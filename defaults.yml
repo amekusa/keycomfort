@@ -1,0 +1,157 @@
+# Do not modify defaults.yml.
+# Edit config.yml instead.
+
+rules:
+  modifier:
+    desc:       Use [key] as a special modifier key (Required)
+    enable:     1
+    key:        spacebar
+    alone:      spacebar
+
+  cancel modifier:
+    desc:       Cancel <modifier> with [key]
+    enable:     1
+    key:        left_shift
+
+  arrows:
+    desc:       <modifier> + [up]/[right]/[down]/[left] = Up/Right/Down/Left
+    enable:     1
+    up:         e
+    right:      f
+    down:       d
+    left:       s
+
+  page up/down:
+    desc:       <modifier> + [up]/[down] = Page Up/Down
+    enable:     1
+    up:         w
+    down:       r
+
+  prev/next word:
+    desc:       <modifier> + [prev]/[next] = Prev/Next Word
+    enable:     1
+    prev:       a
+    next:       g
+    apps:
+      sonicpi:  1
+      others:   1
+
+  line start/end:
+    desc:       <modifier> + [start]/[end] = Line Start/End
+    enable:     1
+    start:      q
+    end:        t
+    apps:
+      terminal: 1
+      sonicpi:  1
+      others:   1
+
+  select:
+    desc:       <modifier> + [up]/[right]/[down]/[left] = Select Up/Right/Down/Left
+    enable:     1
+    up:         i
+    right:      l
+    down:       k
+    left:       j
+
+  indent:
+    desc:       <modifier> + [indent]/[unindent] = Indent/Unindent
+    enable:     1
+    indent:     o
+    unindent:   u
+
+  backspace/delete:
+    desc:       <modifier> + [backspace]/[delete] = Backspace/Delete
+    enable:     1
+    backspace:  h
+    delete:     n
+
+  edit:
+    desc:       <modifier> + [undo]/[cut]/[copy]/[paste] = Undo/Cut/Copy/Paste
+    enable:     1
+    undo:       z
+    cut:        x
+    copy:       c
+    paste:      v
+
+  delete line:
+    desc:       <modifier> + [key] = Delete Line
+    enable:     1
+    key:        m
+    apps:
+      atom:     1
+      vscode:   1
+      eclipse:  1
+
+  insert line:
+    desc:       <modifier> + [key] = New Line Below
+    enable:     1
+    key:        return_or_enter
+    apps:
+      atom:     1
+      vscode:   1
+      eclipse:  1
+
+  move line:
+    desc:       <modifier> + [up]/[down] = Move Line Up/Down
+    enable:     1
+    up:         comma
+    down:       period
+    apps:
+      atom:     1
+      vscode:   1
+      eclipse:  1
+      sonicpi:  1
+
+  left/right tab:
+    desc:       <modifier> + [left]/[right] = Left/Right Tab
+    enable:     1
+    left:       2
+    right:      3
+    apps:
+      vscode:   1
+      eclipse:  1
+      others:   1
+
+  close/open tab:
+    desc:       <modifier> + [close]/[open] = Close/Open Tab
+    enable:     1
+    close:      1
+    open:       4
+
+  backslash:
+    desc:       <modifier> + [key] = Backslash
+    enable:     1
+    key:        slash
+    to:         backslash
+    # to:         backslash + left_option
+    # to:         international3 + left_option
+
+  remap capslock:
+    desc:       Caps Lock = [to]
+    enable:     1
+    to:         left_control
+    alone:      escape
+
+  remap shift + capslock:
+    desc:       Shift + Caps Lock = [to]
+    enable:     1
+    to:         x
+
+  modify:
+    desc:       <modifier> + Various Keys (Custom)
+    enable:     1
+    rules:
+    - from:     semicolon
+      to:       equal_sign
+
+    - from:     slash
+      to:       backslash
+
+
+keyLabels:
+  spacebar: Space
+  return_or_enter: Enter
+  japanese_eisuu: 英数
+  japanese_kana: かな
+
