@@ -76,6 +76,7 @@ let modifier = config.rules.modifier.key;
 let apps = config.apps;
 
 function label(key) {
+	if (Array.isArray(key)) return key.map(label).join(',');
 	key = '' + key;
 	if (key in config.keyLabels) return config.keyLabels[key];
 	return key.split('_').map(I => I.charAt(0).toUpperCase() + I.slice(1)).join(' ');
