@@ -1,6 +1,8 @@
 # Do not modify defaults.yml.
 # Edit config.yml instead.
 
+vim-like: 0  # prefer vim-like mappings?
+
 rules:
   modifier:
     desc:       Use [key] as a special modifier key (Required)
@@ -53,6 +55,11 @@ rules:
     right:      l
     down:       k
     left:       j
+    vim:
+      left:  h
+      down:  j
+      up:    k
+      right: l
 
   indent/outdent:
     desc:       <modifier> + [indent]/[outdent] = Indent/Outdent
@@ -61,10 +68,13 @@ rules:
     outdent:    u
 
   backspace/delete:
-    desc:       <modifier> + [backspace]/[delete] = Backspace/Delete
+    desc:       <modifier> + [bs]/[del] = Backspace/Delete
     enable:     1
-    backspace:  h
-    delete:     n
+    bs:         h
+    del:        n
+    vim:
+      bs:       b
+      del:      n
 
   edit:
     desc:       <modifier> + [undo]/[cut]/[copy]/[paste] = Undo/Cut/Copy/Paste

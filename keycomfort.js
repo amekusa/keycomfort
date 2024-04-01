@@ -74,6 +74,15 @@ let config = {};
 
 let modifier = config.rules.modifier.key;
 let apps = config.apps;
+let vim = yn(config['vim-like']);
+
+function yn(x) {
+	if (typeof x == 'string') {
+		if (x.match(/^(?:y|yes)$/i)) return true;
+		if (x.match(/^(?:n|no)$/i)) return false;
+	}
+	return !!x;
+}
 
 function label(key) {
 	if (Array.isArray(key)) return key.map(label).join(',');
@@ -235,21 +244,22 @@ let rules = {
 	},
 
 	'select'(c, r) {
+		let {up, down, left, right} = vim ? c.vim : c;
 		r.cond(modding)
 		.remap({
-			from: key(c.up),
+			from: key(up),
 			to:   key('up_arrow', 'shift')
 		})
 		.remap({
-			from: key(c.down),
+			from: key(down),
 			to:   key('down_arrow', 'shift')
 		})
 		.remap({
-			from: key(c.left),
+			from: key(left),
 			to:   key('left_arrow', 'shift')
 		})
 		.remap({
-			from: key(c.right),
+			from: key(right),
 			to:   key('right_arrow', 'shift')
 		})
 	},
@@ -267,13 +277,14 @@ let rules = {
 	},
 
 	'backspace/delete'(c, r) {
+		let {bs, del } = vim ? c.vim : c;
 		r.cond(modding)
 		.remap({
-			from: key(c.backspace),
+			from: key(bs),
 			to:   key('delete_or_backspace')
 		})
 		.remap({
-			from: key(c.delete),
+			from: key(del),
 			to:   key('delete_or_backspace', 'fn')
 		})
 	},
