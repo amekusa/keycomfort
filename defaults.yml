@@ -131,6 +131,24 @@ rules:
     close:      1
     open:       4
 
+  numpad:
+    desc:       <modifier> + [trigger] = Numpad Mode ([num1]=1, [num5]=5, [num9]=9)
+    enable:     1
+    trigger:    left_control
+
+    num0:       b
+    num1:       n
+    num2:       m
+    num3:       comma
+
+    num4:       h
+    num5:       j
+    num6:       k
+
+    num7:       y
+    num8:       u
+    num9:       i
+
   remap capslock:
     desc:       Caps Lock = [to]/[alone]
     enable:     1

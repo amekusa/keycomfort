@@ -443,6 +443,50 @@ let rules = {
 		})
 	},
 
+	'numpad'(c, r) {
+		r.cond(modding)
+		.remap({
+			from: key(c.num0, c.trigger),
+			to:   key('keypad_0')
+		})
+		.remap({
+			from: key(c.num1, c.trigger),
+			to:   key('keypad_1')
+		})
+		.remap({
+			from: key(c.num2, c.trigger),
+			to:   key('keypad_2')
+		})
+		.remap({
+			from: key(c.num3, c.trigger),
+			to:   key('keypad_3')
+		})
+		.remap({
+			from: key(c.num4, c.trigger),
+			to:   key('keypad_4')
+		})
+		.remap({
+			from: key(c.num5, c.trigger),
+			to:   key('keypad_5')
+		})
+		.remap({
+			from: key(c.num6, c.trigger),
+			to:   key('keypad_6')
+		})
+		.remap({
+			from: key(c.num7, c.trigger),
+			to:   key('keypad_7')
+		})
+		.remap({
+			from: key(c.num8, c.trigger),
+			to:   key('keypad_8')
+		})
+		.remap({
+			from: key(c.num9, c.trigger),
+			to:   key('keypad_9')
+		})
+	},
+
 	'remap capslock'(c, r) {
 		r.remap({
 			from: key('caps_lock', any),
