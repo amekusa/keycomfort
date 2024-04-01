@@ -93,16 +93,16 @@ function label(key) {
 
 
 // ---- RULE DEFINITIONS ---- //
-let modding = if_var('keycomfort_mod', 1);
+let modding = if_var('keycomfort_layer', 1);
 let any = {optional: 'any'};
 let rules = {
 
 	'modifier'(c, r) {
-		r.cond(unless_var('keycomfort_disable_mod', 1))
+		r.cond(unless_var('keycomfort_layer_disable', 1))
 		.remap({
 			from:            key(c.key, any),
-			to:              set_var('keycomfort_mod', 1, {lazy: true}),
-			to_after_key_up: set_var('keycomfort_mod', 0),
+			to:              set_var('keycomfort_layer', 1, {lazy: true}),
+			to_after_key_up: set_var('keycomfort_layer', 0),
 			to_if_alone:     key(c.alone)
 		})
 		return {
@@ -114,10 +114,10 @@ let rules = {
 		r.remap({
 			from: key(c.key, any),
 			to: [
-				set_var('keycomfort_disable_mod', 1),
+				set_var('keycomfort_layer_disable', 1),
 				key(c.key)
 			],
-			to_after_key_up: set_var('keycomfort_disable_mod', 0)
+			to_after_key_up: set_var('keycomfort_layer_disable', 0)
 		})
 		return {
 			ahk: ``
