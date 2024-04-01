@@ -55,11 +55,12 @@ rules:
     right:      l
     down:       k
     left:       j
+
     vim:
-      left:  h
-      down:  j
-      up:    k
-      right: l
+      left:     h
+      down:     j
+      up:       k
+      right:    l
 
   indent/outdent:
     desc:       <modifier> + [indent]/[outdent] = Indent/Outdent
@@ -72,6 +73,7 @@ rules:
     enable:     1
     bs:         h
     del:        n
+
     vim:
       bs:       b
       del:      n
