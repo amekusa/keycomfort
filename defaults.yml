@@ -54,11 +54,11 @@ rules:
     down:       k
     left:       j
 
-  indent:
-    desc:       <modifier> + [indent]/[unindent] = Indent/Unindent
+  indent/outdent:
+    desc:       <modifier> + [indent]/[outdent] = Indent/Outdent
     enable:     1
     indent:     o
-    unindent:   u
+    outdent:    u
 
   backspace/delete:
     desc:       <modifier> + [backspace]/[delete] = Backspace/Delete

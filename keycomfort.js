@@ -254,14 +254,14 @@ let rules = {
 		})
 	},
 
-	'indent'(c, r) {
+	'indent/outdent'(c, r) {
 		r.cond(modding)
 		.remap({
 			from: key(c.indent),
 			to:   key('tab')
 		})
 		.remap({
-			from: key(c.unindent),
+			from: key(c.outdent),
 			to:   key('tab', 'shift')
 		})
 	},
