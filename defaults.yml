@@ -125,13 +125,13 @@ rules:
     to:         left_control
     alone:      escape
 
-  remap left shift:
+  remap l-shift:
     desc:       Left Shift = [to]/[alone]
     enable:     1
     to:         left_shift
     alone:      left_shift
 
-  remap right shift:
+  remap r-shift:
     desc:       Right Shift = [to]/[alone]
     enable:     1
     to:         right_shift

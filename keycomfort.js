@@ -449,7 +449,7 @@ let rules = {
 		})
 	},
 
-	'remap left shift'(c, r) {
+	'remap l-shift'(c, r) {
 		r.remap({
 			from:        key('left_shift', any),
 			to:          key(c.to),
@@ -457,7 +457,7 @@ let rules = {
 		})
 	},
 
-	'remap right shift'(c, r) {
+	'remap r-shift'(c, r) {
 		r.remap({
 			from:        key('right_shift', any),
 			to:          key(c.to),
