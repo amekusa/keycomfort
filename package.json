@@ -1,0 +1,41 @@
+{
+  "name": "keycomfort",
+  "version": "0.1.0",
+  "description": "Comfortable keyboard remaps for Karabiner/AutoHotKey",
+  "files": [
+    "dist",
+    "defaults.yml",
+    "mac/defaults.yml"
+  ],
+  "bin": {
+    "keycomfort": "./dist/bundle.js"
+  },
+  "scripts": {
+    "test": "echo noop",
+    "build": "rollup -c",
+    "clean": "rm -rf ./dist",
+    "dist": "npm run clean; NODE_ENV=production npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amekusa/keycomfort.git"
+  },
+  "keywords": [
+    "keyboard",
+    "remap",
+    "karabiner",
+    "mac",
+    "macos",
+    "qol",
+    "numpad"
+  ],
+  "author": "Satoshi Soma (https://amekusa.com)",
+  "license": "MIT",
+  "devDependencies": {
+    "@amekusa/util.js": "^1.1.0",
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "karabinerge": "^1.6.0",
+    "yaml": "^2.4.1"
+  }
+}
