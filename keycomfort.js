@@ -91,15 +91,6 @@ function label(key) {
 	return key.split('_').map(I => I.charAt(0).toUpperCase() + I.slice(1)).join(' ');
 }
 
-function template(str, data, fn) {
-	if (!str) return '';
-	str = str.replaceAll('<modifier>', fn(modifier));
-	for (let i in data) {
-		str = str.replaceAll(`[${i}]`, fn(data[i]));
-	}
-	return str;
-}
-
 
 // ---- RULE DEFINITIONS ---- //
 let modding = if_var('keycomfort_mod', 1);
@@ -503,9 +494,13 @@ for (let i in rules) {
 	if (!conf) continue;
 	if (!conf.enable) continue;
 
-	let desc = template(conf.desc, conf, label);
 	let newRule;
 	let code;
+
+	// rule description
+	let desc = conf.desc.replaceAll('<modifier>', label(modifier));
+	let keys = (vim && conf.vim) ? conf.vim : conf;
+	for (let i in keys) desc = desc.replaceAll(`[${i}]`, label(keys[i]));
 
 	// non app-specific rule
 	if (typeof rule == 'function') {
