@@ -5,9 +5,9 @@ const path = require('node:path');
 const yaml = require('yaml');
 
 /*!
- * ==== KEYCOMFORT ==== *
+ * === KEYCOMFORT === *
  * github.com/amekusa/keycomfort
- * ------------------------------ -
+ * ------------------------------ *
  *
  * MIT License
  *
@@ -489,8 +489,8 @@ let rules = {
 
 	'remap capslock'(c, r) {
 		r.remap({
-			from: key('caps_lock', any),
-			to:   key(c.to),
+			from:        key('caps_lock', any),
+			to:          key(c.to),
 			to_if_alone: key(c.alone)
 		})
 	},
@@ -526,6 +526,177 @@ let rules = {
 
 };
 
+
+/*
+rules.add(`${label(kb.modifier)} + Control + Q/W = Browser Back/Forward`)
+	.cond(moding)
+	.remap({
+		from: key('q', 'control'),
+		to:   key('left_arrow', 'command')
+	})
+	.remap({
+		from: key('w', 'control'),
+		to:   key('right_arrow', 'command')
+	});
+
+if (config.appSwitcher.enabled) {
+	let rule = rules.add(`${label(kb.modifier)} + 8/9/0 = App Switcher`)
+		.cond(moding);
+
+	for (let item of config.appSwitcher.map) {
+		rule.remap({
+			from: key(...item.key),
+			to:   { shell_command: `open -a "${item.app}"` }
+		});
+	}
+}
+
+rules.add(`${label(kb.modifier)} + Control = Numpad Mode (Space=0 NM,=123 JKL=456 UIO=789)`)
+	.cond(moding)
+	.remap({
+		from: key('spacebar', 'control'),
+		to:   key('keypad_0')
+	})
+	.remap({
+		from: key('n', 'control'),
+		to:   key('keypad_1')
+	})
+	.remap({
+		from: key('m', 'control'),
+		to:   key('keypad_2')
+	})
+	.remap({
+		from: key('comma', 'control'),
+		to:   key('keypad_3')
+	})
+	.remap({
+		from: key('period', 'control'),
+		to:   key('keypad_period')
+	})
+	.remap({
+		from: key('j', 'control'),
+		to:   key('keypad_4')
+	})
+	.remap({
+		from: key('k', 'control'),
+		to:   key('keypad_5')
+	})
+	.remap({
+		from: key('l', 'control'),
+		to:   key('keypad_6')
+	})
+	.remap({
+		from: key('u', 'control'),
+		to:   key('keypad_7')
+	})
+	.remap({
+		from: key('i', 'control'),
+		to:   key('keypad_8')
+	})
+	.remap({
+		from: key('o', 'control'),
+		to:   key('keypad_9')
+	})
+	.remap({
+		from: key('semicolon', 'control'),
+		to:   key('keypad_plus')
+	})
+	.remap({
+		from: key('p', 'control'),
+		to:   key('keypad_hyphen')
+	})
+	.remap({
+		from: key('9', 'control'),
+		to:   key('keypad_asterisk')
+	})
+	.remap({
+		from: key('8', 'control'),
+		to:   key('keypad_slash')
+	});
+
+rules.add('[EXTRA] Shift + Space = Underscore')
+	.cond(if_lang('en'))
+	.remap({
+		from: key('spacebar', 'shift'),
+		to:   key('international1')
+	});
+
+
+// ---- touchpad specific features -------- *
+let touched = unless_var('multitouch_extension_finger_count_total', 0);
+
+rules.add('Touchpad + J = Left Click (Multitouch-Extension required)')
+	.cond(touched)
+	.cond(unless_app(apps.login))
+	.remap({
+		from: key('j', { optional: 'any' }),
+		to:   click('left')
+	});
+
+rules.add('Touchpad + K = Right Click (Multitouch-Extension required)')
+	.cond(touched)
+	.cond(unless_app(apps.login))
+	.remap({
+		from: key('k', { optional: 'any' }),
+		to:   click('right')
+	});
+
+rules.add('Touchpad + L = Middle Click (Multitouch-Extension required)')
+	.cond(touched)
+	.cond(unless_app(apps.login))
+	.remap({
+		from: key('l', { optional: 'any' }),
+		to:   click('middle')
+	});
+
+rules.add('Touchpad + U/O = Prev/Next Tab (Multitouch-Extension required)')
+	.cond(touched)
+	.cond(unless_app(apps.login, apps.vscode, apps.vscodium, apps.eclipse))
+	.remap({
+		from: key('u', { optional: 'any' }),
+		to:   key('tab', ['control', 'shift'])
+	})
+	.remap({
+		from: key('o', { optional: 'any' }),
+		to:   key('tab', 'control')
+	});
+
+rules.add('Touchpad + U/O = Prev/Next Tab (VSCode) (Multitouch-Extension required)')
+	.cond(touched)
+	.cond(if_app(apps.vscode, apps.vscodium))
+	.remap({
+		from: key('u', { optional: 'any' }),
+		to:   key('left_arrow', ['command', 'option'])
+	})
+	.remap({
+		from: key('o', { optional: 'any' }),
+		to:   key('right_arrow', ['command', 'option'])
+	});
+
+rules.add('Touchpad + U/O = Prev/Next Tab (Eclipse) (Multitouch-Extension required)')
+	.cond(touched)
+	.cond(if_app(apps.eclipse))
+	.remap({
+		from: key('u', { optional: 'any' }),
+		to:   key('page_up', 'control')
+	})
+	.remap({
+		from: key('o', { optional: 'any' }),
+		to:   key('page_down', 'control')
+	});
+
+rules.add('Touchpad + M/I = Close/Open Tab (Multitouch-Extension required)')
+	.cond(touched)
+	.cond(unless_app(apps.login))
+	.remap({
+		from: key('m', { optional: 'any' }),
+		to:   key('w', 'command')
+	})
+	.remap({
+		from: key('i', { optional: 'any' }),
+		to:   key('t', 'command')
+	});
+*/
 
 // ---- EXPORT RULES ---- //
 let ruleSet = new RuleSet('KeyComfort');
