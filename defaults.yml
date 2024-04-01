@@ -9,7 +9,7 @@ rules:
     alone:      spacebar
 
   cancel modifier:
-    desc:       Cancel <modifier> with [key]
+    desc:       Cancel modifier (<modifier>) with [key]
     enable:     1
     key:        left_shift
 
