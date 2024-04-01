@@ -1,0 +1,18 @@
+apps:
+  login:
+  - com.apple.loginwindow
+  terminal:
+  - com.apple.Terminal
+  - com.googlecode.iterm2
+  - org.alacritty
+  atom:
+  - com.github.atom
+  - dev.pulsar-edit.pulsar
+  vscode:
+  - com.microsoft.VSCode
+  - com.vscodium
+  eclipse:
+  - org.eclipse.platform.ide
+  sonicpi:
+  - net.sonic-pi.app
+
