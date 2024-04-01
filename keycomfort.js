@@ -441,14 +441,6 @@ let rules = {
 		})
 	},
 
-	'backslash'(c, r) {
-		r.cond(modding)
-		.remap({
-			from: key(c.key),
- 			to:   key(...(c.to.split(' + ')))
-		})
-	},
-
 	'remap capslock'(c, r) {
 		r.remap({
 			from: key('caps_lock', any),
