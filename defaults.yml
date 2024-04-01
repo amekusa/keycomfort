@@ -119,39 +119,52 @@ rules:
     close:      1
     open:       4
 
-  backslash:
-    desc:       <modifier> + [key] = Backslash
-    enable:     1
-    key:        slash
-    to:         backslash
-    # to:         backslash + left_option
-    # to:         international3 + left_option
-
   remap capslock:
-    desc:       Caps Lock = [to]
+    desc:       Caps Lock = [to]/[alone]
     enable:     1
     to:         left_control
     alone:      escape
 
-  remap shift + capslock:
-    desc:       Shift + Caps Lock = [to]
+  remap left shift:
+    desc:       Left Shift = [to]/[alone]
     enable:     1
-    to:         x
+    to:         left_shift
+    alone:      left_shift
 
-  modify:
-    desc:       <modifier> + Various Keys (Custom)
+  remap right shift:
+    desc:       Right Shift = [to]/[alone]
+    enable:     1
+    to:         right_shift
+    alone:      right_shift
+
+  custom:
+    desc:       <modifier> + Custom Keys
     enable:     1
     rules:
-    - from:     semicolon
-      to:       equal_sign
-
-    - from:     slash
-      to:       backslash
+    # tab to enter
+    - from: tab
+      to:   return_or_enter
+    # /(slash) to \(backslash)
+    - from: slash
+      to:   backslash
+    # '(apostrophe) to `(backtick)
+    - from: quote
+      to:   grave_accent_and_tilde
+    # ;(semicolon) to =(equal)
+    - from: semicolon
+      to:   equal_sign
+    # p to +(plus)
+    - from: p
+      to:   shift + equal_sign
+    # 7 to |(pipe)
+    - from: 7
+      to:   shift + backslash
 
 
 keyLabels:
   spacebar: Space
   return_or_enter: Enter
+  grave_accent_and_tilde: Backtick
   japanese_eisuu: 英数
   japanese_kana: かな
 

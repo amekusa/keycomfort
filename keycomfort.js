@@ -457,21 +457,32 @@ let rules = {
 		})
 	},
 
-	'remap shift + capslock'(c, r) {
+	'remap left shift'(c, r) {
 		r.remap({
-			from: key('left_control', 'left_shift'),
-			to:   key(...c.to.split(' + ').reverse())
+			from:        key('left_shift', any),
+			to:          key(c.to),
+			to_if_alone: key(c.alone)
 		})
 	},
 
-	'modify'(c, r) {
+	'remap right shift'(c, r) {
+		r.remap({
+			from:        key('right_shift', any),
+			to:          key(c.to),
+			to_if_alone: key(c.alone)
+		})
+	},
+
+	'custom'(c, r) {
 		if (!c.rules.length) return;
 		r.cond(modding);
-		for (let {from, to} of c.rules) {
-			r.remap({
+		for (let {from, to, alone} of c.rules) {
+			let map = {
 				from: key(from),
 				to:   key(to)
-			})
+			};
+			if (alone) map.to_if_alone = key(alone);
+			r.remap(map);
 		}
 	},
 
