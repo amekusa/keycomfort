@@ -11,6 +11,7 @@
     "keycomfort": "./dist/bundle.js"
   },
   "scripts": {
+    "dev": "rollup -c --watch",
     "test": "echo noop",
     "build": "rollup -c",
     "clean": "rm -rf ./dist",
@@ -34,7 +35,10 @@
   "devDependencies": {
     "@amekusa/util.js": "^1.1.0",
     "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-replace": "^5.0.5",
+    "commander": "^12.0.0",
     "karabinerge": "^1.6.0",
     "yaml": "^2.4.1"
   }

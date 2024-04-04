@@ -191,6 +191,51 @@ rules:
       to:   shift + backslash
 
 
+apps:
+  others:
+    enable: 1
+
+  login:
+    enable: 1
+    id:
+    - com.apple.loginwindow
+
+  terminal:
+    enable: 1
+    id:
+    - com.apple.Terminal
+    - com.googlecode.iterm2
+    - org.alacritty
+    exe:
+    - cmd.exe
+
+  vscode:
+    enable: 0
+    id:
+    - com.microsoft.VSCode
+    - com.vscodium
+    exe:
+    - Code.exe
+
+  atom:
+    enable: 0
+    id:
+    - com.github.atom
+    - dev.pulsar-edit.pulsar
+
+  eclipse:
+    enable: 0
+    id:
+    - org.eclipse.platform.ide
+    exe:
+    - eclipse.exe
+
+  sonicpi:
+    enable: 0
+    id:
+    - net.sonic-pi.app
+
+
 keyLabels:
   spacebar: Space
   return_or_enter: Enter
