@@ -59,14 +59,6 @@ const {
 	warning: warn
 } = console;
 
-function yn(x) {
-	if (typeof x == 'string') {
-		if (x.match(/^(?:y|yes|true)$/i)) return true;
-		if (x.match(/^(?:n|no|false)$/i)) return false;
-	}
-	return !!x;
-}
-
 function yes(answer) {
 	return typeof answer == 'string' && answer.trim().match(/^(?:y|yes)$/i);
 }
@@ -92,6 +84,13 @@ function prompt(msg, fn) {
 		ask.close();
 		return fn(answer);
 	});
+}
+
+function label(key, dict) {
+	if (Array.isArray(key)) return key.map(I => label(I, dict)).join(',');
+	key += '';
+	if (key in dict) return dict[key];
+	return key.split('_').map(I => I.charAt(0).toUpperCase() + I.slice(1)).join(' ');
 }
 
 const paths = {
@@ -133,7 +132,8 @@ app.command('generate')
 		'all', 'karabiner', 'ahk',
 	]))
 	.option('-c, --config <src>', `config file`, path.join(paths.config.dir, paths.config.file))
-	.option('-s, --save <dst>', `save destination`)
+	.option('--no-config', `do not use config, use default values`)
+	.option('-s, --save-to <dst>', `save destination`)
 	.option('-n, --no-save', `do not save to files`)
 	.option('-r, --reload', `reload keymaps (only for karabiner)`)
 	.option('-p, --print', `print results`)
@@ -145,6 +145,9 @@ app.parse();
  * Create/Edit/Reset/Delete config file.
  */
 function configure(file, opts = {}) {
+	debug(`options:`, opts);
+
+	// check options
 	if (opts.reset && opts.delete) {
 		return app.error(`--reset and --delete options are mutually exclusive`);
 	}
@@ -212,8 +215,10 @@ function configure(file, opts = {}) {
  * Generate keymaps.
  */
 function generate(target, opts = {}) {
-	let config = defaults;
+	debug(`options:`, opts);
 
+	// parse config
+	let config = defaults;
 	if (opts.config) {
 		if (!fs.existsSync(opts.config)) {
 			log(`Config not found:`, opts.config);
@@ -228,20 +233,13 @@ function generate(target, opts = {}) {
 		let userConfig = yaml.parse(fs.readFileSync(opts.config, {encoding: 'utf8'}));
 		if (userConfig) config = merge(config, userConfig);
 	}
-
 	let modifier = config.rules.modifier.key;
-
-	function label(key) {
-		if (Array.isArray(key)) return key.map(label).join(',');
-		key = '' + key;
-		if (key in config.keyLabels) return config.keyLabels[key];
-		return key.split('_').map(I => I.charAt(0).toUpperCase() + I.slice(1)).join(' ');
-	}
-
-	let ruleSet = new RuleSet('KeyComfort');
 	let apps = config.apps;
-	let vim = config['vim-like'];
+	let labels = config.key_labels;
+	let vim = config.vim_like;
 
+	// run rules
+	let ruleSet = new RuleSet('KeyComfort');
 	for (let i in rules) {
 
 		// rule config
@@ -253,8 +251,8 @@ function generate(target, opts = {}) {
 		if (rc.vim && vim) rc = merge(rc, rc.vim);
 
 		// format rule description
-		let desc = rc.desc.replaceAll('<modifier>', label(modifier));
-		for (let i in rc) desc = desc.replaceAll(`[${i}]`, label(rc[i]));
+		let desc = rc.desc.replaceAll('<modifier>', label(modifier, labels));
+		for (let i in rc) desc = desc.replaceAll(`[${i}]`, label(rc[i], labels));
 
 		let rule = rules[i];
 		let newRule;
@@ -286,9 +284,8 @@ function generate(target, opts = {}) {
 		}
 	}
 
-	let result = ruleSet.toJSON();
-
-	if (opts.print) log(JSON.stringify(result, null, 2));
+	let result = JSON.stringify(ruleSet.toJSON(), null, 2);
+	if (opts.print) log(result);
 	if (!opts.save) return;
 
 	let tasks = [];

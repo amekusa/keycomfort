@@ -1,7 +1,7 @@
 # Do not modify defaults.yml.
 # Edit config.yml instead.
 
-vim-like: 0  # prefer vim-like mappings?
+vim_like: 0  # prefer vim-like mappings?
 
 rules:
   modifier:
@@ -236,7 +236,7 @@ apps:
     - net.sonic-pi.app
 
 
-keyLabels:
+key_labels:
   spacebar: Space
   return_or_enter: Enter
   grave_accent_and_tilde: Backtick
