@@ -122,7 +122,7 @@ app.command('configure')
 	.description(`create/edit/reset/delete config`)
 	.argument('[file]', `config file`, path.join(paths.config.dir, paths.config.file))
 	.option('-r, --reset', `reset config with defaults`)
-	.option('-d, --delete', `delete config`)
+	.option('-D, --delete', `delete config`)
 	.action(configure);
 
 app.command('generate')
