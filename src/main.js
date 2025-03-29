@@ -215,8 +215,9 @@ function configure(file, opts = {}) {
  * Generate keymaps.
  */
 function generate(target, opts = {}) {
-	debug(`options:`, opts);
-
+	if (target == 'ahk') {
+		return app.error(`sorry, ahk is not supported yet.`)
+	}
 	// parse config
 	let config = defaults;
 	if (opts.config) {
