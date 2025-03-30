@@ -3,7 +3,8 @@
 
 vim_like: 0  # prefer vim-like mappings?
 
-rules:
+rules:  # mapping rules
+
   modifier:
     desc:       Use [key] as a special modifier key (Required)
     enable:     1
@@ -236,7 +237,7 @@ apps:
     - net.sonic-pi.app
 
 
-key_labels:
+key_labels:  # display names for key codes
   spacebar: Space
   return_or_enter: Enter
   grave_accent_and_tilde: Backtick
