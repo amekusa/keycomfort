@@ -59,6 +59,10 @@ const {
 	warning: warn
 } = console;
 
+function loc(...args) {
+	return io.untilde(path.join(...args));
+}
+
 function yes(answer) {
 	return typeof answer == 'string' && answer.trim().match(/^(?:y|yes)$/i);
 }
@@ -120,7 +124,7 @@ app.name(pkg.name)
 app.command('configure')
 	.alias('config')
 	.description(`create/edit/reset/delete config`)
-	.argument('[file]', `config file`, path.join(paths.config.dir, paths.config.file))
+	.argument('[file]', `config file`, loc(paths.config.dir, paths.config.file))
 	.option('-r, --reset', `reset config with defaults`)
 	.option('-D, --delete', `delete config`)
 	.action(configure);
