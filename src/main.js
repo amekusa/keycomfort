@@ -113,7 +113,7 @@ app.name(pkg.name)
 	.option('-v, --verbose', `output detailed messages for debug`)
 	.hook('preAction', (app, cmd) => {
 		Object.assign(options, app.opts());
-		debug(`options:`, options);
+		debug(` global options:`, options);
 		debug(`command options:`, cmd.opts());
 	});
 
