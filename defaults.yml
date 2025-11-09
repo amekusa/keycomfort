@@ -1,5 +1,15 @@
-# Do not modify defaults.yml.
-# Edit config.yml instead.
+# === KEYCOMFORT CONFIG ===
+# NOTE:
+#   0 means "No"
+#   1 means "Yes"
+
+paths:
+  karabiner:
+    save_as:    ~/.config/karabiner/assets/complex_modifications/keycomfort.json
+    apply_to:   ~/.config/karabiner/karabiner.json
+  ahk:
+    save_as:    ~/Desktop/keycomfort.ahk
+    apply_to:
 
 vim_like: 0  # prefer vim-like mappings?
 
@@ -70,14 +80,10 @@ rules:  # mapping rules
     outdent:    u
 
   backspace/delete:
-    desc:       <modifier> + [bs]/[del] = Backspace/Delete
+    desc:       <modifier> + [backspace]/[delete] = Backspace/Delete
     enable:     1
-    bs:         h
-    del:        n
-
-    vim:
-      bs:       b
-      del:      n
+    backspace:  n
+    delete:     m
 
   edit:
     desc:       <modifier> + [undo]/[cut]/[copy]/[paste] = Undo/Cut/Copy/Paste
@@ -90,7 +96,7 @@ rules:  # mapping rules
   delete line:
     desc:       <modifier> + [key] = Delete Line
     enable:     1
-    key:        m
+    key:        shift + m
     apps:
       atom:     1
       vscode:   1
@@ -142,13 +148,63 @@ rules:  # mapping rules
     num2:       m
     num3:       comma
 
-    num4:       h
-    num5:       j
-    num6:       k
+    num4:       j
+    num5:       k
+    num6:       l
 
-    num7:       y
-    num8:       u
-    num9:       i
+    num7:       u
+    num8:       i
+    num9:       o
+
+    slash:      8
+    asterisk:   9
+    hyphen:     0
+    plus:       p
+
+    enter:      slash
+    delete:     semicolon
+    backspace:  h
+
+  backslash:
+    desc:       <modifier> + [from] = [to]
+    enable:     1
+    from:       slash
+    to:         backslash
+
+  backtick:
+    desc:       <modifier> + [from] = [to]
+    enable:     1
+    from:       quote
+    to:         grave_accent_and_tilde
+
+  tilde:
+    desc:       <modifier> + [from] = [to]
+    enable:     1
+    from:       hyphen
+    to:         shift + grave_accent_and_tilde
+
+  equal:
+    desc:       <modifier> + [from] = [to]
+    enable:     1
+    from:       semicolon
+    to:         equal_sign
+
+  enter:
+    desc:       <modifier> + [from] = [to]
+    enable:     1
+    from:       tab
+    to:         return_or_enter
+
+  custom:
+    desc:       <modifier> + Custom Keys
+    enable:     1
+    rules:
+    # p to +(plus)
+    - from: p
+      to:   shift + equal_sign
+    # 7 to |(pipe)
+    - from: 7
+      to:   shift + backslash
 
   remap capslock:
     desc:       Caps Lock = [to]/[alone]
@@ -156,40 +212,29 @@ rules:  # mapping rules
     to:         left_control
     alone:      escape
 
+  remap l-control:
+    desc:       Left Control = [to]/[alone]
+    enable:     1
+    to:         left_control
+    alone:      escape
+
+  remap r-control:
+    desc:       Right Control = [to]/[alone]
+    enable:     0
+    to:         right_control
+    alone:      escape
+
   remap l-shift:
     desc:       Left Shift = [to]/[alone]
-    enable:     1
+    enable:     0
     to:         left_shift
     alone:      left_shift
 
   remap r-shift:
     desc:       Right Shift = [to]/[alone]
-    enable:     1
+    enable:     0
     to:         right_shift
     alone:      right_shift
-
-  custom:
-    desc:       <modifier> + Custom Keys
-    enable:     1
-    rules:
-    # tab to enter
-    - from: tab
-      to:   return_or_enter
-    # /(slash) to \(backslash)
-    - from: slash
-      to:   backslash
-    # '(apostrophe) to `(backtick)
-    - from: quote
-      to:   grave_accent_and_tilde
-    # ;(semicolon) to =(equal)
-    - from: semicolon
-      to:   equal_sign
-    # p to +(plus)
-    - from: p
-      to:   shift + equal_sign
-    # 7 to |(pipe)
-    - from: 7
-      to:   shift + backslash
 
 
 apps:

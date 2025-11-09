@@ -159,11 +159,11 @@ const rules = {
 	'backspace/delete'(c, r) {
 		r.cond(modding)
 		.remap({
-			from: key(c.bs),
+			from: key(c.backspace),
 			to:   key('delete_or_backspace')
 		})
 		.remap({
-			from: key(c.del),
+			from: key(c.delete),
 			to:   key('delete_or_backspace', 'fn')
 		})
 	},
@@ -373,11 +373,108 @@ const rules = {
 			from: key(c.num9, c.trigger),
 			to:   key('keypad_9')
 		})
+		.remap({
+			from: key(c.slash, c.trigger),
+			to:   key('keypad_slash')
+		})
+		.remap({
+			from: key(c.asterisk, c.trigger),
+			to:   key('keypad_asterisk')
+		})
+		.remap({
+			from: key(c.hyphen, c.trigger),
+			to:   key('keypad_hyphen')
+		})
+		.remap({
+			from: key(c.plus, c.trigger),
+			to:   key('keypad_plus')
+		})
+		.remap({
+			from: key(c.enter, c.trigger),
+			to:   key('keypad_enter')
+		})
+		.remap({
+			from: key(c.delete, c.trigger),
+			to:   key('delete_or_backspace', 'fn')
+		})
+		.remap({
+			from: key(c.backspace, c.trigger),
+			to:   key('delete_or_backspace')
+		})
+	},
+
+	'backslash'(c, r) {
+		r.cond(modding)
+		r.remap({
+			from: key(c.from),
+			to:   key(c.to)
+		})
+	},
+
+	'backtick'(c, r) {
+		r.cond(modding)
+		r.remap({
+			from: key(c.from),
+			to:   key(c.to)
+		})
+	},
+
+	'tilde'(c, r) {
+		r.cond(modding)
+		r.remap({
+			from: key(c.from),
+			to:   key(c.to)
+		})
+	},
+
+	'equal'(c, r) {
+		r.cond(modding)
+		r.remap({
+			from: key(c.from),
+			to:   key(c.to)
+		})
+	},
+
+	'enter'(c, r) {
+		r.cond(modding)
+		r.remap({
+			from: key(c.from),
+			to:   key(c.to)
+		})
+	},
+
+	'custom'(c, r) {
+		if (!c.rules.length) return;
+		r.cond(modding);
+		for (let {from, to, alone} of c.rules) {
+			let map = {
+				from: key(from),
+				to:   key(to)
+			};
+			if (alone) map.to_if_alone = key(alone);
+			r.remap(map);
+		}
 	},
 
 	'remap capslock'(c, r) {
 		r.remap({
 			from:        key('caps_lock', any),
+			to:          key(c.to),
+			to_if_alone: key(c.alone)
+		})
+	},
+
+	'remap l-control'(c, r) {
+		r.remap({
+			from:        key('left_control', any),
+			to:          key(c.to),
+			to_if_alone: key(c.alone)
+		})
+	},
+
+	'remap r-control'(c, r) {
+		r.remap({
+			from:        key('right_control', any),
 			to:          key(c.to),
 			to_if_alone: key(c.alone)
 		})
@@ -397,19 +494,6 @@ const rules = {
 			to:          key(c.to),
 			to_if_alone: key(c.alone)
 		})
-	},
-
-	'custom'(c, r) {
-		if (!c.rules.length) return;
-		r.cond(modding);
-		for (let {from, to, alone} of c.rules) {
-			let map = {
-				from: key(from),
-				to:   key(to)
-			};
-			if (alone) map.to_if_alone = key(alone);
-			r.remap(map);
-		}
 	},
 
 };
