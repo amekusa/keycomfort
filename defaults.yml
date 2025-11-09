@@ -178,7 +178,7 @@ rules:  # mapping rules
     to:         grave_accent_and_tilde
 
   tilde:
-    desc:       <modifier> + [from] = [to]
+    desc:       <modifier> + [from] = Tilde
     enable:     1
     from:       hyphen
     to:         shift + grave_accent_and_tilde
