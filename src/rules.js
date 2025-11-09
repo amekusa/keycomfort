@@ -480,6 +480,22 @@ const rules = {
 		})
 	},
 
+	'remap l-command'(c, r) {
+		r.remap({
+			from:        key('left_command', any),
+			to:          key(c.to),
+			to_if_alone: key(c.alone)
+		})
+	},
+
+	'remap r-command'(c, r) {
+		r.remap({
+			from:        key('right_command', any),
+			to:          key(c.to),
+			to_if_alone: key(c.alone)
+		})
+	},
+
 	'remap l-shift'(c, r) {
 		r.remap({
 			from:        key('left_shift', any),

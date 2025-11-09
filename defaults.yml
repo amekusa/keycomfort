@@ -224,6 +224,18 @@ rules:  # mapping rules
     to:         right_control
     alone:      escape
 
+  remap l-command:
+    desc:       Left Command = [to]/[alone]
+    enable:     0
+    to:         left_command
+    alone:      left_command
+
+  remap r-command:
+    desc:       Right Command = [to]/[alone]
+    enable:     0
+    to:         right_command
+    alone:      right_command
+
   remap l-shift:
     desc:       Left Shift = [to]/[alone]
     enable:     0
