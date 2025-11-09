@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 
-const {env, stdin, stdout} = require('node:process');
+const {env, cwd, stdin, stdout} = require('node:process');
 const {spawnSync: spawn} = require('node:child_process');
-const os = require('node:os');
 const fs = require('node:fs');
 const path = require('node:path');
 const readline = require('node:readline');
@@ -10,6 +9,7 @@ const readline = require('node:readline');
 const {Command, Argument, Option} = require('commander');
 const yaml = require('yaml');
 const {merge, isEmpty} = require('@amekusa/util.js');
+const {io} = require('@amekusa/nodeutil');
 const {
 	RuleSet, Config,
 	if_app, unless_app,
@@ -44,20 +44,21 @@ const {
  *
  */
 
-const rules = require('./rules.js');
 const pkg = require('../package.json');
+const rules = require('./rules.js');
 const defaultsYML = ROLLUP_REPLACE.defaultsYML;
 const defaults = yaml.parse(defaultsYML);
+const defaultConfig = loc(io.home, '.config', 'keycomfort', 'config.yml')
 
-const home = os.homedir();
 const options = {
 	verbose: false,
 };
 
-const {
-	log, error,
-	warning: warn
-} = console;
+const {log, warn} = console;
+
+function debug(...args) {
+	if (options.verbose) console.debug(...args);
+}
 
 function loc(...args) {
 	return io.untilde(path.join(...args));
@@ -71,12 +72,8 @@ function no(answer) {
 	return typeof answer == 'string' && answer.trim().match(/^(?:n|no)$/i);
 }
 
-function debug(...args) {
-	if (options.verbose) console.debug(...args);
-}
-
 function edit(file) {
-	let editor = spawn(env.EDITOR || env.VISUAL || 'nano', [file], {
+	return spawn(env.EDITOR || env.VISUAL || 'vi', [file], {
 		stdio: 'inherit',
 		detached: true,
 	});
@@ -97,20 +94,7 @@ function label(key, dict) {
 	return key.split('_').map(I => I.charAt(0).toUpperCase() + I.slice(1)).join(' ');
 }
 
-const paths = {
-	config: {
-		dir: path.join(home, '.config', 'keycomfort'),
-		file: 'config.yml',
-	},
-	dist: {
-		dir: path.join(home, '.config', 'keycomfort'),
-		karabiner: 'keycomfort-karabiner.json',
-		ahk:       'keycomfort.ahk',
-	},
-};
-
 const app = new Command();
-
 app.name(pkg.name)
 	.version(pkg.version)
 	.description(pkg.description)
@@ -124,7 +108,7 @@ app.name(pkg.name)
 app.command('configure')
 	.alias('config')
 	.description(`create/edit/reset/delete config`)
-	.argument('[file]', `config file`, loc(paths.config.dir, paths.config.file))
+	.argument('[file]', `config file`, defaultConfig)
 	.option('-r, --reset', `reset config with defaults`)
 	.option('-D, --delete', `delete config`)
 	.action(configure);
@@ -132,14 +116,13 @@ app.command('configure')
 app.command('generate')
 	.alias('gen')
 	.description(`generate keymaps`)
-	.addArgument(new Argument('<target>', `target application`).choices([
-		'all', 'karabiner', 'ahk',
-	]))
-	.option('-c, --config <src>', `config file`, path.join(paths.config.dir, paths.config.file))
-	.option('--no-config', `do not use config, use default values`)
-	.option('-s, --save-to <dst>', `save destination`)
-	.option('-n, --no-save', `do not save to files`)
-	.option('-r, --reload', `reload keymaps (only for karabiner)`)
+	.addArgument(new Argument('[target]', `target application`).choices(['karabiner', 'ahk']).default('karabiner'))
+	.option('-c, --config <path>', `config file`, defaultConfig)
+	.option('-d, --no-config', `do not use config, use only default values`)
+	.option('-s, --save', `save generated keymaps`, true)
+	.option('--no-save', `do not save generated keymaps`)
+	.option('-a, --apply', `apply generated keymaps (only for karabiner)`, true)
+	.option('--no-apply', `do not apply generated keymaps`)
 	.option('-p, --print', `print results`)
 	.action(generate);
 
@@ -149,9 +132,6 @@ app.parse();
  * Create/Edit/Reset/Delete config file.
  */
 function configure(file, opts = {}) {
-	debug(`options:`, opts);
-
-	// check options
 	if (opts.reset && opts.delete) {
 		return app.error(`--reset and --delete options are mutually exclusive`);
 	}
@@ -289,32 +269,42 @@ function generate(target, opts = {}) {
 		}
 	}
 
-	let result = JSON.stringify(ruleSet.toJSON(), null, 2);
+	let data = ruleSet.toJSON();
+	let result = JSON.stringify(data, null, 2);
+
 	if (opts.print) log(result);
-	if (!opts.save) return;
 
-	let tasks = [];
-	tasks.push(new Promise((done, fail) => {
-		let data = ruleSet.toJSON();
-		fs.writeFile(
-			path.join(base, 'mac/keycomfort.json'),
-			JSON.stringify(data, null, 2),
-			{encoding: 'utf8'},
-			err => {
-				if (err) fail(err);
-				let conf = new Config();
-				conf.load()
-					.backup()
-					.setRules(data.rules)
-					.save();
+	if (opts.apply) {
+		switch (target) {
+		case 'karabiner':
+			let conf = new Config();
+			conf.setIO(loc(config.paths.karabiner.apply_to), {
+					encoding: 'utf8',
+					backup: true,
+					backupExt: '.bak',
+				})
+				.load()
+				.setRules(data.rules)
+				.save();
+			break;
+		case 'ahk':
+			warn(`Applying to ahk is not supported`);
+			break;
+		}
+	}
 
-				done();
-			}
-		);
-	}));
+	if (opts.save) {
+		let saveAs;
+		switch (target) {
+		case 'karabiner':
+			saveAs = loc(config.paths.karabiner.save_as);
+			break;
+		case 'ahk':
+			saveAs = loc(config.paths.ahk.save_as);
+			break;
+		}
+		fs.writeFileSync(saveAs, result, {encoding: 'utf8'});
+	}
 
-	Promise.all(tasks).then(() => {
-		console.log('All done.');
-	});
 }
 
