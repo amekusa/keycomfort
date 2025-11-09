@@ -166,13 +166,13 @@ rules:  # mapping rules
     backspace:  h
 
   backslash:
-    desc:       <modifier> + [from] = [to]
+    desc:       <modifier> + [from] = Backslash
     enable:     1
     from:       slash
     to:         backslash
 
   backtick:
-    desc:       <modifier> + [from] = [to]
+    desc:       <modifier> + [from] = Backtick
     enable:     1
     from:       quote
     to:         grave_accent_and_tilde
@@ -184,13 +184,13 @@ rules:  # mapping rules
     to:         shift + grave_accent_and_tilde
 
   equal:
-    desc:       <modifier> + [from] = [to]
+    desc:       <modifier> + [from] = Equal Sign
     enable:     1
     from:       semicolon
     to:         equal_sign
 
   enter:
-    desc:       <modifier> + [from] = [to]
+    desc:       <modifier> + [from] = Enter
     enable:     1
     from:       tab
     to:         return_or_enter
