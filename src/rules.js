@@ -403,6 +403,18 @@ const rules = {
 		})
 	},
 
+	'plus/minus'(c, r) {
+		r.cond(modding)
+		.remap({
+			from: key(c.plus),
+			to:   key(c.to.plus)
+		})
+		.remap({
+			from: key(c.minus),
+			to:   key(c.to.minus)
+		})
+	},
+
 	'backslash'(c, r) {
 		r.cond(modding)
 		r.remap({

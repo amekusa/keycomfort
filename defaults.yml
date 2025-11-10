@@ -165,6 +165,15 @@ rules:  # mapping rules
     delete:     semicolon
     backspace:  h
 
+  plus/minus:
+    desc:       <modifier> + [plus]/[minus] = Plus/Minus
+    enable:     1
+    plus:       p
+    minus:      shift + p
+    to:
+      plus:     shift + equal_sign
+      minus:    hyphen
+
   backslash:
     desc:       <modifier> + [from] = Backslash
     enable:     1
@@ -183,6 +192,12 @@ rules:  # mapping rules
     from:       hyphen
     to:         shift + grave_accent_and_tilde
 
+  pipe:
+    desc:       <modifier> + [from] = Pipe
+    enable:     1
+    from:       7
+    to:         shift + backslash
+
   equal:
     desc:       <modifier> + [from] = Equal Sign
     enable:     1
@@ -199,12 +214,9 @@ rules:  # mapping rules
     desc:       <modifier> + Custom Keys
     enable:     1
     rules:
-    # p to +(plus)
-    - from: p
-      to:   shift + equal_sign
-    # 7 to |(pipe)
-    - from: 7
-      to:   shift + backslash
+      # Examples
+      # - from: p
+      #   to:   shift + equal_sign
 
   remap capslock:
     desc:       Caps Lock = [to]/[alone]
