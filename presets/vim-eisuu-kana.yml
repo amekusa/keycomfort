@@ -1,0 +1,22 @@
+#  Vim-like?: Yes
+#
+#     Indent: mod + o
+#    Outdent: mod + y
+#
+#       英数: mod + u
+#       かな: mod + i
+
+vim_like: 1
+rules:
+
+  indent/outdent:
+    indent:  o
+    outdent: y
+
+  custom:
+    rules:
+      - from: u
+        to:   japanese_eisuu
+      - from: i
+        to:   japanese_kana
+
