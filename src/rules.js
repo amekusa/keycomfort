@@ -417,7 +417,7 @@ const rules = {
 
 	'backslash'(c, r) {
 		r.cond(modding)
-		r.remap({
+		.remap({
 			from: key(c.from),
 			to:   key(c.to)
 		})
@@ -425,7 +425,7 @@ const rules = {
 
 	'backtick'(c, r) {
 		r.cond(modding)
-		r.remap({
+		.remap({
 			from: key(c.from),
 			to:   key(c.to)
 		})
@@ -433,7 +433,7 @@ const rules = {
 
 	'tilde'(c, r) {
 		r.cond(modding)
-		r.remap({
+		.remap({
 			from: key(c.from),
 			to:   key(c.to)
 		})
@@ -441,7 +441,7 @@ const rules = {
 
 	'equal'(c, r) {
 		r.cond(modding)
-		r.remap({
+		.remap({
 			from: key(c.from),
 			to:   key(c.to)
 		})
@@ -449,7 +449,7 @@ const rules = {
 
 	'enter'(c, r) {
 		r.cond(modding)
-		r.remap({
+		.remap({
 			from: key(c.from),
 			to:   key(c.to)
 		})
