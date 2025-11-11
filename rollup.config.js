@@ -2,7 +2,7 @@
  * Rollup Config
  *
  * Use with:
- *   rollup -c rollup.js
+ *   rollup -c
  */
 
 const rNode = require('@rollup/plugin-node-resolve');

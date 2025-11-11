@@ -3,9 +3,7 @@
   "version": "0.1.0",
   "description": "Comfortable keyboard remaps for Karabiner/AutoHotKey",
   "files": [
-    "dist",
-    "defaults.yml",
-    "mac/defaults.yml"
+    "dist/bundle.js"
   ],
   "bin": {
     "keycomfort": "./dist/bundle.js"

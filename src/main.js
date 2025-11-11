@@ -6,7 +6,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const readline = require('node:readline');
 
-const {Command, Argument, Option} = require('commander');
+const {Command, Argument} = require('commander');
 const yaml = require('yaml');
 const {merge, isEmpty} = require('@amekusa/util.js');
 const {io} = require('@amekusa/nodeutil');
