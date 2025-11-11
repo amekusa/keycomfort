@@ -14758,7 +14758,7 @@ function requireMain () {
 	const path = require$$5;
 	const readline = require$$4$1;
 
-	const {Command, Argument, Option} = requireCommander();
+	const {Command, Argument} = requireCommander();
 	const yaml = require$$6;
 	const {merge, isEmpty} = requireBundle$2();
 	const {io} = requireBundle$1();
