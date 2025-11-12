@@ -439,6 +439,14 @@ const rules = {
 		})
 	},
 
+	'pipe'(c, r) {
+		r.cond(modding)
+		.remap({
+			from: key(c.from),
+			to:   key(c.to)
+		})
+	},
+
 	'equal'(c, r) {
 		r.cond(modding)
 		.remap({
