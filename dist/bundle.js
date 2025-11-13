@@ -1,18 +1,5 @@
 #!/usr/bin/env node
-'use strict';
-
-var require$$0$1 = require('node:process');
-var require$$1 = require('node:child_process');
-var require$$3 = require('node:fs');
-var require$$5 = require('node:path');
-var require$$4$1 = require('node:readline');
-var require$$0 = require('node:events');
-var require$$2 = require('node:os');
-var require$$4 = require('node:fs/promises');
-var require$$6$1 = require('node:stream');
-var require$$7 = require('node:assert');
-
-function getDefaultExportFromCjs (x) {
+'use strict';var require$$0$1=require('node:process'),require$$1=require('node:child_process'),require$$3=require('node:fs'),require$$2=require('node:path'),require$$4$1=require('node:readline'),require$$0=require('node:events'),require$$2$1=require('node:os'),require$$4=require('node:fs/promises'),require$$6$1=require('node:stream'),require$$7=require('node:assert');function getDefaultExportFromCjs (x) {
 	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
 }
 
@@ -43,17 +30,7 @@ function getAugmentedNamespace(n) {
 		});
 	});
 	return a;
-}
-
-var main$1 = {};
-
-var commander = {};
-
-var argument = {};
-
-var error = {};
-
-/**
+}var main$1 = {};var commander = {};var argument = {};var error = {};/**
  * CommanderError class
  */
 
@@ -99,9 +76,7 @@ function requireError () {
 	error.CommanderError = CommanderError;
 	error.InvalidArgumentError = InvalidArgumentError;
 	return error;
-}
-
-var hasRequiredArgument;
+}var hasRequiredArgument;
 
 function requireArgument () {
 	if (hasRequiredArgument) return argument;
@@ -257,13 +232,7 @@ function requireArgument () {
 	argument.Argument = Argument;
 	argument.humanReadableArgName = humanReadableArgName;
 	return argument;
-}
-
-var command = {};
-
-var help = {};
-
-var hasRequiredHelp;
+}var command = {};var help = {};var hasRequiredHelp;
 
 function requireHelp () {
 	if (hasRequiredHelp) return help;
@@ -1016,11 +985,7 @@ function requireHelp () {
 	help.Help = Help;
 	help.stripColor = stripColor;
 	return help;
-}
-
-var option = {};
-
-var hasRequiredOption;
+}var option = {};var hasRequiredOption;
 
 function requireOption () {
 	if (hasRequiredOption) return option;
@@ -1406,11 +1371,7 @@ function requireOption () {
 	option.Option = Option;
 	option.DualOptions = DualOptions;
 	return option;
-}
-
-var suggestSimilar = {};
-
-var hasRequiredSuggestSimilar;
+}var suggestSimilar = {};var hasRequiredSuggestSimilar;
 
 function requireSuggestSimilar () {
 	if (hasRequiredSuggestSimilar) return suggestSimilar;
@@ -1517,16 +1478,14 @@ function requireSuggestSimilar () {
 
 	suggestSimilar.suggestSimilar = suggestSimilar$1;
 	return suggestSimilar;
-}
-
-var hasRequiredCommand;
+}var hasRequiredCommand;
 
 function requireCommand () {
 	if (hasRequiredCommand) return command;
 	hasRequiredCommand = 1;
 	const EventEmitter = require$$0.EventEmitter;
 	const childProcess = require$$1;
-	const path = require$$5;
+	const path = require$$2;
 	const fs = require$$3;
 	const process = require$$0$1;
 
@@ -4300,9 +4259,7 @@ Expecting one of '${allowedValues.join("', '")}'`);
 	command.Command = Command;
 	command.useColor = useColor; // exporting for tests
 	return command;
-}
-
-var hasRequiredCommander;
+}var hasRequiredCommander;
 
 function requireCommander () {
 	if (hasRequiredCommander) return commander;
@@ -4332,9 +4289,7 @@ function requireCommander () {
 	commander.InvalidArgumentError = InvalidArgumentError;
 	commander.InvalidOptionArgumentError = InvalidArgumentError; // Deprecated
 	return commander;
-}
-
-const ALIAS = Symbol.for('yaml.alias');
+}const ALIAS = Symbol.for('yaml.alias');
 const DOC = Symbol.for('yaml.document');
 const MAP = Symbol.for('yaml.map');
 const PAIR = Symbol.for('yaml.pair');
@@ -4367,9 +4322,7 @@ function isNode(node) {
         }
     return false;
 }
-const hasAnchor = (node) => (isScalar$1(node) || isCollection$1(node)) && !!node.anchor;
-
-const BREAK$1 = Symbol('break visit');
+const hasAnchor = (node) => (isScalar$1(node) || isCollection$1(node)) && !!node.anchor;const BREAK$1 = Symbol('break visit');
 const SKIP$1 = Symbol('skip children');
 const REMOVE$1 = Symbol('remove node');
 /**
@@ -4597,9 +4550,7 @@ function replaceNode(key, path, node) {
         const pt = isAlias(parent) ? 'alias' : 'scalar';
         throw new Error(`Cannot replace node with ${pt} parent`);
     }
-}
-
-const escapeChars = {
+}const escapeChars = {
     '!': '%21',
     ',': '%2C',
     '[': '%5B',
@@ -4769,9 +4720,7 @@ class Directives {
     }
 }
 Directives.defaultYaml = { explicit: false, version: '1.2' };
-Directives.defaultTags = { '!!': 'tag:yaml.org,2002:' };
-
-/**
+Directives.defaultTags = { '!!': 'tag:yaml.org,2002:' };/**
  * Verify that the input string is a valid anchor.
  *
  * Will throw on errors.
@@ -4836,9 +4785,7 @@ function createNodeAnchors(doc, prefix) {
         },
         sourceObjects
     };
-}
-
-/**
+}/**
  * Applies the JSON.parse reviver algorithm as defined in the ECMA-262 spec,
  * in section 24.5.1.1 "Runtime Semantics: InternalizeJSONProperty" of the
  * 2021 edition: https://tc39.es/ecma262/#sec-json.parse
@@ -4890,9 +4837,7 @@ function applyReviver(reviver, obj, key, val) {
         }
     }
     return reviver.call(obj, key, val);
-}
-
-/**
+}/**
  * Recursively convert any node or its contents to native JavaScript
  *
  * @param value - The input value
@@ -4924,9 +4869,7 @@ function toJS(value, arg, ctx) {
     if (typeof value === 'bigint' && !ctx?.keep)
         return Number(value);
     return value;
-}
-
-class NodeBase {
+}class NodeBase {
     constructor(type) {
         Object.defineProperty(this, NODE_TYPE, { value: type });
     }
@@ -4957,9 +4900,7 @@ class NodeBase {
             ? applyReviver(reviver, { '': res }, '', res)
             : res;
     }
-}
-
-class Alias extends NodeBase {
+}class Alias extends NodeBase {
     constructor(source) {
         super(ALIAS);
         this.source = source;
@@ -5064,9 +5005,7 @@ function getAliasCount(doc, node, anchors) {
         return Math.max(kc, vc);
     }
     return 1;
-}
-
-const isScalarValue = (value) => !value || (typeof value !== 'function' && typeof value !== 'object');
+}const isScalarValue = (value) => !value || (typeof value !== 'function' && typeof value !== 'object');
 class Scalar extends NodeBase {
     constructor(value) {
         super(SCALAR$1);
@@ -5083,9 +5022,7 @@ Scalar.BLOCK_FOLDED = 'BLOCK_FOLDED';
 Scalar.BLOCK_LITERAL = 'BLOCK_LITERAL';
 Scalar.PLAIN = 'PLAIN';
 Scalar.QUOTE_DOUBLE = 'QUOTE_DOUBLE';
-Scalar.QUOTE_SINGLE = 'QUOTE_SINGLE';
-
-const defaultTagPrefix = 'tag:yaml.org,2002:';
+Scalar.QUOTE_SINGLE = 'QUOTE_SINGLE';const defaultTagPrefix = 'tag:yaml.org,2002:';
 function findTagObject(value, tagName, tags) {
     if (tagName) {
         const match = tags.filter(t => t.tag === tagName);
@@ -5166,9 +5103,7 @@ function createNode(value, tagName, ctx) {
     if (ref)
         ref.node = node;
     return node;
-}
-
-function collectionFromPath(schema, path, value) {
+}function collectionFromPath(schema, path, value) {
     let v = value;
     for (let i = path.length - 1; i >= 0; --i) {
         const k = path[i];
@@ -5308,9 +5243,7 @@ class Collection extends NodeBase {
                 throw new Error(`Expected YAML collection at ${key}. Remaining path: ${rest}`);
         }
     }
-}
-
-/**
+}/**
  * Stringifies a comment.
  *
  * Empty comment lines are left empty,
@@ -5327,9 +5260,7 @@ const lineComment = (str, indent, comment) => str.endsWith('\n')
     ? indentComment(comment, indent)
     : comment.includes('\n')
         ? '\n' + indentComment(comment, indent)
-        : (str.endsWith(' ') ? '' : ' ') + comment;
-
-const FOLD_FLOW = 'flow';
+        : (str.endsWith(' ') ? '' : ' ') + comment;const FOLD_FLOW = 'flow';
 const FOLD_BLOCK = 'block';
 const FOLD_QUOTED = 'quoted';
 /**
@@ -5472,9 +5403,7 @@ function consumeMoreIndentedLines(text, i, indent) {
         }
     }
     return end;
-}
-
-const getFoldOptions = (ctx, isBlock) => ({
+}const getFoldOptions = (ctx, isBlock) => ({
     indentAtStart: isBlock ? ctx.indent.length : ctx.indentAtStart,
     lineWidth: ctx.options.lineWidth,
     minContentWidth: ctx.options.minContentWidth
@@ -5804,9 +5733,7 @@ function stringifyString(item, ctx, onComment, onChompKeep) {
             throw new Error(`Unsupported default string type ${t}`);
     }
     return res;
-}
-
-function createStringifyContext(doc, options) {
+}function createStringifyContext(doc, options) {
     const opt = Object.assign({
         blockQuote: true,
         commentString: stringifyComment,
@@ -5926,9 +5853,7 @@ function stringify$2(item, ctx, onComment, onChompKeep) {
     return isScalar$1(node) || str[0] === '{' || str[0] === '['
         ? `${props} ${str}`
         : `${props}\n${ctx.indent}${str}`;
-}
-
-function stringifyPair({ key, value }, ctx, onComment, onChompKeep) {
+}function stringifyPair({ key, value }, ctx, onComment, onChompKeep) {
     const { allNullValues, doc, indent, indentStep, options: { commentString, indentSeq, simpleKeys } } = ctx;
     let keyComment = (isNode(key) && key.comment) || null;
     if (simpleKeys) {
@@ -6070,15 +5995,11 @@ function stringifyPair({ key, value }, ctx, onComment, onChompKeep) {
         onChompKeep();
     }
     return str;
-}
-
-function warn(logLevel, warning) {
+}function warn(logLevel, warning) {
     if (logLevel === 'debug' || logLevel === 'warn') {
         console.warn(warning);
     }
-}
-
-// If the value associated with a merge key is a single mapping node, each of
+}// If the value associated with a merge key is a single mapping node, each of
 // its key/value pairs is inserted into the current mapping, unless the key
 // already exists in it. If the value associated with the merge key is a
 // sequence, then this sequence is expected to contain mapping nodes and each
@@ -6136,9 +6057,7 @@ function mergeValue(ctx, map, value) {
         }
     }
     return map;
-}
-
-function addPairToJSMap(ctx, map, { key, value }) {
+}function addPairToJSMap(ctx, map, { key, value }) {
     if (isNode(key) && key.addToJSMap)
         key.addToJSMap(ctx, map, value);
     // TODO: Should drop this special case for bare << handling
@@ -6192,9 +6111,7 @@ function stringifyKey(key, jsKey, ctx) {
         return strKey;
     }
     return JSON.stringify(jsKey);
-}
-
-function createPair(key, value, ctx) {
+}function createPair(key, value, ctx) {
     const k = createNode(key, undefined, ctx);
     const v = createNode(value, undefined, ctx);
     return new Pair(k, v);
@@ -6222,9 +6139,7 @@ class Pair {
             ? stringifyPair(this, ctx, onComment, onChompKeep)
             : JSON.stringify(this);
     }
-}
-
-function stringifyCollection(collection, ctx, options) {
+}function stringifyCollection(collection, ctx, options) {
     const flow = ctx.inFlow ?? collection.flow;
     const stringify = flow ? stringifyFlowCollection : stringifyBlockCollection;
     return stringify(collection, ctx, options);
@@ -6360,9 +6275,7 @@ function addCommentBefore({ indent, options: { commentString } }, lines, comment
         const ic = indentComment(commentString(comment), indent);
         lines.push(ic.trimStart()); // Avoid double indent on first line
     }
-}
-
-function findPair(items, key) {
+}function findPair(items, key) {
     const k = isScalar$1(key) ? key.value : key;
     for (const it of items) {
         if (isPair(it)) {
@@ -6496,9 +6409,7 @@ class YAMLMap extends Collection {
             onComment
         });
     }
-}
-
-const map = {
+}const map = {
     collection: 'map',
     default: true,
     nodeClass: YAMLMap,
@@ -6509,9 +6420,7 @@ const map = {
         return map;
     },
     createNode: (schema, obj, ctx) => YAMLMap.from(schema, obj, ctx)
-};
-
-class YAMLSeq extends Collection {
+};class YAMLSeq extends Collection {
     static get tagName() {
         return 'tag:yaml.org,2002:seq';
     }
@@ -6614,9 +6523,7 @@ function asItemIndex(key) {
     return typeof idx === 'number' && Number.isInteger(idx) && idx >= 0
         ? idx
         : null;
-}
-
-const seq = {
+}const seq = {
     collection: 'seq',
     default: true,
     nodeClass: YAMLSeq,
@@ -6627,9 +6534,7 @@ const seq = {
         return seq;
     },
     createNode: (schema, obj, ctx) => YAMLSeq.from(schema, obj, ctx)
-};
-
-const string = {
+};const string = {
     identify: value => typeof value === 'string',
     default: true,
     tag: 'tag:yaml.org,2002:str',
@@ -6638,9 +6543,7 @@ const string = {
         ctx = Object.assign({ actualString: true }, ctx);
         return stringifyString(item, ctx, onComment, onChompKeep);
     }
-};
-
-const nullTag = {
+};const nullTag = {
     identify: value => value == null,
     createNode: () => new Scalar(null),
     default: true,
@@ -6650,9 +6553,7 @@ const nullTag = {
     stringify: ({ source }, ctx) => typeof source === 'string' && nullTag.test.test(source)
         ? source
         : ctx.options.nullStr
-};
-
-const boolTag = {
+};const boolTag = {
     identify: value => typeof value === 'boolean',
     default: true,
     tag: 'tag:yaml.org,2002:bool',
@@ -6666,9 +6567,7 @@ const boolTag = {
         }
         return value ? ctx.options.trueStr : ctx.options.falseStr;
     }
-};
-
-function stringifyNumber({ format, minFractionDigits, tag, value }) {
+};function stringifyNumber({ format, minFractionDigits, tag, value }) {
     if (typeof value === 'bigint')
         return String(value);
     const num = typeof value === 'number' ? value : Number(value);
@@ -6689,9 +6588,7 @@ function stringifyNumber({ format, minFractionDigits, tag, value }) {
             n += '0';
     }
     return n;
-}
-
-const floatNaN$1 = {
+}const floatNaN$1 = {
     identify: value => typeof value === 'number',
     default: true,
     tag: 'tag:yaml.org,2002:float',
@@ -6728,9 +6625,7 @@ const float$1 = {
         return node;
     },
     stringify: stringifyNumber
-};
-
-const intIdentify$2 = (value) => typeof value === 'bigint' || Number.isInteger(value);
+};const intIdentify$2 = (value) => typeof value === 'bigint' || Number.isInteger(value);
 const intResolve$1 = (str, offset, radix, { intAsBigInt }) => (intAsBigInt ? BigInt(str) : parseInt(str.substring(offset), radix));
 function intStringify$1(node, radix, prefix) {
     const { value } = node;
@@ -6763,9 +6658,7 @@ const intHex$1 = {
     test: /^0x[0-9a-fA-F]+$/,
     resolve: (str, _onError, opt) => intResolve$1(str, 2, 16, opt),
     stringify: node => intStringify$1(node, 16, '0x')
-};
-
-const schema$2 = [
+};const schema$2 = [
     map,
     seq,
     string,
@@ -6777,9 +6670,7 @@ const schema$2 = [
     floatNaN$1,
     floatExp$1,
     float$1
-];
-
-function intIdentify$1(value) {
+];function intIdentify$1(value) {
     return typeof value === 'bigint' || Number.isInteger(value);
 }
 const stringifyJSON = ({ value }) => JSON.stringify(value);
@@ -6834,9 +6725,7 @@ const jsonError = {
         return str;
     }
 };
-const schema$1 = [map, seq].concat(jsonScalars, jsonError);
-
-const binary = {
+const schema$1 = [map, seq].concat(jsonScalars, jsonError);const binary = {
     identify: value => value instanceof Uint8Array, // Buffer inherits from Uint8Array
     default: false,
     tag: 'tag:yaml.org,2002:binary',
@@ -6888,9 +6777,7 @@ const binary = {
         }
         return stringifyString({ comment, type, value: str }, ctx, onComment, onChompKeep);
     }
-};
-
-function resolvePairs(seq, onError) {
+};function resolvePairs(seq, onError) {
     if (isSeq(seq)) {
         for (let i = 0; i < seq.items.length; ++i) {
             let item = seq.items[i];
@@ -6960,9 +6847,7 @@ const pairs = {
     tag: 'tag:yaml.org,2002:pairs',
     resolve: resolvePairs,
     createNode: createPairs
-};
-
-class YAMLOMap extends YAMLSeq {
+};class YAMLOMap extends YAMLSeq {
     constructor() {
         super();
         this.add = YAMLMap.prototype.add.bind(this);
@@ -7027,9 +6912,7 @@ const omap = {
         return Object.assign(new YAMLOMap(), pairs);
     },
     createNode: (schema, iterable, ctx) => YAMLOMap.from(schema, iterable, ctx)
-};
-
-function boolStringify({ value, source }, ctx) {
+};function boolStringify({ value, source }, ctx) {
     const boolObj = value ? trueTag : falseTag;
     if (source && boolObj.test.test(source))
         return source;
@@ -7050,9 +6933,7 @@ const falseTag = {
     test: /^(?:N|n|[Nn]o|NO|[Ff]alse|FALSE|[Oo]ff|OFF)$/,
     resolve: () => new Scalar(false),
     stringify: boolStringify
-};
-
-const floatNaN = {
+};const floatNaN = {
     identify: value => typeof value === 'number',
     default: true,
     tag: 'tag:yaml.org,2002:float',
@@ -7092,9 +6973,7 @@ const float = {
         return node;
     },
     stringify: stringifyNumber
-};
-
-const intIdentify = (value) => typeof value === 'bigint' || Number.isInteger(value);
+};const intIdentify = (value) => typeof value === 'bigint' || Number.isInteger(value);
 function intResolve(str, offset, radix, { intAsBigInt }) {
     const sign = str[0];
     if (sign === '-' || sign === '+')
@@ -7160,9 +7039,7 @@ const intHex = {
     test: /^[-+]?0x[0-9a-fA-F_]+$/,
     resolve: (str, _onError, opt) => intResolve(str, 2, 16, opt),
     stringify: node => intStringify(node, 16, '0x')
-};
-
-class YAMLSet extends YAMLMap {
+};class YAMLSet extends YAMLMap {
     constructor(schema) {
         super(schema);
         this.tag = YAMLSet.tag;
@@ -7248,9 +7125,7 @@ const set = {
             onError('Expected a mapping for this tag');
         return map;
     }
-};
-
-/** Internal types handle bigint as number, because TS can't figure it out. */
+};/** Internal types handle bigint as number, because TS can't figure it out. */
 function parseSexagesimal(str, asBigInt) {
     const sign = str[0];
     const parts = sign === '-' || sign === '+' ? str.substring(1) : str;
@@ -7346,9 +7221,7 @@ const timestamp = {
         return new Date(date);
     },
     stringify: ({ value }) => value?.toISOString().replace(/(T00:00:00)?\.000Z$/, '') ?? ''
-};
-
-const schema = [
+};const schema = [
     map,
     seq,
     string,
@@ -7370,9 +7243,7 @@ const schema = [
     intTime,
     floatTime,
     timestamp
-];
-
-const schemas = new Map([
+];const schemas = new Map([
     ['core', schema$2],
     ['failsafe', [map, seq, string]],
     ['json', schema$1],
@@ -7448,9 +7319,7 @@ function getTags(customTags, schemaName, addMergeTag) {
             tags.push(tagObj);
         return tags;
     }, []);
-}
-
-const sortMapEntriesByKey = (a, b) => a.key < b.key ? -1 : a.key > b.key ? 1 : 0;
+}const sortMapEntriesByKey = (a, b) => a.key < b.key ? -1 : a.key > b.key ? 1 : 0;
 class Schema {
     constructor({ compat, customTags, merge, resolveKnownTags, schema, sortMapEntries, toStringDefaults }) {
         this.compat = Array.isArray(compat)
@@ -7478,9 +7347,7 @@ class Schema {
         copy.tags = this.tags.slice();
         return copy;
     }
-}
-
-function stringifyDocument(doc, options) {
+}function stringifyDocument(doc, options) {
     const lines = [];
     let hasDirectives = options.directives === true;
     if (options.directives !== false && doc.directives) {
@@ -7558,9 +7425,7 @@ function stringifyDocument(doc, options) {
         }
     }
     return lines.join('\n') + '\n';
-}
-
-class Document {
+}class Document {
     constructor(value, replacer, options) {
         /** A comment before this Document */
         this.commentBefore = null;
@@ -7880,9 +7745,7 @@ function assertCollection(contents) {
     if (isCollection$1(contents))
         return true;
     throw new Error('Expected a YAML collection as document contents');
-}
-
-class YAMLError extends Error {
+}class YAMLError extends Error {
     constructor(name, pos, code, message) {
         super();
         this.name = name;
@@ -7936,9 +7799,7 @@ const prettifyError = (src, lc) => (error) => {
         const pointer = ' '.repeat(ci) + '^'.repeat(count);
         error.message += `:\n\n${lineStr}\n${pointer}\n`;
     }
-};
-
-function resolveProps(tokens, { flow, indicator, next, offset, onError, parentIndent, startOnNewline }) {
+};function resolveProps(tokens, { flow, indicator, next, offset, onError, parentIndent, startOnNewline }) {
     let spaceBefore = false;
     let atNewline = startOnNewline;
     let hasSpace = startOnNewline;
@@ -8081,9 +7942,7 @@ function resolveProps(tokens, { flow, indicator, next, offset, onError, parentIn
         end,
         start: start ?? end
     };
-}
-
-function containsNewline(key) {
+}function containsNewline(key) {
     if (!key)
         return null;
     switch (key.type) {
@@ -8114,9 +7973,7 @@ function containsNewline(key) {
         default:
             return true;
     }
-}
-
-function flowIndentCheck(indent, fc, onError) {
+}function flowIndentCheck(indent, fc, onError) {
     if (fc?.type === 'flow-collection') {
         const end = fc.end[0];
         if (end.indent === indent &&
@@ -8126,9 +7983,7 @@ function flowIndentCheck(indent, fc, onError) {
             onError(end, 'BAD_INDENT', msg, true);
         }
     }
-}
-
-function mapIncludes(ctx, items, search) {
+}function mapIncludes(ctx, items, search) {
     const { uniqueKeys } = ctx.options;
     if (uniqueKeys === false)
         return false;
@@ -8136,9 +7991,7 @@ function mapIncludes(ctx, items, search) {
         ? uniqueKeys
         : (a, b) => a === b || (isScalar$1(a) && isScalar$1(b) && a.value === b.value);
     return items.some(pair => isEqual(pair.key, search));
-}
-
-const startColMsg = 'All mapping items must start at the same column';
+}const startColMsg = 'All mapping items must start at the same column';
 function resolveBlockMap({ composeNode, composeEmptyNode }, ctx, bm, onError, tag) {
     const NodeClass = tag?.nodeClass ?? YAMLMap;
     const map = new NodeClass(ctx.schema);
@@ -8243,9 +8096,7 @@ function resolveBlockMap({ composeNode, composeEmptyNode }, ctx, bm, onError, ta
         onError(commentEnd, 'IMPOSSIBLE', 'Map comment with trailing content');
     map.range = [bm.offset, offset, commentEnd ?? offset];
     return map;
-}
-
-function resolveBlockSeq({ composeNode, composeEmptyNode }, ctx, bs, onError, tag) {
+}function resolveBlockSeq({ composeNode, composeEmptyNode }, ctx, bs, onError, tag) {
     const NodeClass = tag?.nodeClass ?? YAMLSeq;
     const seq = new NodeClass(ctx.schema);
     if (ctx.atRoot)
@@ -8287,9 +8138,7 @@ function resolveBlockSeq({ composeNode, composeEmptyNode }, ctx, bs, onError, ta
     }
     seq.range = [bs.offset, offset, commentEnd ?? offset];
     return seq;
-}
-
-function resolveEnd(end, offset, reqSpace, onError) {
+}function resolveEnd(end, offset, reqSpace, onError) {
     let comment = '';
     if (end) {
         let hasSpace = false;
@@ -8323,9 +8172,7 @@ function resolveEnd(end, offset, reqSpace, onError) {
         }
     }
     return { comment, offset };
-}
-
-const blockMsg = 'Block collections are not allowed within flow collections';
+}const blockMsg = 'Block collections are not allowed within flow collections';
 const isBlock = (token) => token && (token.type === 'block-map' || token.type === 'block-seq');
 function resolveFlowCollection({ composeNode, composeEmptyNode }, ctx, fc, onError, tag) {
     const isMap = fc.start.source === '{';
@@ -8520,9 +8367,7 @@ function resolveFlowCollection({ composeNode, composeEmptyNode }, ctx, fc, onErr
         coll.range = [fc.offset, cePos, cePos];
     }
     return coll;
-}
-
-function resolveCollection(CN, ctx, token, onError, tagName, tag) {
+}function resolveCollection(CN, ctx, token, onError, tagName, tag) {
     const coll = token.type === 'block-map'
         ? resolveBlockMap(CN, ctx, token, onError, tag)
         : token.type === 'block-seq'
@@ -8599,9 +8444,7 @@ function composeCollection(CN, ctx, token, props, onError) {
     if (tag?.format)
         node.format = tag.format;
     return node;
-}
-
-function resolveBlockScalar(ctx, scalar, onError) {
+}function resolveBlockScalar(ctx, scalar, onError) {
     const start = scalar.offset;
     const header = parseBlockScalarHeader(scalar, ctx.options.strict, onError);
     if (!header)
@@ -8794,9 +8637,7 @@ function splitLines(source) {
     for (let i = 1; i < split.length; i += 2)
         lines.push([split[i], split[i + 1]]);
     return lines;
-}
-
-function resolveFlowScalar(scalar, strict, onError) {
+}function resolveFlowScalar(scalar, strict, onError) {
     const { offset, type, source, end } = scalar;
     let _type;
     let value;
@@ -9013,9 +8854,7 @@ function parseCharCode(source, offset, length, onError) {
         return raw;
     }
     return String.fromCodePoint(code);
-}
-
-function composeScalar(ctx, token, tagToken, onError) {
+}function composeScalar(ctx, token, tagToken, onError) {
     const { value, type, comment, range } = token.type === 'block-scalar'
         ? resolveBlockScalar(ctx, token, onError)
         : resolveFlowScalar(token, ctx.options.strict, onError);
@@ -9093,9 +8932,7 @@ function findScalarTagByTest({ atKey, directives, schema }, value, token, onErro
         }
     }
     return tag;
-}
-
-function emptyScalarPosition(offset, before, pos) {
+}function emptyScalarPosition(offset, before, pos) {
     if (before) {
         pos ?? (pos = before.length);
         for (let i = pos - 1; i >= 0; --i) {
@@ -9118,9 +8955,7 @@ function emptyScalarPosition(offset, before, pos) {
         }
     }
     return offset;
-}
-
-const CN = { composeNode, composeEmptyNode };
+}const CN = { composeNode, composeEmptyNode };
 function composeNode(ctx, token, props, onError) {
     const atKey = ctx.atKey;
     const { spaceBefore, comment, anchor, tag } = props;
@@ -9212,9 +9047,7 @@ function composeAlias({ options }, { offset, source, end }, onError) {
     if (re.comment)
         alias.comment = re.comment;
     return alias;
-}
-
-function composeDoc(options, directives, { offset, start, value, end }, onError) {
+}function composeDoc(options, directives, { offset, start, value, end }, onError) {
     const opts = Object.assign({ _directives: directives }, options);
     const doc = new Document(undefined, opts);
     const ctx = {
@@ -9249,9 +9082,7 @@ function composeDoc(options, directives, { offset, start, value, end }, onError)
         doc.comment = re.comment;
     doc.range = [offset, contentEnd, re.offset];
     return doc;
-}
-
-function getErrorPos(src) {
+}function getErrorPos(src) {
     if (typeof src === 'number')
         return [src, src + 1];
     if (Array.isArray(src))
@@ -9458,9 +9289,7 @@ class Composer {
             yield doc;
         }
     }
-}
-
-function resolveAsScalar(token, strict = true, onError) {
+}function resolveAsScalar(token, strict = true, onError) {
     if (token) {
         const _onError = (pos, code, message) => {
             const offset = typeof pos === 'number' ? pos : Array.isArray(pos) ? pos[0] : pos.offset;
@@ -9666,9 +9495,7 @@ function setFlowScalarValue(token, source, type) {
             Object.assign(token, { type, indent, source, end });
         }
     }
-}
-
-/**
+}/**
  * Stringify a CST document, token, or collection item
  *
  * Fair warning: This applies no validation whatsoever, and
@@ -9726,9 +9553,7 @@ function stringifyItem({ start, key, sep, value }) {
     if (value)
         res += stringifyToken(value);
     return res;
-}
-
-const BREAK = Symbol('break visit');
+}const BREAK = Symbol('break visit');
 const SKIP = Symbol('skip children');
 const REMOVE = Symbol('remove item');
 /**
@@ -9822,9 +9647,7 @@ function _visit(path, item, visitor) {
         }
     }
     return typeof ctrl === 'function' ? ctrl(item, path) : ctrl;
-}
-
-/** The byte order mark */
+}/** The byte order mark */
 const BOM = '\u{FEFF}';
 /** Start of doc-mode */
 const DOCUMENT = '\x02'; // C0: Start of Text
@@ -9915,26 +9738,7 @@ function tokenType(source) {
             return 'block-scalar-header';
     }
     return null;
-}
-
-var cst = /*#__PURE__*/Object.freeze({
-	__proto__: null,
-	BOM: BOM,
-	DOCUMENT: DOCUMENT,
-	FLOW_END: FLOW_END,
-	SCALAR: SCALAR,
-	createScalarToken: createScalarToken,
-	isCollection: isCollection,
-	isScalar: isScalar,
-	prettyToken: prettyToken,
-	resolveAsScalar: resolveAsScalar,
-	setScalarValue: setScalarValue,
-	stringify: stringify$1,
-	tokenType: tokenType,
-	visit: visit
-});
-
-/*
+}var cst=/*#__PURE__*/Object.freeze({__proto__:null,BOM:BOM,DOCUMENT:DOCUMENT,FLOW_END:FLOW_END,SCALAR:SCALAR,createScalarToken:createScalarToken,isCollection:isCollection,isScalar:isScalar,prettyToken:prettyToken,resolveAsScalar:resolveAsScalar,setScalarValue:setScalarValue,stringify:stringify$1,tokenType:tokenType,visit:visit});/*
 START -> stream
 
 stream
@@ -10646,9 +10450,7 @@ class Lexer {
             ch = this.buffer[++i];
         return yield* this.pushToIndex(i, false);
     }
-}
-
-/**
+}/**
  * Tracks newlines during parsing in order to provide an efficient API for
  * determining the one-indexed `{ line, col }` position for any offset
  * within the input.
@@ -10684,9 +10486,7 @@ class LineCounter {
             return { line: low, col: offset - start + 1 };
         };
     }
-}
-
-function includesToken(list, type) {
+}function includesToken(list, type) {
     for (let i = 0; i < list.length; ++i)
         if (list[i].type === type)
             return true;
@@ -11647,9 +11447,7 @@ class Parser {
                     yield* this.pop();
         }
     }
-}
-
-function parseOptions(options) {
+}function parseOptions(options) {
     const prettyErrors = options.prettyErrors !== false;
     const lineCounter = options.lineCounter || (prettyErrors && new LineCounter()) || null;
     return { lineCounter, prettyErrors };
@@ -11740,83 +11538,9 @@ function stringify(value, replacer, options) {
     if (isDocument(value) && !_replacer)
         return value.toString(options);
     return new Document(value, _replacer, options).toString(options);
-}
-
-var YAML = /*#__PURE__*/Object.freeze({
-	__proto__: null,
-	Alias: Alias,
-	CST: cst,
-	Composer: Composer,
-	Document: Document,
-	Lexer: Lexer,
-	LineCounter: LineCounter,
-	Pair: Pair,
-	Parser: Parser,
-	Scalar: Scalar,
-	Schema: Schema,
-	YAMLError: YAMLError,
-	YAMLMap: YAMLMap,
-	YAMLParseError: YAMLParseError,
-	YAMLSeq: YAMLSeq,
-	YAMLWarning: YAMLWarning,
-	isAlias: isAlias,
-	isCollection: isCollection$1,
-	isDocument: isDocument,
-	isMap: isMap,
-	isNode: isNode,
-	isPair: isPair,
-	isScalar: isScalar$1,
-	isSeq: isSeq,
-	parse: parse,
-	parseAllDocuments: parseAllDocuments,
-	parseDocument: parseDocument,
-	stringify: stringify,
-	visit: visit$1,
-	visitAsync: visitAsync
-});
-
-// `export * as default from ...` fails on Webpack v4
+}var YAML=/*#__PURE__*/Object.freeze({__proto__:null,Alias:Alias,CST:cst,Composer:Composer,Document:Document,Lexer:Lexer,LineCounter:LineCounter,Pair:Pair,Parser:Parser,Scalar:Scalar,Schema:Schema,YAMLError:YAMLError,YAMLMap:YAMLMap,YAMLParseError:YAMLParseError,YAMLSeq:YAMLSeq,YAMLWarning:YAMLWarning,isAlias:isAlias,isCollection:isCollection$1,isDocument:isDocument,isMap:isMap,isNode:isNode,isPair:isPair,isScalar:isScalar$1,isSeq:isSeq,parse:parse,parseAllDocuments:parseAllDocuments,parseDocument:parseDocument,stringify:stringify,visit:visit$1,visitAsync:visitAsync});// `export * as default from ...` fails on Webpack v4
 // https://github.com/eemeli/yaml/issues/228
-
-var browser = /*#__PURE__*/Object.freeze({
-	__proto__: null,
-	Alias: Alias,
-	CST: cst,
-	Composer: Composer,
-	Document: Document,
-	Lexer: Lexer,
-	LineCounter: LineCounter,
-	Pair: Pair,
-	Parser: Parser,
-	Scalar: Scalar,
-	Schema: Schema,
-	YAMLError: YAMLError,
-	YAMLMap: YAMLMap,
-	YAMLParseError: YAMLParseError,
-	YAMLSeq: YAMLSeq,
-	YAMLWarning: YAMLWarning,
-	default: YAML,
-	isAlias: isAlias,
-	isCollection: isCollection$1,
-	isDocument: isDocument,
-	isMap: isMap,
-	isNode: isNode,
-	isPair: isPair,
-	isScalar: isScalar$1,
-	isSeq: isSeq,
-	parse: parse,
-	parseAllDocuments: parseAllDocuments,
-	parseDocument: parseDocument,
-	stringify: stringify,
-	visit: visit$1,
-	visitAsync: visitAsync
-});
-
-var require$$6 = /*@__PURE__*/getAugmentedNamespace(browser);
-
-var bundle$2 = {};
-
-var hasRequiredBundle$2;
+var browser=/*#__PURE__*/Object.freeze({__proto__:null,Alias:Alias,CST:cst,Composer:Composer,Document:Document,Lexer:Lexer,LineCounter:LineCounter,Pair:Pair,Parser:Parser,Scalar:Scalar,Schema:Schema,YAMLError:YAMLError,YAMLMap:YAMLMap,YAMLParseError:YAMLParseError,YAMLSeq:YAMLSeq,YAMLWarning:YAMLWarning,default:YAML,isAlias:isAlias,isCollection:isCollection$1,isDocument:isDocument,isMap:isMap,isNode:isNode,isPair:isPair,isScalar:isScalar$1,isSeq:isSeq,parse:parse,parseAllDocuments:parseAllDocuments,parseDocument:parseDocument,stringify:stringify,visit:visit$1,visitAsync:visitAsync});var require$$6 = /*@__PURE__*/getAugmentedNamespace(browser);var bundle$2 = {};var hasRequiredBundle$2;
 
 function requireBundle$2 () {
 	if (hasRequiredBundle$2) return bundle$2;
@@ -12228,11 +11952,7 @@ function requireBundle$2 () {
 	bundle$2.time = time;
 	bundle$2.web = web;
 	return bundle$2;
-}
-
-var bundle$1 = {};
-
-var hasRequiredBundle$1;
+}var bundle$1 = {};var hasRequiredBundle$1;
 
 function requireBundle$1 () {
 	if (hasRequiredBundle$1) return bundle$1;
@@ -12240,10 +11960,10 @@ function requireBundle$1 () {
 
 	var node_process = require$$0$1;
 	var node_child_process = require$$1;
-	var os = require$$2;
+	var os = require$$2$1;
 	var fs = require$$3;
 	var fsp = require$$4;
-	var path = require$$5;
+	var path = require$$2;
 	var node_stream = require$$6$1;
 	var assert = require$$7;
 
@@ -12732,22 +12452,18 @@ function requireBundle$1 () {
 	bundle$1.sh = sh;
 	bundle$1.test = test;
 	return bundle$1;
-}
-
-var bundle = {};
-
-var hasRequiredBundle;
+}var bundle = {};var hasRequiredBundle;
 
 function requireBundle () {
 	if (hasRequiredBundle) return bundle;
 	hasRequiredBundle = 1;
 
 	var node_process = require$$0$1;
-	var fs = require$$3;
+	var path = require$$2;
 	var node_child_process = require$$1;
-	var os = require$$2;
+	var os = require$$2$1;
+	var fs = require$$3;
 	var fsp = require$$4;
-	var path = require$$5;
 	var node_stream = require$$6$1;
 
 
@@ -12769,6 +12485,169 @@ function requireBundle () {
 	}
 
 	var fsp__namespace = /*#__PURE__*/_interopNamespaceDefault(fsp);
+
+	/*!
+	 * Shell Utils
+	 * @author amekusa
+	 */
+
+	/**
+	 * Executes the given shell command, and returns a Promise that resolves the stdout
+	 * @param {string} cmd
+	 * @param {object} [opts]
+	 * @return {Promise}
+	 */
+	function exec(cmd, opts = {}) {
+		opts = Object.assign({
+			dryRun: false,
+		}, opts);
+		return new Promise((resolve, reject) => {
+			if (opts.dryRun) {
+				console.log(`[DRYRUN] ${cmd}`);
+				return resolve();
+			}
+			node_child_process.exec(cmd, (err, stdout) => {
+				return err ? reject(err) : resolve(stdout);
+			});
+		});
+	}
+
+	/*!
+	 * I/O Utils
+	 * @author amekusa
+	 */
+
+	/**
+	 * Alias of `os.homedir()`.
+	 * @type {string}
+	 */
+	const home = os.homedir();
+
+	/**
+	 * Searchs the given file path in the given directories.
+	 * @param {string} file - File to find
+	 * @param {string[]} dirs - Array of directories to search
+	 * @param {object} [opts] - Options
+	 * @return {string|boolean} found file path, or false if not found
+	 */
+	function find(file, dirs = [], opts = {}) {
+		let {allowAbsolute = true} = opts;
+		if (allowAbsolute && path.isAbsolute(file)) return fs.existsSync(file) ? file : false;
+		for (let i = 0; i < dirs.length; i++) {
+			let find = path.join(dirs[i], file);
+			if (fs.existsSync(find)) return find;
+		}
+		return false;
+	}
+
+	/**
+	 * Replaces the beginning `~` character with `os.homedir()`.
+	 * @param {string} file - File path
+	 * @param {string} [replace=os.homedir()] - Replacement
+	 * @return {string} modified `file`
+	 */
+	function untilde(file, replace = home) {
+		if (!file.startsWith('~')) return file;
+		if (file.length == 1) return replace;
+		if (file.startsWith(path.sep, 1)) return replace + file.substring(1);
+		return file;
+	}
+
+	/**
+	 * Deletes the contents of the given directory.
+	 * @return {Promise}
+	 */
+	function clean$1(dir, pattern, depth = 1) {
+		return exec(`find '${dir}' -type f -name '${pattern}' -maxdepth ${depth} -delete`);
+	}
+
+	/**
+	 * Deletes the given file or directory.
+	 * @param {string} file
+	 * @return {Promise}
+	 */
+	function rm(file) {
+		return fsp__namespace.rm(file, {recursive: true, force: true});
+	}
+
+	/**
+	 * Deletes the given file or directory synchronously.
+	 * @param {string} file
+	 */
+	function rmSync(file) {
+		return fs.rmSync(file, {recursive: true, force: true});
+	}
+
+	/**
+	 * Copies the given file(s) to another directory
+	 * @param {string|object|string[]|object[]} src
+	 * @param {string} dst Base destination directory
+	 * @return {Promise}
+	 */
+	function copy(src, dst) {
+		return Promise.all((Array.isArray(src) ? src : [src]).map(item => {
+			let _src, _dst;
+			switch (typeof item) {
+			case 'object':
+				_src = item.src;
+				_dst = item.dst;
+				break;
+			case 'string':
+				_src = item;
+				break;
+			default:
+				throw 'invalid type';
+			}
+			_dst = path.join(dst, _dst || path.basename(_src));
+			return fsp__namespace.mkdir(path.dirname(_dst), {recursive: true}).then(fsp__namespace.copyFile(_src, _dst));
+		}));
+	}
+
+	/**
+	 * Returns a Transform stream object with the given function as its transform() method.
+	 * `fn` must return a string which is to be the new content, or a Promise which resolves a string.
+	 *
+	 * @example
+	 * return gulp.src(src)
+	 *   .pipe(modify((data, enc) => {
+	 *     // do stuff
+	 *     return newData;
+	 *   }));
+	 *
+	 * @param {function} fn
+	 * @return {Transform}
+	 */
+	function modifyStream(fn) {
+		return new node_stream.Transform({
+			objectMode: true,
+			transform(file, enc, done) {
+				let r = fn(file.contents.toString(enc), enc);
+				if (r instanceof Promise) {
+					r.then(modified => {
+						file.contents = Buffer.from(modified, enc);
+						this.push(file);
+						done();
+					});
+				} else {
+					file.contents = Buffer.from(r, enc);
+					this.push(file);
+					done();
+				}
+			}
+		});
+	}
+
+	var io = /*#__PURE__*/Object.freeze({
+	__proto__: null,
+	clean: clean$1,
+	copy: copy,
+	find: find,
+	home: home,
+	modifyStream: modifyStream,
+	rm: rm,
+	rmSync: rmSync,
+	untilde: untilde
+	});
 
 	/*!
 	 * === @amekusa/util.js/web === *
@@ -13052,12 +12931,12 @@ function requireBundle () {
 	 * @param {number} recurse - Recursion limit
 	 * @return {object|any[]} modified `x`
 	 */
-	function clean$1(x, recurse = 8) {
+	function clean(x, recurse = 8) {
 		if (recurse) {
 			if (Array.isArray(x)) {
 				let r = [];
 				for (let i = 0; i < x.length; i++) {
-					let I = clean$1(x[i], recurse - 1);
+					let I = clean(x[i], recurse - 1);
 					if (!isEmpty(I)) r.push(I);
 				}
 				return r;
@@ -13065,7 +12944,7 @@ function requireBundle () {
 			if (typeof x == 'object') {
 				let r = {};
 				for (let k in x) {
-					let v = clean$1(x[k], recurse - 1);
+					let v = clean(x[k], recurse - 1);
 					if (!isEmpty(v)) r[k] = v;
 				}
 				return r;
@@ -13115,169 +12994,6 @@ function requireBundle () {
 		}
 		return y;
 	}
-
-	/*!
-	 * Shell Utils
-	 * @author amekusa
-	 */
-
-	/**
-	 * Executes the given shell command, and returns a Promise that resolves the stdout
-	 * @param {string} cmd
-	 * @param {object} [opts]
-	 * @return {Promise}
-	 */
-	function exec(cmd, opts = {}) {
-		opts = Object.assign({
-			dryRun: false,
-		}, opts);
-		return new Promise((resolve, reject) => {
-			if (opts.dryRun) {
-				console.log(`[DRYRUN] ${cmd}`);
-				return resolve();
-			}
-			node_child_process.exec(cmd, (err, stdout) => {
-				return err ? reject(err) : resolve(stdout);
-			});
-		});
-	}
-
-	/*!
-	 * I/O Utils
-	 * @author amekusa
-	 */
-
-	/**
-	 * Alias of `os.homedir()`.
-	 * @type {string}
-	 */
-	const home = os.homedir();
-
-	/**
-	 * Searchs the given file path in the given directories.
-	 * @param {string} file - File to find
-	 * @param {string[]} dirs - Array of directories to search
-	 * @param {object} [opts] - Options
-	 * @return {string|boolean} found file path, or false if not found
-	 */
-	function find(file, dirs = [], opts = {}) {
-		let {allowAbsolute = true} = opts;
-		if (allowAbsolute && path.isAbsolute(file)) return fs.existsSync(file) ? file : false;
-		for (let i = 0; i < dirs.length; i++) {
-			let find = path.join(dirs[i], file);
-			if (fs.existsSync(find)) return find;
-		}
-		return false;
-	}
-
-	/**
-	 * Replaces the beginning `~` character with `os.homedir()`.
-	 * @param {string} file - File path
-	 * @param {string} [replace=os.homedir()] - Replacement
-	 * @return {string} modified `file`
-	 */
-	function untilde(file, replace = home) {
-		if (!file.startsWith('~')) return file;
-		if (file.length == 1) return replace;
-		if (file.startsWith(path.sep, 1)) return replace + file.substring(1);
-		return file;
-	}
-
-	/**
-	 * Deletes the contents of the given directory.
-	 * @return {Promise}
-	 */
-	function clean(dir, pattern, depth = 1) {
-		return exec(`find '${dir}' -type f -name '${pattern}' -maxdepth ${depth} -delete`);
-	}
-
-	/**
-	 * Deletes the given file or directory.
-	 * @param {string} file
-	 * @return {Promise}
-	 */
-	function rm(file) {
-		return fsp__namespace.rm(file, {recursive: true, force: true});
-	}
-
-	/**
-	 * Deletes the given file or directory synchronously.
-	 * @param {string} file
-	 */
-	function rmSync(file) {
-		return fs.rmSync(file, {recursive: true, force: true});
-	}
-
-	/**
-	 * Copies the given file(s) to another directory
-	 * @param {string|object|string[]|object[]} src
-	 * @param {string} dst Base destination directory
-	 * @return {Promise}
-	 */
-	function copy(src, dst) {
-		return Promise.all((Array.isArray(src) ? src : [src]).map(item => {
-			let _src, _dst;
-			switch (typeof item) {
-			case 'object':
-				_src = item.src;
-				_dst = item.dst;
-				break;
-			case 'string':
-				_src = item;
-				break;
-			default:
-				throw 'invalid type';
-			}
-			_dst = path.join(dst, _dst || path.basename(_src));
-			return fsp__namespace.mkdir(path.dirname(_dst), {recursive: true}).then(fsp__namespace.copyFile(_src, _dst));
-		}));
-	}
-
-	/**
-	 * Returns a Transform stream object with the given function as its transform() method.
-	 * `fn` must return a string which is to be the new content, or a Promise which resolves a string.
-	 *
-	 * @example
-	 * return gulp.src(src)
-	 *   .pipe(modify((data, enc) => {
-	 *     // do stuff
-	 *     return newData;
-	 *   }));
-	 *
-	 * @param {function} fn
-	 * @return {Transform}
-	 */
-	function modifyStream(fn) {
-		return new node_stream.Transform({
-			objectMode: true,
-			transform(file, enc, done) {
-				let r = fn(file.contents.toString(enc), enc);
-				if (r instanceof Promise) {
-					r.then(modified => {
-						file.contents = Buffer.from(modified, enc);
-						this.push(file);
-						done();
-					});
-				} else {
-					file.contents = Buffer.from(r, enc);
-					this.push(file);
-					done();
-				}
-			}
-		});
-	}
-
-	var io = /*#__PURE__*/Object.freeze({
-	__proto__: null,
-	clean: clean,
-	copy: copy,
-	find: find,
-	home: home,
-	modifyStream: modifyStream,
-	rm: rm,
-	rmSync: rmSync,
-	untilde: untilde
-	});
 
 	/**
 	 * File I/O manager.
@@ -13564,7 +13280,24 @@ function requireBundle () {
 	 * @return {object} an object like: `{ key_code: ... }`
 	 */
 	function key(code, mods = null, opts = null) {
-		if (Array.isArray(code)) {
+		switch (typeof code) {
+		case 'number':
+			code += '';
+			break;
+		case 'string':
+			code = code.trim();
+			if (code.includes(',')) {
+				let r = [];
+				let codes = code.split(',');
+				for (let i = 0; i < codes.length; i++) {
+					let I = codes[i].trim();
+					if (I) r.push(key(I, mods, opts));
+				}
+				return r;
+			}
+			break;
+		default:
+			if (!Array.isArray(code)) throw `invalid argument (#1)`;
 			let r = [];
 			for (let i = 0; i < code.length; i++) {
 				let I = code[i];
@@ -13586,6 +13319,9 @@ function requireBundle () {
 			optional: []
 		};
 
+		/**
+		 * @param {string} mod - Modifier name
+		 */
 		function addModifier(mod) {
 			mod = mod.trim();
 			let m = mod.match(/^\((.+?)\)$/); // is '(optional-key)' ?
@@ -13594,7 +13330,7 @@ function requireBundle () {
 		}
 
 		// parse 'modifier + keycode' expression
-		code = (code + '').split('+');
+		code = code.split('+');
 		for (let i = 0; i < code.length - 1; i++) addModifier(code[i]);
 		code = code[code.length - 1].trim();
 
@@ -13752,7 +13488,7 @@ function requireBundle () {
 	 * {@link key} function returns in this format.
 	 *
 	 * #### String Format
-	 * A special expression that is only supported by Karabinerge for user's convenience.
+	 * A special expression that is only supported by Karabinerge.
 	 * Here are some examples:
 	 *
 	 * | Expression | Meaning |
@@ -13829,7 +13565,7 @@ function requireBundle () {
 		remap(map) {
 			if (!map.type) map.type = 'basic';
 			if (this.conds.length) map = Object.assign(map, {conditions: this.conds});
-			map = clean$1(remapSanitizer.sanitize(map));
+			map = clean(remapSanitizer.sanitize(map));
 			if (isEmpty(map)) console.warn(`Rule.remap: empty argument`);
 			else this.remaps.push(map);
 			return this;
@@ -13851,7 +13587,7 @@ function requireBundle () {
 		 *   .remap( ... );
 		 */
 		cond(cond) {
-			cond = clean$1(cond);
+			cond = clean(cond);
 			if (isEmpty(cond)) console.warn(`Rule.cond: empty argument`);
 			else this.conds.push(cond);
 			return this;
@@ -13969,13 +13705,14 @@ function requireBundle () {
 		}
 		/**
 		 * Setup {@link IO} object for reading/writing this ruleset from/to a file.
-		 * Ruleset files are normally located at `~/.config/karabiner/complex_modifications/*.json`.
-		 * @param {string} file - Ruleset file path
+		 * @param {string} file - Ruleset filename or path.
+		 * If a filename was passed, it is treated as `~/.config/karabiner/complex_modifications/*`.
 		 * @param {object} [opts] - IO options
 		 * @return {RuleSet} Itself
 		 */
 		setIO(file, opts = {}) {
-			this.io = new IO(file, opts);
+			if (!file) throw `invalid argument (#1)`;
+			this.io = new IO(file.includes('/') ? file : path.join(io.home, '.config', 'karabiner', 'complex_modifications', file), opts);
 			return this;
 		}
 		/**
@@ -14199,17 +13936,13 @@ function requireBundle () {
 	bundle.unless_lang = unless_lang;
 	bundle.unless_var = unless_var;
 	return bundle;
-}
-
-var name = "keycomfort";
-var version = "0.1.0";
+}var name = "keycomfort";
+var version = "0.2.0";
 var description = "Comfortable keyboard remaps for Karabiner/AutoHotKey";
 var require$$10 = {
 	name: name,
 	version: version,
-	description: description};
-
-var rules_1;
+	description: description};var rules_1;
 var hasRequiredRules;
 
 function requireRules () {
@@ -14656,6 +14389,14 @@ function requireRules () {
 			});
 		},
 
+		'pipe'(c, r) {
+			r.cond(modding)
+			.remap({
+				from: key(c.from),
+				to:   key(c.to)
+			});
+		},
+
 		'equal'(c, r) {
 			r.cond(modding)
 			.remap({
@@ -14745,9 +14486,7 @@ function requireRules () {
 
 	rules_1 = rules;
 	return rules_1;
-}
-
-var hasRequiredMain;
+}var hasRequiredMain;
 
 function requireMain () {
 	if (hasRequiredMain) return main$1;
@@ -14755,7 +14494,7 @@ function requireMain () {
 	const {env, cwd, stdin, stdout} = require$$0$1;
 	const {spawnSync: spawn} = require$$1;
 	const fs = require$$3;
-	const path = require$$5;
+	const path = require$$2;
 	const readline = require$$4$1;
 
 	const {Command, Argument} = requireCommander();
@@ -15060,10 +14799,5 @@ function requireMain () {
 
 	}
 	return main$1;
-}
-
-var mainExports = requireMain();
-var main = /*@__PURE__*/getDefaultExportFromCjs(mainExports);
-
-module.exports = main;
-//# sourceMappingURL=bundle.js.map
+}var mainExports = requireMain();
+var main = /*@__PURE__*/getDefaultExportFromCjs(mainExports);module.exports=main;
