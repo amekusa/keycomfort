@@ -85,6 +85,11 @@ rules:  # mapping rules
     backspace:  n
     delete:     m
 
+  option + backspace:
+    desc:       <modifier> + [key] = Option + Backspace
+    enable:     1
+    key:        b
+
   edit:
     desc:       <modifier> + [undo]/[cut]/[copy]/[paste] = Undo/Cut/Copy/Paste
     enable:     1

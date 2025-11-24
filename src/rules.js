@@ -168,6 +168,14 @@ const rules = {
 		})
 	},
 
+	'option + backspace'(c, r) {
+		r.cond(modding)
+		.remap({
+			from: key(c.key),
+			to:   key('delete_or_backspace', 'option')
+		})
+	},
+
 	'edit'(c, r) {
 		r.cond(modding)
 		.remap({
