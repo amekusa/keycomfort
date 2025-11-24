@@ -11,7 +11,7 @@
   "scripts": {
     "dev": "rollup -c --watch",
     "test": "echo noop",
-    "build": "rollup -c",
+    "build": "rollup -c && chmod +x ./dist/bundle.js",
     "clean": "rm -rf ./dist",
     "dist": "npm run clean; NODE_ENV=production npm run build"
   },
