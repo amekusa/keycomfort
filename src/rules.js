@@ -168,7 +168,7 @@ const rules = {
 		})
 	},
 
-	'option + backspace'(c, r) {
+	'delete word'(c, r) {
 		r.cond(modding)
 		.remap({
 			from: key(c.key),

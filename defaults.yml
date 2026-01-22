@@ -85,8 +85,8 @@ rules:  # mapping rules
     backspace:  n
     delete:     m
 
-  option + backspace:
-    desc:       <modifier> + [key] = Option + Backspace
+  delete word:
+    desc:       <modifier> + [key] = Delete Word
     enable:     1
     key:        b
 
