@@ -31,8 +31,7 @@
   "author": "Satoshi Soma (https://amekusa.com)",
   "license": "MIT",
   "devDependencies": {
-    "@amekusa/nodeutil": "^3.4.0",
-    "@amekusa/util.js": "^1.2.1",
+    "@amekusa/util.js": "^2.2.0",
     "@rollup/plugin-commonjs": "^29.0.0",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^16.0.3",

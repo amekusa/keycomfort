@@ -8,8 +8,7 @@ const readline = require('node:readline');
 
 const {Command, Argument} = require('commander');
 const yaml = require('yaml');
-const {merge, isEmpty} = require('@amekusa/util.js');
-const {io} = require('@amekusa/nodeutil');
+const {io, merge, isEmpty} = require('@amekusa/util.js');
 const {
 	RuleSet, Config,
 	if_app, unless_app,
