@@ -119,8 +119,11 @@ rules:  # mapping rules
   move line:
     desc:       <modifier> + [up]/[down] = Move Line Up/Down
     enable:     1
-    up:         comma
-    down:       period
+    up:         shift + i
+    down:       shift + k
+    vim:
+      up:       shift + k
+      down:     shift + j
     apps:
       atom:     1
       vscode:   1
