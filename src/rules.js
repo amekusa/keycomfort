@@ -471,6 +471,14 @@ const rules = {
 		})
 	},
 
+	'underscore'(c, r) {
+		r.cond(modding)
+		.remap({
+			from: key(c.from),
+			to:   key(c.to)
+		})
+	},
+
 	'custom'(c, r) {
 		if (!c.rules.length) return;
 		r.cond(modding);

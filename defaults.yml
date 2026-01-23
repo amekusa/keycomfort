@@ -217,6 +217,12 @@ rules:  # mapping rules
     from:       tab
     to:         return_or_enter
 
+  underscore:
+    desc:       <modifier> + [from] = Underscore
+    enable:     1
+    from:       period
+    to:         shift + hyphen
+
   custom:
     desc:       <modifier> + Custom Keys
     enable:     1
