@@ -21,13 +21,31 @@ const rules = {
 	},
 
 	'cancel modifier'(c, r) {
-		r.remap({
+		r.cond(if_var('keycomfort_layer_disable', 0))
+		.remap({
 			from: key(c.key, any),
 			to: [
 				set_var('keycomfort_layer_disable', 1),
 				key(c.key)
 			],
 			to_after_key_up: set_var('keycomfort_layer_disable', 0)
+		})
+	},
+
+	'disable modifier'(c, r) {
+		r.cond(modding)
+		.cond(if_var('keycomfort_layer_disable', 0))
+		.remap({
+			from: key(c.key),
+			to:   set_var('keycomfort_layer_disable', 1)
+		})
+	},
+
+	'enable modifier'(c, r) {
+		r.cond(if_var('keycomfort_layer_disable', 1))
+		.remap({
+			from: key(c.key),
+			to:   set_var('keycomfort_layer_disable', 0)
 		})
 	},
 

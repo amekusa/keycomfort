@@ -26,6 +26,16 @@ rules:  # mapping rules
     enable:     1
     key:        left_shift
 
+  disable modifier:
+    desc:       Disable modifier (<modifier>) with <modifier> + [key]
+    enable:     1
+    key:        right_shift + escape
+
+  enable modifier:
+    desc:       Enable modifier with [key]
+    enable:     1
+    key:        right_shift + escape
+
   arrows:
     desc:       <modifier> + [up]/[right]/[down]/[left] = Up/Right/Down/Left
     enable:     1
