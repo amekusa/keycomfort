@@ -87,10 +87,18 @@ function prompt(msg, fn) {
 }
 
 function label(key, dict) {
-	if (Array.isArray(key)) return key.map(I => label(I, dict)).join(',');
-	key += '';
+	if (Array.isArray(key)) return key.map(I => label(I.trim(), dict)).join(', ');
+	key = `${key}`.trim();
+	if (key.includes(',')) return label(key.split(','), dict);
+	if (key.includes('+')) return key.split('+').map(I => label(I.trim(), dict)).join(' + ');
 	if (key in dict) return dict[key];
-	return key.split('_').map(I => I.charAt(0).toUpperCase() + I.slice(1)).join(' ');
+	let lr = ''; // left or right
+	let m = key.match(/^(left|right)_([_a-z0-9]+)$/i);
+	if (m) {
+		lr = m[1] == 'left' ? 'L-' : 'R-';
+		key = m[2];
+	}
+	return lr + key.split('_').map(I => I.charAt(0).toUpperCase() + I.slice(1)).join(' ');
 }
 
 const app = new Command();
@@ -235,8 +243,9 @@ function generate(target, opts = {}) {
 		if (rc.vim && vim) rc = merge(rc, rc.vim);
 
 		// format rule description
-		let desc = rc.desc.replaceAll('<modifier>', label(modifier, labels));
-		for (let i in rc) desc = desc.replaceAll(`[${i}]`, label(rc[i], labels));
+		let desc = rc.desc.replaceAll(/(?:<modifier>|\[([_0-9a-z]+)\])/gi, (_, m1) => {
+			return label(m1 ? rc[m1] : modifier, labels);
+		});
 
 		let rule = rules[i];
 		let newRule;
