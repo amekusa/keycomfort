@@ -591,40 +591,36 @@ const rules = {
 		})
 	},
 
-	'wheel up'(c, r) {
+	'wheel up/down'(c, r) {
+		let speed = Math.round(32 * c.speed);
+		let flip = c.reverse ? -1 : 1;
 		r.cond(if_touched(c.fingers, c.area))
 		.remap({
-			from: key(c.key, any),
-			to:   {mouse_key: {vertical_wheel: c.speed}}
+			from: key(c.up, any),
+			to:   {mouse_key: {vertical_wheel: -speed * flip}}
+		})
+		.remap({
+			from: key(c.down, any),
+			to:   {mouse_key: {vertical_wheel: speed * flip}}
 		})
 	},
 
-	'wheel down'(c, r) {
+	'wheel left/right'(c, r) {
+		let speed = Math.round(32 * c.speed);
+		let flip = c.reverse ? -1 : 1;
 		r.cond(if_touched(c.fingers, c.area))
 		.remap({
-			from: key(c.key, any),
-			to:   {mouse_key: {vertical_wheel: c.speed}}
+			from: key(c.left, any),
+			to:   {mouse_key: {horizontal_wheel: speed * flip}}
 		})
-	},
-
-	'wheel left'(c, r) {
-		r.cond(if_touched(c.fingers, c.area))
 		.remap({
-			from: key(c.key, any),
-			to:   {mouse_key: {horizontal_wheel: c.speed}}
-		})
-	},
-
-	'wheel right'(c, r) {
-		r.cond(if_touched(c.fingers, c.area))
-		.remap({
-			from: key(c.key, any),
-			to:   {mouse_key: {horizontal_wheel: c.speed}}
+			from: key(c.right, any),
+			to:   {mouse_key: {horizontal_wheel: -speed * flip}}
 		})
 	},
 
 	'move mouse by keys'(c, r) {
-		let speed = 1536 * c.speed;
+		let speed = Math.round(1536 * c.speed);
 		r.cond(if_touched(c.fingers, c.area))
 		.remap({
 			from: key(c.up, any),

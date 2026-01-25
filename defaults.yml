@@ -304,36 +304,26 @@ rules:  # mapping rules
     enable:     1
     from:       comma
     to:         button3
-
-  wheel up:
-    desc:       (MultiTouchExtension) Touchpad + [key] = Wheel Up
-    enable:     1
-    key:        i
-    speed:      -32
     fingers:    1
     area:       # top/right/bottom/left
 
-  wheel down:
-    desc:       (MultiTouchExtension) Touchpad + [key] = Wheel Down
+  wheel up/down:
+    desc:       (MultiTouchExtension) Touchpad + { [up] / [down] } = Wheel Up / Down
     enable:     1
-    key:        k
-    speed:      32
+    up:         i
+    down:       k
+    speed:      1.0
+    reverse:    0
     fingers:    1
     area:       # top/right/bottom/left
 
-  wheel left:
-    desc:       (MultiTouchExtension) Touchpad + [key] = Wheel Left
+  wheel left/right:
+    desc:       (MultiTouchExtension) Touchpad + { [left] / [right] } = Wheel Left / Right
     enable:     1
-    key:        h
-    speed:      32
-    fingers:    1
-    area:       # top/right/bottom/left
-
-  wheel right:
-    desc:       (MultiTouchExtension) Touchpad + [key] = Wheel Right
-    enable:     1
-    key:        semicolon
-    speed:      -32
+    left:       h
+    right:      semicolon
+    speed:      1.0
+    reverse:    0
     fingers:    1
     area:       # top/right/bottom/left
 
