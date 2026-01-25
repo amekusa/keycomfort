@@ -32,12 +32,12 @@ rules:  # mapping rules
     key:        right_shift + escape
 
   enable modifier:
-    desc:       Enable modifier with [key]
+    desc:       Enable modifier (<modifier>) with [key]
     enable:     1
     key:        right_shift + escape
 
   arrows:
-    desc:       <modifier> + [up]/[right]/[down]/[left] = Up/Right/Down/Left
+    desc:       <modifier> + { [up] / [right] / [down] / [left] } = Up / Right / Down / Left
     enable:     1
     up:         e
     right:      f
@@ -45,13 +45,13 @@ rules:  # mapping rules
     left:       s
 
   page up/down:
-    desc:       <modifier> + [up]/[down] = Page Up/Down
+    desc:       <modifier> + { [up] / [down] } = Page Up / Down
     enable:     1
     up:         w
     down:       r
 
   prev/next word:
-    desc:       <modifier> + [prev]/[next] = Prev/Next Word
+    desc:       <modifier> + { [prev] / [next] } = Prev / Next Word
     enable:     1
     prev:       a
     next:       g
@@ -60,7 +60,7 @@ rules:  # mapping rules
       others:   1
 
   line start/end:
-    desc:       <modifier> + [start]/[end] = Line Start/End
+    desc:       <modifier> + { [start] / [end] } = Line Start / End
     enable:     1
     start:      q
     end:        t
@@ -70,7 +70,7 @@ rules:  # mapping rules
       others:   1
 
   select:
-    desc:       <modifier> + [up]/[right]/[down]/[left] = Select Up/Right/Down/Left
+    desc:       <modifier> + { [up] / [right] / [down] / [left] } = Select Up / Right / Down / Left
     enable:     1
     up:         i
     right:      l
@@ -83,13 +83,13 @@ rules:  # mapping rules
       right:    l
 
   indent/outdent:
-    desc:       <modifier> + [indent]/[outdent] = Indent/Outdent
+    desc:       <modifier> + { [indent] / [outdent] } = Indent / Outdent
     enable:     1
     indent:     o
     outdent:    u
 
   backspace/delete:
-    desc:       <modifier> + [backspace]/[delete] = Backspace/Delete
+    desc:       <modifier> + { [backspace] / [delete] } = Backspace / Delete
     enable:     1
     backspace:  n
     delete:     m
@@ -100,7 +100,7 @@ rules:  # mapping rules
     key:        b
 
   edit:
-    desc:       <modifier> + [undo]/[cut]/[copy]/[paste] = Undo/Cut/Copy/Paste
+    desc:       <modifier> + { [undo] / [cut] / [copy] / [paste] } = Undo / Cut / Copy / Paste
     enable:     1
     undo:       z
     cut:        x
@@ -126,7 +126,7 @@ rules:  # mapping rules
       eclipse:  1
 
   move line:
-    desc:       <modifier> + [up]/[down] = Move Line Up/Down
+    desc:       <modifier> + { [up] / [down] } = Move Line Up / Down
     enable:     1
     up:         shift + i
     down:       shift + k
@@ -140,7 +140,7 @@ rules:  # mapping rules
       sonicpi:  1
 
   left/right tab:
-    desc:       <modifier> + [left]/[right] = Left/Right Tab
+    desc:       <modifier> + { [left] / [right] } = Left / Right Tab
     enable:     1
     left:       2
     right:      3
@@ -150,7 +150,7 @@ rules:  # mapping rules
       others:   1
 
   close/open tab:
-    desc:       <modifier> + [close]/[open] = Close/Open Tab
+    desc:       <modifier> + { [close] / [open] } = Close / Open Tab
     enable:     1
     close:      1
     open:       4
@@ -183,7 +183,7 @@ rules:  # mapping rules
     backspace:  h
 
   plus/minus:
-    desc:       <modifier> + [plus]/[minus] = Plus/Minus
+    desc:       <modifier> + { [plus] / [minus] } = Plus / Minus
     enable:     1
     plus:       p
     minus:      shift + p
@@ -242,43 +242,43 @@ rules:  # mapping rules
       #   to:   shift + equal_sign
 
   remap capslock:
-    desc:       Caps Lock = [to]/[alone]
+    desc:       Caps Lock = [to] / [alone]
     enable:     1
     to:         left_control
     alone:      escape
 
   remap l-control:
-    desc:       Left Control = [to]/[alone]
+    desc:       Left Control = [to] / [alone]
     enable:     1
     to:         left_control
     alone:      escape
 
   remap r-control:
-    desc:       Right Control = [to]/[alone]
+    desc:       Right Control = [to] / [alone]
     enable:     0
     to:         right_control
     alone:      escape
 
   remap l-command:
-    desc:       Left Command = [to]/[alone]
+    desc:       Left Command = [to] / [alone]
     enable:     0
     to:         left_command
     alone:      left_command
 
   remap r-command:
-    desc:       Right Command = [to]/[alone]
+    desc:       Right Command = [to] / [alone]
     enable:     0
     to:         right_command
     alone:      right_command
 
   remap l-shift:
-    desc:       Left Shift = [to]/[alone]
+    desc:       Left Shift = [to] / [alone]
     enable:     0
     to:         left_shift
     alone:      left_shift
 
   remap r-shift:
-    desc:       Right Shift = [to]/[alone]
+    desc:       Right Shift = [to] / [alone]
     enable:     0
     to:         right_shift
     alone:      right_shift
