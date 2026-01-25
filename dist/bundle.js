@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-'use strict';var require$$0$1=require('node:process'),require$$1=require('node:child_process'),require$$3=require('node:fs'),require$$2=require('node:path'),require$$4$1=require('node:readline'),require$$0=require('node:events'),require$$2$1=require('node:os'),require$$4=require('node:fs/promises'),require$$6$1=require('node:stream'),require$$7=require('node:assert');function getDefaultExportFromCjs (x) {
+'use strict';var require$$0$1=require('node:process'),require$$1=require('node:child_process'),require$$3=require('node:fs'),require$$3$1=require('node:path'),require$$4$1=require('node:readline'),require$$0=require('node:events'),require$$0$2=require('node:os'),require$$2=require('node:fs/promises'),require$$4=require('node:stream'),require$$7=require('node:assert');function getDefaultExportFromCjs (x) {
 	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
 }
 
@@ -1485,7 +1485,7 @@ function requireCommand () {
 	hasRequiredCommand = 1;
 	const EventEmitter = require$$0.EventEmitter;
 	const childProcess = require$$1;
-	const path = require$$2;
+	const path = require$$3$1;
 	const fs = require$$3;
 	const process = require$$0$1;
 
@@ -4955,7 +4955,7 @@ function toJS(value, arg, ctx) {
             data = anchors.get(source);
         }
         /* istanbul ignore if */
-        if (!data || data.res === undefined) {
+        if (data?.res === undefined) {
             const msg = 'This should not happen: Alias anchor was not resolved?';
             throw new ReferenceError(msg);
         }
@@ -5951,7 +5951,7 @@ function stringify$2(item, ctx, onComment, onChompKeep) {
             ws += `\n${indentComment(cs, ctx.indent)}`;
         }
         if (valueStr === '' && !ctx.inFlow) {
-            if (ws === '\n')
+            if (ws === '\n' && valueComment)
                 ws = '\n\n';
         }
         else {
@@ -6573,7 +6573,7 @@ function asItemIndex(key) {
     const num = typeof value === 'number' ? value : Number(value);
     if (!isFinite(num))
         return isNaN(num) ? '.nan' : num < 0 ? '-.inf' : '.inf';
-    let n = JSON.stringify(value);
+    let n = Object.is(value, -0) ? '-0' : JSON.stringify(value);
     if (!format &&
         minFractionDigits &&
         (!tag || tag === 'tag:yaml.org,2002:float') &&
@@ -7793,7 +7793,7 @@ const prettifyError = (src, lc) => (error) => {
     if (/[^ ]/.test(lineStr)) {
         let count = 1;
         const end = error.linePos[1];
-        if (end && end.line === line && end.col > col) {
+        if (end?.line === line && end.col > col) {
             count = Math.max(1, Math.min(end.col - col, 80 - ci));
         }
         const pointer = ' '.repeat(ci) + '^'.repeat(count);
@@ -8116,7 +8116,7 @@ function resolveBlockMap({ composeNode, composeEmptyNode }, ctx, bm, onError, ta
         });
         if (!props.found) {
             if (props.anchor || props.tag || value) {
-                if (value && value.type === 'block-seq')
+                if (value?.type === 'block-seq')
                     onError(props.end, 'BAD_INDENT', 'All sequence items must start at the same column');
                 else
                     onError(offset, 'MISSING_CHAR', 'Sequence item without - indicator');
@@ -8298,7 +8298,7 @@ function resolveFlowCollection({ composeNode, composeEmptyNode }, ctx, fc, onErr
                 }
             }
             else if (value) {
-                if ('source' in value && value.source && value.source[0] === ':')
+                if ('source' in value && value.source?.[0] === ':')
                     onError(value, 'MISSING_CHAR', `Missing space after : in ${fcName}`);
                 else
                     onError(valueProps.start, 'MISSING_CHAR', `Missing , or : between ${fcName} items`);
@@ -8342,7 +8342,7 @@ function resolveFlowCollection({ composeNode, composeEmptyNode }, ctx, fc, onErr
     const expectedEnd = isMap ? '}' : ']';
     const [ce, ...ee] = fc.end;
     let cePos = offset;
-    if (ce && ce.source === expectedEnd)
+    if (ce?.source === expectedEnd)
         cePos = ce.offset + ce.source.length;
     else {
         const name = fcName[0].toUpperCase() + fcName.substring(1);
@@ -8420,7 +8420,7 @@ function composeCollection(CN, ctx, token, props, onError) {
     let tag = ctx.schema.tags.find(t => t.tag === tagName && t.collection === expType);
     if (!tag) {
         const kt = ctx.schema.knownTags[tagName];
-        if (kt && kt.collection === expType) {
+        if (kt?.collection === expType) {
             ctx.schema.tags.push(Object.assign({}, kt, { default: false }));
             tag = kt;
         }
@@ -10711,7 +10711,7 @@ class Parser {
     }
     *step() {
         const top = this.peek(1);
-        if (this.type === 'doc-end' && (!top || top.type !== 'doc-end')) {
+        if (this.type === 'doc-end' && top?.type !== 'doc-end') {
             while (this.stack.length > 0)
                 yield* this.pop();
             this.stack.push({
@@ -11243,7 +11243,7 @@ class Parser {
             do {
                 yield* this.pop();
                 top = this.peek(1);
-            } while (top && top.type === 'flow-collection');
+            } while (top?.type === 'flow-collection');
         }
         else if (fc.end.length === 0) {
             switch (this.type) {
@@ -11540,15 +11540,210 @@ function stringify(value, replacer, options) {
     return new Document(value, _replacer, options).toString(options);
 }var YAML=/*#__PURE__*/Object.freeze({__proto__:null,Alias:Alias,CST:cst,Composer:Composer,Document:Document,Lexer:Lexer,LineCounter:LineCounter,Pair:Pair,Parser:Parser,Scalar:Scalar,Schema:Schema,YAMLError:YAMLError,YAMLMap:YAMLMap,YAMLParseError:YAMLParseError,YAMLSeq:YAMLSeq,YAMLWarning:YAMLWarning,isAlias:isAlias,isCollection:isCollection$1,isDocument:isDocument,isMap:isMap,isNode:isNode,isPair:isPair,isScalar:isScalar$1,isSeq:isSeq,parse:parse,parseAllDocuments:parseAllDocuments,parseDocument:parseDocument,stringify:stringify,visit:visit$1,visitAsync:visitAsync});// `export * as default from ...` fails on Webpack v4
 // https://github.com/eemeli/yaml/issues/228
-var browser=/*#__PURE__*/Object.freeze({__proto__:null,Alias:Alias,CST:cst,Composer:Composer,Document:Document,Lexer:Lexer,LineCounter:LineCounter,Pair:Pair,Parser:Parser,Scalar:Scalar,Schema:Schema,YAMLError:YAMLError,YAMLMap:YAMLMap,YAMLParseError:YAMLParseError,YAMLSeq:YAMLSeq,YAMLWarning:YAMLWarning,default:YAML,isAlias:isAlias,isCollection:isCollection$1,isDocument:isDocument,isMap:isMap,isNode:isNode,isPair:isPair,isScalar:isScalar$1,isSeq:isSeq,parse:parse,parseAllDocuments:parseAllDocuments,parseDocument:parseDocument,stringify:stringify,visit:visit$1,visitAsync:visitAsync});var require$$6 = /*@__PURE__*/getAugmentedNamespace(browser);var bundle$2 = {};var hasRequiredBundle$2;
+var browser=/*#__PURE__*/Object.freeze({__proto__:null,Alias:Alias,CST:cst,Composer:Composer,Document:Document,Lexer:Lexer,LineCounter:LineCounter,Pair:Pair,Parser:Parser,Scalar:Scalar,Schema:Schema,YAMLError:YAMLError,YAMLMap:YAMLMap,YAMLParseError:YAMLParseError,YAMLSeq:YAMLSeq,YAMLWarning:YAMLWarning,default:YAML,isAlias:isAlias,isCollection:isCollection$1,isDocument:isDocument,isMap:isMap,isNode:isNode,isPair:isPair,isScalar:isScalar$1,isSeq:isSeq,parse:parse,parseAllDocuments:parseAllDocuments,parseDocument:parseDocument,stringify:stringify,visit:visit$1,visitAsync:visitAsync});var require$$6 = /*@__PURE__*/getAugmentedNamespace(browser);var amekusa_util = {};var hasRequiredAmekusa_util;
 
-function requireBundle$2 () {
-	if (hasRequiredBundle$2) return bundle$2;
-	hasRequiredBundle$2 = 1;
+function requireAmekusa_util () {
+	if (hasRequiredAmekusa_util) return amekusa_util;
+	hasRequiredAmekusa_util = 1;
+var os=require$$0$2,fs=require$$3,fsp=require$$2,path=require$$3$1,node_stream=require$$4,node_process=require$$0$1,node_child_process=require$$1,assert=require$$7;function _interopNamespaceDefault(e){var n=Object.create(null);if(e){Object.keys(e).forEach(function(k){if(k!=='default'){var d=Object.getOwnPropertyDescriptor(e,k);Object.defineProperty(n,k,d.get?d:{enumerable:true,get:function(){return e[k]}});}});}n.default=e;return Object.freeze(n)}var fsp__namespace=/*#__PURE__*/_interopNamespaceDefault(fsp);/*!
+	 * === @amekusa/util.js/gen === *
+	 * MIT License
+	 *
+	 * Copyright (c) 2024 Satoshi Soma
+	 *
+	 * Permission is hereby granted, free of charge, to any person obtaining a copy
+	 * of this software and associated documentation files (the "Software"), to deal
+	 * in the Software without restriction, including without limitation the rights
+	 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	 * copies of the Software, and to permit persons to whom the Software is
+	 * furnished to do so, subject to the following conditions:
+	 *
+	 * The above copyright notice and this permission notice shall be included in all
+	 * copies or substantial portions of the Software.
+	 *
+	 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	 * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+	 * SOFTWARE.
+	 */
 
-	Object.defineProperty(bundle$2, '__esModule', { value: true });
+	/**
+	 * Coerces the given value into an array.
+	 * @param {any} x
+	 * @return {any[]}
+	 */
+	function arr(x) {
+		return Array.isArray(x) ? x : [x];
+	}
 
-	/*!
+	/**
+	 * Checks the type of the given value matches with one of the given types.
+	 * If a constructor is given to `types`, it checks if `x` is `instanceof` the constructor.
+	 * @param {any} x
+	 * @param {...string|function} types - Type or Constructor
+	 * @return {boolean}
+	 */
+	function is(x, ...types) {
+		let t = typeof x;
+		for (let i = 0; i < types.length; i++) {
+			let v = types[i];
+			if (typeof v == 'string') {
+				if (v == 'array') {
+					if (Array.isArray(x)) return true;
+				} else if (t == v) return true;
+			} else if (x instanceof v) return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Returns whether the given value can be considered as "empty".
+	 * @param {any} x
+	 * @return {boolean}
+	 */
+	function isEmpty(x) {
+		if (Array.isArray(x)) return x.length == 0;
+		switch (typeof x) {
+		case 'string':
+			return !x;
+		case 'object':
+			for (let _ in x) return false;
+			return true;
+		case 'undefined':
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Returns whether the given value can be considered as "empty" or "falsy".
+	 * Faster than {@link isEmpty}.
+	 * @param {any} x
+	 * @return {boolean}
+	 */
+	function isEmptyOrFalsy(x) {
+		if (!x) return true;
+		if (Array.isArray(x)) return x.length == 0;
+		if (typeof x == 'object') {
+			for (let _ in x) return false;
+		}
+		return false;
+	}
+
+	/**
+	 * @function isEmptyOrFalsey
+	 * Alias of {@link isEmptyOrFalsy}.
+	 */
+	const isEmptyOrFalsey = isEmptyOrFalsy;
+
+	/**
+	 * Removes "empty" values from the given object or array.
+	 * @param {object|any[]} x
+	 * @param {number} recurse - Recursion limit
+	 * @return {object|any[]} modified `x`
+	 */
+	function clean$1(x, recurse = 8) {
+		if (recurse) {
+			if (Array.isArray(x)) {
+				let r = [];
+				for (let i = 0; i < x.length; i++) {
+					let v = clean$1(x[i], recurse - 1);
+					if (!isEmpty(v)) r.push(v);
+				}
+				return r;
+			}
+			if (typeof x == 'object') {
+				let r = {};
+				for (let k in x) {
+					let v = clean$1(x[k], recurse - 1);
+					if (!isEmpty(v)) r[k] = v;
+				}
+				return r;
+			}
+		}
+		return x;
+	}
+
+	/**
+	 * Merges the 2nd object into the 1st object recursively (deep-merge). The 1st object will be modified.
+	 * @param {object} x - The 1st object
+	 * @param {object} y - The 2nd object
+	 * @param {object} [opts] - Options
+	 * @param {number} opts.recurse=8 - Recurstion limit. Negative number means unlimited
+	 * @param {boolean|string} opts.mergeArrays - How to merge arrays
+	 * - `true`: merge x with y
+	 * - 'push': push y elements to x
+	 * - 'concat': concat x and y
+	 * - other: replace x with y
+	 * @return {object} The 1st object
+	 */
+	function merge$1(x, y, opts = {}) {
+		if (!('recurse' in opts)) opts.recurse = 8;
+		switch (Array.isArray(x) + Array.isArray(y)) {
+		case 0: // no array
+			if (opts.recurse && x && y && typeof x == 'object' && typeof y == 'object') {
+				opts.recurse--;
+				for (let k in y) x[k] = merge$1(x[k], y[k], opts);
+				opts.recurse++;
+				return x;
+			}
+		case 1: // 1 array
+			return y;
+		}
+		// 2 arrays
+		switch (opts.mergeArrays) {
+		case true:
+			for (let i = 0; i < y.length; i++) {
+				if (!x.includes(y[i])) x.push(y[i]);
+			}
+			return x;
+		case 'push':
+			x.push(...y);
+			return x;
+		case 'concat':
+			return x.concat(y);
+		}
+		return y;
+	}
+
+	/**
+	 * Gets a property from the given object by the given string path.
+	 * @param {object} obj - Object to traverse
+	 * @param {string} path - Property names separated with '.'
+	 * @return {any} value of the found property, or undefined if it's not found
+	 */
+	function dig(obj, path) {
+		path = path.split('.');
+		for (let i = 0; i < path.length; i++) {
+			let p = path[i];
+			if (typeof obj == 'object' && p in obj) obj = obj[p];
+			else return undefined;
+		}
+		return obj;
+	}
+
+	/**
+	 * Substitutes the properties of the given data for the references in the given string.
+	 * @param {string} str - String that contains references to the properties
+	 * @param {object} data - Object that contains properties to replace the references
+	 * @param {object} [opts] - Options
+	 * @return {string} a modified `str`
+	 */
+	function subst(str, data, opts = {}) {
+		let {
+			modifier = null,
+			start = '{{',
+			end   = '}}',
+		} = opts;
+		let ref = new RegExp(start + '\\s*([-.\\w]+)\\s*' + end, 'g');
+		return str.replaceAll(ref, modifier
+			? (_, m1) => (modifier(dig(data, m1), m1, data) || '')
+			: (_, m1) => (dig(data, m1) || '')
+		);
+	}var gen=/*#__PURE__*/Object.freeze({__proto__:null,arr:arr,clean:clean$1,dig:dig,is:is,isEmpty:isEmpty,isEmptyOrFalsey:isEmptyOrFalsey,isEmptyOrFalsy:isEmptyOrFalsy,merge:merge$1,subst:subst});/*!
 	 * === @amekusa/util.js/web === *
 	 * MIT License
 	 *
@@ -11597,15 +11792,7 @@ function requireBundle$2 () {
 		// - This avoids double-escaping '&' symbols
 		// - Regex negative match: (?!word)
 
-	const escHTML_replace = found => `&${escHTML_map[found]};`;
-
-	var web = /*#__PURE__*/Object.freeze({
-	__proto__: null,
-	escHTML: escHTML,
-	escHtml: escHtml
-	});
-
-	/*!
+	const escHTML_replace = found => `&${escHTML_map[found]};`;var web=/*#__PURE__*/Object.freeze({__proto__:null,escHTML:escHTML,escHtml:escHtml});/*!
 	 * === @amekusa/util.js/time === *
 	 * MIT License
 	 *
@@ -11775,25 +11962,8 @@ function requireBundle$2 () {
 	 */
 	function iso9075(d) {
 		return ymd(d, '-') + ' ' + hms(d, ':');
-	}
-
-	var time = /*#__PURE__*/Object.freeze({
-	__proto__: null,
-	addTime: addTime,
-	ceil: ceil,
-	date: date,
-	floor: floor,
-	hms: hms,
-	iso9075: iso9075,
-	localize: localize,
-	ms: ms,
-	quantize: quantize,
-	round: round,
-	ymd: ymd
-	});
-
-	/*!
-	 * === @amekusa/util.js === *
+	}var time=/*#__PURE__*/Object.freeze({__proto__:null,addTime:addTime,ceil:ceil,date:date,floor:floor,hms:hms,iso9075:iso9075,localize:localize,ms:ms,quantize:quantize,round:round,ymd:ymd});/*!
+	 * === @amekusa/util.js/sh === *
 	 * MIT License
 	 *
 	 * Copyright (c) 2024 Satoshi Soma
@@ -11815,180 +11985,6 @@ function requireBundle$2 () {
 	 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 	 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 	 * SOFTWARE.
-	 */
-
-	/**
-	 * Coerces the given value into an array.
-	 * @param {any} x
-	 * @return {any[]}
-	 */
-	function arr(x) {
-		return Array.isArray(x) ? x : [x];
-	}
-
-	/**
-	 * Alias of `Array.isArray`.
-	 * @return {boolean}
-	 */
-	const isArray = Array.isArray;
-
-	/**
-	 * Returns whether the given value is a number or a string.
-	 * @param {any} x
-	 * @return {boolean}
-	 */
-	function isNumOrStr(x) {
-		switch (typeof x) {
-		case 'number':
-		case 'string':
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * Returns whether the given value can be considered as "empty".
-	 * @param {any} x
-	 * @return {boolean}
-	 */
-	function isEmpty(x) {
-		if (Array.isArray(x)) return x.length == 0;
-		switch (typeof x) {
-		case 'string':
-			return !x;
-		case 'object':
-			if (x === null) return true;
-			for (let i in x) return false;
-		case 'undefined':
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * Removes "empty" values from the given object or array.
-	 * @param {object|any[]} x
-	 * @param {number} recurse - Recursion limit
-	 * @return {object|any[]} modified `x`
-	 */
-	function clean(x, recurse = 8) {
-		if (recurse) {
-			if (Array.isArray(x)) {
-				let r = [];
-				for (let i = 0; i < x.length; i++) {
-					let I = clean(x[i], recurse - 1);
-					if (!isEmpty(I)) r.push(I);
-				}
-				return r;
-			}
-			if (typeof x == 'object') {
-				let r = {};
-				for (let k in x) {
-					let v = clean(x[k], recurse - 1);
-					if (!isEmpty(v)) r[k] = v;
-				}
-				return r;
-			}
-		}
-		return x;
-	}
-
-	/**
-	 * Merges the 2nd object into the 1st object recursively (deep-merge). The 1st object will be modified.
-	 * @param {object} x - The 1st object
-	 * @param {object} y - The 2nd object
-	 * @param {object} [opts] - Options
-	 * @param {number} opts.recurse=8 - Recurstion limit. Negative number means unlimited
-	 * @param {boolean|string} opts.mergeArrays - How to merge arrays
-	 * - `true`: merge x with y
-	 * - 'push': push y elements to x
-	 * - 'concat': concat x and y
-	 * - other: replace x with y
-	 * @return {object} The 1st object
-	 */
-	function merge(x, y, opts = {}) {
-		if (!('recurse' in opts)) opts.recurse = 8;
-		switch (Array.isArray(x) + Array.isArray(y)) {
-		case 0: // no array
-			if (opts.recurse && x && y && typeof x == 'object' && typeof y == 'object') {
-				opts.recurse--;
-				for (let k in y) x[k] = merge(x[k], y[k], opts);
-				opts.recurse++;
-				return x;
-			}
-		case 1: // 1 array
-			return y;
-		}
-		// 2 arrays
-		switch (opts.mergeArrays) {
-		case true:
-			for (let i = 0; i < y.length; i++) {
-				if (!x.includes(y[i])) x.push(y[i]);
-			}
-			return x;
-		case 'push':
-			x.push(...y);
-			return x;
-		case 'concat':
-			return x.concat(y);
-		}
-		return y;
-	}
-
-	var main = {
-		arr,
-		isEmpty,
-		clean,
-		merge,
-	};
-
-	bundle$2.arr = arr;
-	bundle$2.clean = clean;
-	bundle$2.default = main;
-	bundle$2.isArray = isArray;
-	bundle$2.isEmpty = isEmpty;
-	bundle$2.isNumOrStr = isNumOrStr;
-	bundle$2.merge = merge;
-	bundle$2.time = time;
-	bundle$2.web = web;
-	return bundle$2;
-}var bundle$1 = {};var hasRequiredBundle$1;
-
-function requireBundle$1 () {
-	if (hasRequiredBundle$1) return bundle$1;
-	hasRequiredBundle$1 = 1;
-
-	var node_process = require$$0$1;
-	var node_child_process = require$$1;
-	var os = require$$2$1;
-	var fs = require$$3;
-	var fsp = require$$4;
-	var path = require$$2;
-	var node_stream = require$$6$1;
-	var assert = require$$7;
-
-	function _interopNamespaceDefault(e) {
-	var n = Object.create(null);
-	if (e) {
-	Object.keys(e).forEach(function (k) {
-	if (k !== 'default') {
-	var d = Object.getOwnPropertyDescriptor(e, k);
-	Object.defineProperty(n, k, d.get ? d : {
-	enumerable: true,
-	get: function () { return e[k]; }
-	});
-	}
-	});
-	}
-	n.default = e;
-	return Object.freeze(n);
-	}
-
-	var fsp__namespace = /*#__PURE__*/_interopNamespaceDefault(fsp);
-
-	/*!
-	 * Shell Utils
-	 * @author amekusa
 	 */
 
 	/**
@@ -12064,32 +12060,246 @@ function requireBundle$1 () {
 		let value = 'development';
 		if (set != undefined) node_process.env.NODE_ENV = set ? value : '';
 		return node_process.env.NODE_ENV == value;
-	}
-
-	var sh = /*#__PURE__*/Object.freeze({
-	__proto__: null,
-	args: args,
-	dev: dev,
-	exec: exec,
-	prod: prod
-	});
-
-	/*!
-	 * I/O Utils
-	 * @author amekusa
+	}var sh=/*#__PURE__*/Object.freeze({__proto__:null,args:args,dev:dev,exec:exec,prod:prod});/*!
+	 * === @amekusa/util.js/io/AssetImporter === *
+	 * MIT License
+	 *
+	 * Copyright (c) 2024 Satoshi Soma
+	 *
+	 * Permission is hereby granted, free of charge, to any person obtaining a copy
+	 * of this software and associated documentation files (the "Software"), to deal
+	 * in the Software without restriction, including without limitation the rights
+	 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	 * copies of the Software, and to permit persons to whom the Software is
+	 * furnished to do so, subject to the following conditions:
+	 *
+	 * The above copyright notice and this permission notice shall be included in all
+	 * copies or substantial portions of the Software.
+	 *
+	 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	 * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+	 * SOFTWARE.
 	 */
 
 	/**
+	 * This is for copying styles or scripts to a certain HTML directory.
+	 * @author Satoshi Soma (github.com/amekusa)
+	 */
+	class AssetImporter {
+		/**
+		 * @param {object} config
+		 * @param {boolean} [config.minify=false] - Prefer `*.min.*` version
+		 * @param {string} config.src - Source dir to search
+		 * @param {string} config.dst - Destination dir
+		 */
+		constructor(config) {
+			this.config = Object.assign({
+				minify: false,
+				src: '', // source dir to search
+				dst: '', // destination dir
+			}, config);
+			this.queue = [];
+			this.results = {
+				script: [],
+				style:  [],
+				asset:  [],
+			};
+		}
+		/**
+		 * Adds a new item to import.
+		 * @param {string|string[]|object|object[]} newImport
+		 */
+		add(newImport) {
+			if (!Array.isArray(newImport)) newImport = [newImport];
+			for (let i = 0; i < newImport.length; i++) {
+				let item = newImport[i];
+				switch (typeof item) {
+				case 'string':
+					item = {src: item};
+					break;
+				case 'object':
+					if (Array.isArray(item)) throw `invalid type: array`;
+					break;
+				default:
+					throw `invalid type: ${typeof item}`;
+				}
+				if (!('src' in item)) throw `'src' property is missing`;
+				this.queue.push(Object.assign({
+					order: 0,
+					resolve: 'local',
+					private: false,
+				}, item));
+			}
+		}
+		/**
+		 * Resolves the location of the given file path
+		 * @param {string} file - File path
+		 * @param {string} method - Resolution method
+		 * @return {string} Resolved file path
+		 */
+		resolve(file, method) {
+			let find = [];
+			if (this.config.minify) {
+				let _ext = ext(file);
+				find.push(ext(file, '.min' + _ext));
+			}
+			find.push(file);
+			for (let i = 0; i < find.length; i++) {
+				let r;
+				switch (method) {
+				case 'require':
+					try {
+						r = require.resolve(find[i]);
+					} catch (e) {
+						if (e.code == 'MODULE_NOT_FOUND') continue;
+						throw e;
+					}
+					return r;
+				case 'local':
+					r = path.join(this.config.src, find[i]);
+					if (fs.existsSync(r)) return r;
+					break;
+				case 'local:absolute':
+				case 'local:abs':
+					r = find[i];
+					if (fs.existsSync(r)) return r;
+					break;
+				default:
+					throw `invalid resolution method: ${method}`;
+				}
+			}
+			throw `cannot resolve '${file}'`;
+		}
+		/**
+		 * Imports all items in the queue at once.
+		 * @return {Promise}
+		 */
+		import() {
+			let tasks = [];
+			let typeMap = {
+				'.css': 'style',
+				'.js': 'script',
+			};
+			this.queue.sort((a, b) => (Number(a.order) - Number(b.order))); // sort by order
+			while (this.queue.length) {
+				let item = this.queue.shift();
+				let {type, src} = item;
+				let url;
+
+				if (!item.resolve) { // no resolution
+					url = src;
+					if (!type) type = typeMap[ext(src)] || 'asset';
+					console.log('---- File Link ----');
+					console.log(' type:', type);
+					console.log('  src:', src);
+
+				} else { // needs resolution
+					let {dst:dstDir, as:dstFile} = item;
+					let create = item.resolve == 'create'; // needs creation?
+					if (create) {
+						if (!dstFile) throw `'as' property is required with {resolve: 'create'}`;
+					} else {
+						src = this.resolve(src, item.resolve);
+						if (!dstFile) dstFile = path.basename(src);
+					}
+					if (!type) type = typeMap[ext(dstFile)] || 'asset';
+					if (!dstDir) dstDir = type + 's';
+
+					// absolute destination
+					url = path.join(dstDir, dstFile);
+					let dst = path.join(this.config.dst, url);
+					dstDir = path.dirname(dst);
+					if (!fs.existsSync(dstDir)) fs.mkdirSync(dstDir, {recursive:true});
+
+					// create/copy file
+					if (create) {
+						console.log('---- File Creation ----');
+						console.log(' type:', type);
+						console.log('  dst:', dst);
+						tasks.push(fsp.writeFile(dst, src));
+					} else {
+						console.log('---- File Import ----');
+						console.log(' type:', type);
+						console.log('  src:', src);
+						console.log('  dst:', dst);
+						tasks.push(fsp.copyFile(src, dst));
+					}
+				}
+
+				if (!item.private) {
+					if (!(type in this.results)) this.results[type] = [];
+					this.results[type].push({type, url});
+				}
+			}
+
+			return tasks.length ? Promise.all(tasks) : Promise.resolve();
+		}
+		/**
+		 * Outputs HTML tags for imported items.
+		 * @param {string} [type] - Type
+		 * @return {string} HTML
+		 */
+		toHTML(type = null) {
+			let r;
+			if (type) {
+				let tmpl = templates[type];
+				if (!tmpl) return '';
+				if (Array.isArray(tmpl)) tmpl = tmpl.join('\n');
+				let items = this.results[type];
+				r = new Array(items.length);
+				for (let i = 0; i < items.length; i++) {
+					r[i] = tmpl.replaceAll('%s', items[i].url || '');
+				}
+			} else {
+				let keys = Object.keys(this.results);
+				r = new Array(keys.length);
+				for (let i = 0; i < keys.length; i++) {
+					r[i] = this.toHTML(keys[i]);
+				}
+			}
+			return r.join('\n');
+		}
+	}
+
+	const templates = {
+		script: [
+			`<script src="%s"></script>`,
+		],
+		module: [
+			`<script type="module" src="%s"></script>`,
+		],
+		style: [
+			`<link rel="stylesheet" href="%s">`,
+		],
+	};/**
 	 * Alias of `os.homedir()`.
 	 * @type {string}
 	 */
 	const home = os.homedir();
 
 	/**
-	 * Searchs the given file path in the given directories.
+	 * Returns or overwrites the extension of the given file path.
+	 * @param {string} file - File path
+	 * @param {string} [set] - New extension
+	 * @return {string} the extension, or a modified file path with the new extension
+	 */
+	function ext(file, set = null) {
+		let dot = file.lastIndexOf('.');
+		return typeof set == 'string'
+			? (dot < 0 ? (file + set) : (file.substring(0, dot) + set))
+			: (dot < 0 ? '' : file.substring(dot));
+	}
+
+	/**
+	 * Searches the given file path in the given directories.
 	 * @param {string} file - File to find
 	 * @param {string[]} dirs - Array of directories to search
 	 * @param {object} [opts] - Options
+	 * @param {boolean} [opts.allowAbsolute=true] - If true, `file` can be an absolute path
 	 * @return {string|boolean} found file path, or false if not found
 	 */
 	function find(file, dirs = [], opts = {}) {
@@ -12116,28 +12326,43 @@ function requireBundle$1 () {
 	}
 
 	/**
-	 * Deletes the contents of the given directory.
-	 * @return {Promise}
+	 * Deletes the files in the given directory.
+	 * @param {string} dir - Directory to clean
+	 * @param {string|RegExp} [pattern] - File pattern
+	 * @param {object} [opts] - Options
+	 * @param {boolean} [opts.recursive=false] - Searches recursively
+	 * @param {object} [opts.types] - File types to delete
+	 * @param {boolean} [opts.types.any=false] - Any type
+	 * @param {boolean} [opts.types.file=true] - Regular file
+	 * @param {boolean} [opts.types.dir=false] - Directory
+	 * @param {boolean} [opts.types.symlink=false] - Symbolic link
+	 * @return {Promise} a promise resolved with the deleted file paths
 	 */
-	function clean(dir, pattern, depth = 1) {
-		return exec(`find '${dir}' -type f -name '${pattern}' -maxdepth ${depth} -delete`);
-	}
-
-	/**
-	 * Deletes the given file or directory.
-	 * @param {string} file
-	 * @return {Promise}
-	 */
-	function rm(file) {
-		return fsp__namespace.rm(file, {recursive: true, force: true});
-	}
-
-	/**
-	 * Deletes the given file or directory synchronously.
-	 * @param {string} file
-	 */
-	function rmSync(file) {
-		return fs.rmSync(file, {recursive: true, force: true});
+	function clean(dir, pattern = null, opts = {}) {
+		if (pattern && typeof pattern == 'string') pattern = new RegExp(pattern);
+		let {
+			recursive = false,
+			types = {file: true},
+		} = opts;
+		return fsp__namespace.readdir(dir, {recursive, withFileTypes: true}).then(files => {
+			let tasks = [];
+			for (let i = 0; i < files.length; i++) {
+				let f = files[i];
+				if (!types.any) {
+					if (f.isFile()) {
+						if (!types.file) continue;
+					} else if (f.isDirectory()) {
+						if (!types.dir) continue;
+					} else if (f.isSymbolicLink()) {
+						if (!types.symlink) continue;
+					}
+				}
+				f = path.join(dir, f.name);
+				if (pattern && !f.match(pattern)) continue;
+				tasks.push(fsp__namespace.rm(f, {force: true, recursive: true}).then(() => f));
+			}
+			return tasks.length ? Promise.all(tasks) : false;
+		});
 	}
 
 	/**
@@ -12171,7 +12396,7 @@ function requireBundle$1 () {
 	 *
 	 * @example
 	 * return gulp.src(src)
-	 *   .pipe(modify((data, enc) => {
+	 *   .pipe(modifyStream((data, enc) => {
 	 *     // do stuff
 	 *     return newData;
 	 *   }));
@@ -12197,25 +12422,31 @@ function requireBundle$1 () {
 				}
 			}
 		});
-	}
-
-	var io = /*#__PURE__*/Object.freeze({
-	__proto__: null,
-	clean: clean,
-	copy: copy,
-	find: find,
-	home: home,
-	modifyStream: modifyStream,
-	rm: rm,
-	rmSync: rmSync,
-	untilde: untilde
-	});
-
-	const merge = Object.assign;
+	}var io=/*#__PURE__*/Object.freeze({__proto__:null,AssetImporter:AssetImporter,clean:clean,copy:copy,ext:ext,find:find,home:home,modifyStream:modifyStream,untilde:untilde});const merge = Object.assign;
 
 	/*!
-	 * Test Utils
-	 * @author amekusa
+	 * === @amekusa/util.js/test === *
+	 * MIT License
+	 *
+	 * Copyright (c) 2024 Satoshi Soma
+	 *
+	 * Permission is hereby granted, free of charge, to any person obtaining a copy
+	 * of this software and associated documentation files (the "Software"), to deal
+	 * in the Software without restriction, including without limitation the rights
+	 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	 * copies of the Software, and to permit persons to whom the Software is
+	 * furnished to do so, subject to the following conditions:
+	 *
+	 * The above copyright notice and this permission notice shall be included in all
+	 * copies or substantial portions of the Software.
+	 *
+	 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	 * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+	 * SOFTWARE.
 	 */
 
 	/**
@@ -12282,28 +12513,36 @@ function requireBundle$1 () {
 		let testCase = (c, title) => {
 			it(title, () => {
 				if (typeof c != 'object') invalid(`a test case must be an object`);
+
 				// ---- call function ----
-				let r;
 				let args = [];
-				if (c.args) { // args to pass
+				if ('args' in c) { // args to pass
 					if (!Array.isArray(c.args)) invalid(`'args' must be an array`);
 					args = c.args;
+					delete c.args;
 				}
-				r = fn(...args);
-				// ---- check ----
-				if ('returnType' in c) { // check return type
-					assertType(r, c.returnType, `return type failed`);
-				}
-				if ('return' in c) { // check return
-					assertEqual(r, c.return, merge({msg: `return value failed`}, opts));
-				}
-				if (c.test) { // custom test
-					if (typeof c.test != 'function') invalid(`'test' must be a function`);
-					c.test(r, ...args);
+				let r = fn(...args);
+
+				// ---- check the result ----
+				let check = {
+					returnType() {
+						assertType(r, c.returnType, `return type failed`);
+					},
+					return() {
+						assertEqual(r, c.return, merge({msg: `return value failed`}, opts));
+					},
+					test() {
+						if (typeof c.test != 'function') invalid(`'test' must be a function`);
+						c.test(r, ...args);
+					}
+				};
+				for (let k in c) {
+					if (check[k]) check[k]();
+					else invalid(`invalid property: '${k}' (available properties: ${Object.keys(check).join(', ')})`);
 				}
 			});
 		};
-		describe(fn.displayName || fn.name, () => {
+		describe('function: ' + (fn.displayName || fn.name), () => {
 			if (Array.isArray(cases)) {
 				for (let i = 0; i < cases.length; i++) {
 					let c = cases[i];
@@ -12330,52 +12569,68 @@ function requireBundle$1 () {
 		let testCase = (c, title) => {
 			it(title, () => {
 				if (typeof c != 'object') invalid(`a test case must be an object`);
+
 				// ---- instantiate ----
 				let obj;
 				if (opts.static) {
-					if (c.initArgs) invalid(`'initArgs' is not for static method`);
+					if ('initArgs' in c) invalid(`'initArgs' is not available for a static method`);
+					if ('prepare' in c) invalid(`'prepare' is not available for a static method`);
 					obj = construct;
 				} else {
 					let initArgs = [];
-					if (c.initArgs) {
+					if ('initArgs' in c) {
 						if (!Array.isArray(c.initArgs)) invalid(`'initArgs' must be an array`);
 						initArgs = c.initArgs;
+						delete c.initArgs;
 					}
 					try {
 						obj = new construct(...initArgs);
 					} catch (e) {
 						obj = construct(...initArgs);
 					}
+					if ('prepare' in c) {
+						if (typeof c.prepare != 'function') invalid(`'prepare' must be a function`);
+						c.prepare(obj);
+						delete c.prepare;
+					}
 				}
+
 				// ---- call method ----
-				if (!(method in obj)) invalid(`no such method as '${method}`);
-				let r;
+				if (!(method in obj)) invalid(`no such method as '${method}'`);
 				let args = [];
-				if (c.args) { // args to pass
+				if ('args' in c) { // args to pass
 					if (!Array.isArray(c.args)) invalid(`'args' must be an array`);
 					args = c.args;
+					delete c.args;
 				}
-				r = obj[method](...args);
-				// ---- check ----
-				if (c.returnsSelf) { // check if returns itself
-					assert.strictEqual(r, obj);
-				}
-				if ('returnType' in c) { // check return type
-					assertType(r, c.returnType, `return type failed`);
-				}
-				if ('return' in c) { // check return value
-					assertEqual(r, c.return, merge({msg: `return failed`}, opts));
-				}
-				if (c.props) { // check properties
-					assertProps(obj, c.props, opts);
-				}
-				if (c.test) { // custom test
-					if (typeof c.test != 'function') invalid(`'test' must be a function`);
-					c.test(r, obj, ...args);
+				let r = obj[method](...args);
+
+				// ---- check the result ----
+				let check = {
+					returnsSelf() { // check if returns itself
+						assert.strictEqual(r, obj, `must return self`);
+					},
+					returnType() { // check return type
+						assertType(r, c.returnType, `return type failed`);
+					},
+					return() { // check return value
+						assertEqual(r, c.return, merge({msg: `return failed`}, opts));
+					},
+					props() { // check properties
+						assertProps(obj, c.props, opts);
+					},
+					test() { // custom test
+						if (typeof c.test != 'function') invalid(`'test' must be a function`);
+						c.test(r, obj, ...args);
+					}
+				};
+				for (let k in c) {
+					if (check[k]) check[k]();
+					else invalid(`invalid property: '${k}' (available properties: ${Object.keys(check).join(', ')})`);
 				}
 			});
 		};
-		describe(construct.name + ' :: ' + method, () => {
+		describe('method: ' + method, () => {
 			if (Array.isArray(cases)) {
 				for (let i = 0; i < cases.length; i++) {
 					let c = cases[i];
@@ -12400,23 +12655,35 @@ function requireBundle$1 () {
 	function testInstance(construct, cases, opts = {}) {
 		let testCase = (c, title) => {
 			it(title, () => {
-				let obj;
+				if (typeof c != 'object') invalid(`a test case must be an object`);
+
+				// ---- instantiate ----
 				let args = [];
-				if (c.args) {
+				if ('args' in c) {
 					if (!Array.isArray(c.args)) invalid(`'args' must be an array`);
 					args = c.args;
+					delete c.args;
 				}
+				let obj;
 				try {
 					obj = new construct(...args);
 				} catch (e) {
 					obj = construct(...args);
 				}
-				if (c.props) { // check properties
-					assertProps(obj, c.props, opts);
-				}
-				if (c.test) { // custom test
-					if (typeof c.test != 'function') invalid(`'test' must be a function`);
-					c.test(obj, ...args);
+
+				// ---- check the result ----
+				let check = {
+					props() { // check properties
+						assertProps(obj, c.props, opts);
+					},
+					test() { // custom check
+						if (typeof c.test != 'function') invalid(`'test' must be a function`);
+						c.test(obj, ...args);
+					}
+				};
+				for (let k in c) {
+					if (check[k]) check[k]();
+					else invalid(`invalid property: '${k}' (available properties: ${Object.keys(check).join(', ')})`);
 				}
 			});
 		};
@@ -12435,23 +12702,8 @@ function requireBundle$1 () {
 				}
 			}
 		});
-	}
-
-	var test = /*#__PURE__*/Object.freeze({
-	__proto__: null,
-	InvalidTest: InvalidTest,
-	assertEqual: assertEqual,
-	assertProps: assertProps,
-	assertType: assertType,
-	testFn: testFn,
-	testInstance: testInstance,
-	testMethod: testMethod
-	});
-
-	bundle$1.io = io;
-	bundle$1.sh = sh;
-	bundle$1.test = test;
-	return bundle$1;
+	}var test=/*#__PURE__*/Object.freeze({__proto__:null,InvalidTest:InvalidTest,assertEqual:assertEqual,assertProps:assertProps,assertType:assertType,testFn:testFn,testInstance:testInstance,testMethod:testMethod});amekusa_util.arr=arr;amekusa_util.clean=clean$1;amekusa_util.dig=dig;amekusa_util.gen=gen;amekusa_util.io=io;amekusa_util.is=is;amekusa_util.isEmpty=isEmpty;amekusa_util.isEmptyOrFalsey=isEmptyOrFalsey;amekusa_util.isEmptyOrFalsy=isEmptyOrFalsy;amekusa_util.merge=merge$1;amekusa_util.sh=sh;amekusa_util.subst=subst;amekusa_util.test=test;amekusa_util.time=time;amekusa_util.web=web;
+	return amekusa_util;
 }var bundle = {};var hasRequiredBundle;
 
 function requireBundle () {
@@ -12459,12 +12711,12 @@ function requireBundle () {
 	hasRequiredBundle = 1;
 
 	var node_process = require$$0$1;
-	var path = require$$2;
+	var path = require$$3$1;
 	var node_child_process = require$$1;
-	var os = require$$2$1;
+	var os = require$$0$2;
 	var fs = require$$3;
-	var fsp = require$$4;
-	var node_stream = require$$6$1;
+	var fsp = require$$2;
+	var node_stream = require$$4;
 
 
 	function _interopNamespaceDefault(e) {
@@ -13937,9 +14189,9 @@ function requireBundle () {
 	bundle.unless_var = unless_var;
 	return bundle;
 }var name = "keycomfort";
-var version = "0.2.0";
+var version = "0.3.0";
 var description = "Comfortable keyboard remaps for Karabiner/AutoHotKey";
-var require$$10 = {
+var require$$9 = {
 	name: name,
 	version: version,
 	description: description};var rules_1;
@@ -13971,13 +14223,31 @@ function requireRules () {
 		},
 
 		'cancel modifier'(c, r) {
-			r.remap({
+			r.cond(if_var('keycomfort_layer_disable', 0))
+			.remap({
 				from: key(c.key, any),
 				to: [
 					set_var('keycomfort_layer_disable', 1),
 					key(c.key)
 				],
 				to_after_key_up: set_var('keycomfort_layer_disable', 0)
+			});
+		},
+
+		'disable modifier'(c, r) {
+			r.cond(modding)
+			.cond(if_var('keycomfort_layer_disable', 0))
+			.remap({
+				from: key(c.key),
+				to:   set_var('keycomfort_layer_disable', 1)
+			});
+		},
+
+		'enable modifier'(c, r) {
+			r.cond(if_var('keycomfort_layer_disable', 1))
+			.remap({
+				from: key(c.key),
+				to:   set_var('keycomfort_layer_disable', 0)
 			});
 		},
 
@@ -14115,6 +14385,14 @@ function requireRules () {
 			.remap({
 				from: key(c.delete),
 				to:   key('delete_or_backspace', 'fn')
+			});
+		},
+
+		'delete word'(c, r) {
+			r.cond(modding)
+			.remap({
+				from: key(c.key),
+				to:   key('delete_or_backspace', 'option')
 			});
 		},
 
@@ -14413,6 +14691,14 @@ function requireRules () {
 			});
 		},
 
+		'underscore'(c, r) {
+			r.cond(modding)
+			.remap({
+				from: key(c.from),
+				to:   key(c.to)
+			});
+		},
+
 		'custom'(c, r) {
 			if (!c.rules.length) return;
 			r.cond(modding);
@@ -14494,13 +14780,12 @@ function requireMain () {
 	const {env, cwd, stdin, stdout} = require$$0$1;
 	const {spawnSync: spawn} = require$$1;
 	const fs = require$$3;
-	const path = require$$2;
+	const path = require$$3$1;
 	const readline = require$$4$1;
 
 	const {Command, Argument} = requireCommander();
 	const yaml = require$$6;
-	const {merge, isEmpty} = requireBundle$2();
-	const {io} = requireBundle$1();
+	const {io, merge, isEmpty} = requireAmekusa_util();
 	const {
 		RuleSet, Config,
 		if_app, unless_app,
@@ -14535,9 +14820,9 @@ function requireMain () {
 	 *
 	 */
 
-	const pkg = require$$10;
+	const pkg = require$$9;
 	const rules = requireRules();
-	const defaultsYML = "# === KEYCOMFORT CONFIG ===\n# NOTE:\n#   0 means \"No\"\n#   1 means \"Yes\"\n\npaths:\n  karabiner:\n    save_as:    ~/.config/karabiner/assets/complex_modifications/keycomfort.json\n    apply_to:   ~/.config/karabiner/karabiner.json\n  ahk:\n    save_as:    ~/Desktop/keycomfort.ahk\n    apply_to:\n\nvim_like: 0  # prefer vim-like mappings?\n\nrules:  # mapping rules\n\n  modifier:\n    desc:       Use [key] as a special modifier key (Required)\n    enable:     1\n    key:        spacebar\n    alone:      spacebar\n\n  cancel modifier:\n    desc:       Cancel modifier (<modifier>) with [key]\n    enable:     1\n    key:        left_shift\n\n  arrows:\n    desc:       <modifier> + [up]/[right]/[down]/[left] = Up/Right/Down/Left\n    enable:     1\n    up:         e\n    right:      f\n    down:       d\n    left:       s\n\n  page up/down:\n    desc:       <modifier> + [up]/[down] = Page Up/Down\n    enable:     1\n    up:         w\n    down:       r\n\n  prev/next word:\n    desc:       <modifier> + [prev]/[next] = Prev/Next Word\n    enable:     1\n    prev:       a\n    next:       g\n    apps:\n      sonicpi:  1\n      others:   1\n\n  line start/end:\n    desc:       <modifier> + [start]/[end] = Line Start/End\n    enable:     1\n    start:      q\n    end:        t\n    apps:\n      terminal: 1\n      sonicpi:  1\n      others:   1\n\n  select:\n    desc:       <modifier> + [up]/[right]/[down]/[left] = Select Up/Right/Down/Left\n    enable:     1\n    up:         i\n    right:      l\n    down:       k\n    left:       j\n\n    vim:\n      left:     h\n      down:     j\n      up:       k\n      right:    l\n\n  indent/outdent:\n    desc:       <modifier> + [indent]/[outdent] = Indent/Outdent\n    enable:     1\n    indent:     o\n    outdent:    u\n\n  backspace/delete:\n    desc:       <modifier> + [backspace]/[delete] = Backspace/Delete\n    enable:     1\n    backspace:  n\n    delete:     m\n\n  edit:\n    desc:       <modifier> + [undo]/[cut]/[copy]/[paste] = Undo/Cut/Copy/Paste\n    enable:     1\n    undo:       z\n    cut:        x\n    copy:       c\n    paste:      v\n\n  delete line:\n    desc:       <modifier> + [key] = Delete Line\n    enable:     1\n    key:        shift + m\n    apps:\n      atom:     1\n      vscode:   1\n      eclipse:  1\n\n  insert line:\n    desc:       <modifier> + [key] = New Line Below\n    enable:     1\n    key:        return_or_enter\n    apps:\n      atom:     1\n      vscode:   1\n      eclipse:  1\n\n  move line:\n    desc:       <modifier> + [up]/[down] = Move Line Up/Down\n    enable:     1\n    up:         comma\n    down:       period\n    apps:\n      atom:     1\n      vscode:   1\n      eclipse:  1\n      sonicpi:  1\n\n  left/right tab:\n    desc:       <modifier> + [left]/[right] = Left/Right Tab\n    enable:     1\n    left:       2\n    right:      3\n    apps:\n      vscode:   1\n      eclipse:  1\n      others:   1\n\n  close/open tab:\n    desc:       <modifier> + [close]/[open] = Close/Open Tab\n    enable:     1\n    close:      1\n    open:       4\n\n  numpad:\n    desc:       <modifier> + [trigger] = Numpad Mode ([num1]=1, [num5]=5, [num9]=9)\n    enable:     1\n    trigger:    left_control\n\n    num0:       b\n    num1:       n\n    num2:       m\n    num3:       comma\n\n    num4:       j\n    num5:       k\n    num6:       l\n\n    num7:       u\n    num8:       i\n    num9:       o\n\n    slash:      8\n    asterisk:   9\n    hyphen:     0\n    plus:       p\n\n    enter:      slash\n    delete:     semicolon\n    backspace:  h\n\n  plus/minus:\n    desc:       <modifier> + [plus]/[minus] = Plus/Minus\n    enable:     1\n    plus:       p\n    minus:      shift + p\n    to:\n      plus:     shift + equal_sign\n      minus:    hyphen\n\n  backslash:\n    desc:       <modifier> + [from] = Backslash\n    enable:     1\n    from:       slash\n    to:         backslash\n\n  backtick:\n    desc:       <modifier> + [from] = Backtick\n    enable:     1\n    from:       quote\n    to:         grave_accent_and_tilde\n\n  tilde:\n    desc:       <modifier> + [from] = Tilde\n    enable:     1\n    from:       hyphen\n    to:         shift + grave_accent_and_tilde\n\n  pipe:\n    desc:       <modifier> + [from] = Pipe\n    enable:     1\n    from:       7\n    to:         shift + backslash\n\n  equal:\n    desc:       <modifier> + [from] = Equal Sign\n    enable:     1\n    from:       semicolon\n    to:         equal_sign\n\n  enter:\n    desc:       <modifier> + [from] = Enter\n    enable:     1\n    from:       tab\n    to:         return_or_enter\n\n  custom:\n    desc:       <modifier> + Custom Keys\n    enable:     1\n    rules:\n      # Examples\n      # - from: p\n      #   to:   shift + equal_sign\n\n  remap capslock:\n    desc:       Caps Lock = [to]/[alone]\n    enable:     1\n    to:         left_control\n    alone:      escape\n\n  remap l-control:\n    desc:       Left Control = [to]/[alone]\n    enable:     1\n    to:         left_control\n    alone:      escape\n\n  remap r-control:\n    desc:       Right Control = [to]/[alone]\n    enable:     0\n    to:         right_control\n    alone:      escape\n\n  remap l-command:\n    desc:       Left Command = [to]/[alone]\n    enable:     0\n    to:         left_command\n    alone:      left_command\n\n  remap r-command:\n    desc:       Right Command = [to]/[alone]\n    enable:     0\n    to:         right_command\n    alone:      right_command\n\n  remap l-shift:\n    desc:       Left Shift = [to]/[alone]\n    enable:     0\n    to:         left_shift\n    alone:      left_shift\n\n  remap r-shift:\n    desc:       Right Shift = [to]/[alone]\n    enable:     0\n    to:         right_shift\n    alone:      right_shift\n\n\napps:\n  others:\n    enable: 1\n\n  login:\n    enable: 1\n    id:\n    - com.apple.loginwindow\n\n  terminal:\n    enable: 1\n    id:\n    - com.apple.Terminal\n    - com.googlecode.iterm2\n    - org.alacritty\n    exe:\n    - cmd.exe\n\n  vscode:\n    enable: 0\n    id:\n    - com.microsoft.VSCode\n    - com.vscodium\n    exe:\n    - Code.exe\n\n  atom:\n    enable: 0\n    id:\n    - com.github.atom\n    - dev.pulsar-edit.pulsar\n\n  eclipse:\n    enable: 0\n    id:\n    - org.eclipse.platform.ide\n    exe:\n    - eclipse.exe\n\n  sonicpi:\n    enable: 0\n    id:\n    - net.sonic-pi.app\n\n\nkey_labels:  # display names for key codes\n  spacebar: Space\n  return_or_enter: Enter\n  grave_accent_and_tilde: Backtick\n  japanese_eisuu: 英数\n  japanese_kana: かな\n\n";
+	const defaultsYML = "# === KEYCOMFORT CONFIG ===\n# NOTE:\n#   0 means \"No\"\n#   1 means \"Yes\"\n\npaths:\n  karabiner:\n    save_as:    ~/.config/karabiner/assets/complex_modifications/keycomfort.json\n    apply_to:   ~/.config/karabiner/karabiner.json\n  ahk:\n    save_as:    ~/Desktop/keycomfort.ahk\n    apply_to:\n\nvim_like: 0  # prefer vim-like mappings?\n\nrules:  # mapping rules\n\n  modifier:\n    desc:       Use [key] as a special modifier key (Required)\n    enable:     1\n    key:        spacebar\n    alone:      spacebar\n\n  cancel modifier:\n    desc:       Cancel modifier (<modifier>) with [key]\n    enable:     1\n    key:        left_shift\n\n  disable modifier:\n    desc:       Disable modifier (<modifier>) with <modifier> + [key]\n    enable:     1\n    key:        right_shift + escape\n\n  enable modifier:\n    desc:       Enable modifier (<modifier>) with [key]\n    enable:     1\n    key:        right_shift + escape\n\n  arrows:\n    desc:       <modifier> + { [up] / [right] / [down] / [left] } = Up / Right / Down / Left\n    enable:     1\n    up:         e\n    right:      f\n    down:       d\n    left:       s\n\n  page up/down:\n    desc:       <modifier> + { [up] / [down] } = Page Up / Down\n    enable:     1\n    up:         w\n    down:       r\n\n  prev/next word:\n    desc:       <modifier> + { [prev] / [next] } = Prev / Next Word\n    enable:     1\n    prev:       a\n    next:       g\n    apps:\n      sonicpi:  1\n      others:   1\n\n  line start/end:\n    desc:       <modifier> + { [start] / [end] } = Line Start / End\n    enable:     1\n    start:      q\n    end:        t\n    apps:\n      terminal: 1\n      sonicpi:  1\n      others:   1\n\n  select:\n    desc:       <modifier> + { [up] / [right] / [down] / [left] } = Select Up / Right / Down / Left\n    enable:     1\n    up:         i\n    right:      l\n    down:       k\n    left:       j\n    vim:\n      left:     h\n      down:     j\n      up:       k\n      right:    l\n\n  indent/outdent:\n    desc:       <modifier> + { [indent] / [outdent] } = Indent / Outdent\n    enable:     1\n    indent:     o\n    outdent:    u\n\n  backspace/delete:\n    desc:       <modifier> + { [backspace] / [delete] } = Backspace / Delete\n    enable:     1\n    backspace:  n\n    delete:     m\n\n  delete word:\n    desc:       <modifier> + [key] = Delete Word\n    enable:     1\n    key:        b\n\n  edit:\n    desc:       <modifier> + { [undo] / [cut] / [copy] / [paste] } = Undo / Cut / Copy / Paste\n    enable:     1\n    undo:       z\n    cut:        x\n    copy:       c\n    paste:      v\n\n  delete line:\n    desc:       <modifier> + [key] = Delete Line\n    enable:     1\n    key:        shift + m\n    apps:\n      atom:     1\n      vscode:   1\n      eclipse:  1\n\n  insert line:\n    desc:       <modifier> + [key] = New Line Below\n    enable:     1\n    key:        return_or_enter\n    apps:\n      atom:     1\n      vscode:   1\n      eclipse:  1\n\n  move line:\n    desc:       <modifier> + { [up] / [down] } = Move Line Up / Down\n    enable:     1\n    up:         shift + i\n    down:       shift + k\n    vim:\n      up:       shift + k\n      down:     shift + j\n    apps:\n      atom:     1\n      vscode:   1\n      eclipse:  1\n      sonicpi:  1\n\n  left/right tab:\n    desc:       <modifier> + { [left] / [right] } = Left / Right Tab\n    enable:     1\n    left:       2\n    right:      3\n    apps:\n      vscode:   1\n      eclipse:  1\n      others:   1\n\n  close/open tab:\n    desc:       <modifier> + { [close] / [open] } = Close / Open Tab\n    enable:     1\n    close:      1\n    open:       4\n\n  numpad:\n    desc:       <modifier> + [trigger] = Numpad Mode ([num1]=1, [num5]=5, [num9]=9)\n    enable:     1\n    trigger:    left_control\n\n    num0:       b\n    num1:       n\n    num2:       m\n    num3:       comma\n\n    num4:       j\n    num5:       k\n    num6:       l\n\n    num7:       u\n    num8:       i\n    num9:       o\n\n    slash:      8\n    asterisk:   9\n    hyphen:     0\n    plus:       p\n\n    enter:      slash\n    delete:     semicolon\n    backspace:  h\n\n  plus/minus:\n    desc:       <modifier> + { [plus] / [minus] } = Plus / Minus\n    enable:     1\n    plus:       p\n    minus:      shift + p\n    to:\n      plus:     shift + equal_sign\n      minus:    hyphen\n\n  backslash:\n    desc:       <modifier> + [from] = Backslash\n    enable:     1\n    from:       slash\n    to:         backslash\n\n  backtick:\n    desc:       <modifier> + [from] = Backtick\n    enable:     1\n    from:       quote\n    to:         grave_accent_and_tilde\n\n  tilde:\n    desc:       <modifier> + [from] = Tilde\n    enable:     1\n    from:       hyphen\n    to:         shift + grave_accent_and_tilde\n\n  pipe:\n    desc:       <modifier> + [from] = Pipe\n    enable:     1\n    from:       7\n    to:         shift + backslash\n\n  equal:\n    desc:       <modifier> + [from] = Equal Sign\n    enable:     1\n    from:       semicolon\n    to:         equal_sign\n\n  enter:\n    desc:       <modifier> + [from] = Enter\n    enable:     1\n    from:       tab\n    to:         return_or_enter\n\n  underscore:\n    desc:       <modifier> + [from] = Underscore\n    enable:     1\n    from:       period\n    to:         shift + hyphen\n\n  custom:\n    desc:       <modifier> + Custom Keys\n    enable:     1\n    rules:\n      # Examples\n      # - from: p\n      #   to:   shift + equal_sign\n\n  remap capslock:\n    desc:       Caps Lock = [to] / [alone]\n    enable:     1\n    to:         left_control\n    alone:      escape\n\n  remap l-control:\n    desc:       Left Control = [to] / [alone]\n    enable:     1\n    to:         left_control\n    alone:      escape\n\n  remap r-control:\n    desc:       Right Control = [to] / [alone]\n    enable:     0\n    to:         right_control\n    alone:      escape\n\n  remap l-command:\n    desc:       Left Command = [to] / [alone]\n    enable:     0\n    to:         left_command\n    alone:      left_command\n\n  remap r-command:\n    desc:       Right Command = [to] / [alone]\n    enable:     0\n    to:         right_command\n    alone:      right_command\n\n  remap l-shift:\n    desc:       Left Shift = [to] / [alone]\n    enable:     0\n    to:         left_shift\n    alone:      left_shift\n\n  remap r-shift:\n    desc:       Right Shift = [to] / [alone]\n    enable:     0\n    to:         right_shift\n    alone:      right_shift\n\n\napps:\n  others:\n    enable: 1\n\n  login:\n    enable: 1\n    id:\n    - com.apple.loginwindow\n\n  terminal:\n    enable: 1\n    id:\n    - com.apple.Terminal\n    - com.googlecode.iterm2\n    - org.alacritty\n    exe:\n    - cmd.exe\n\n  vscode:\n    enable: 0\n    id:\n    - com.microsoft.VSCode\n    - com.vscodium\n    exe:\n    - Code.exe\n\n  atom:\n    enable: 0\n    id:\n    - com.github.atom\n    - dev.pulsar-edit.pulsar\n\n  eclipse:\n    enable: 0\n    id:\n    - org.eclipse.platform.ide\n    exe:\n    - eclipse.exe\n\n  sonicpi:\n    enable: 0\n    id:\n    - net.sonic-pi.app\n\n\nkey_labels:  # display names for key codes\n  spacebar: Space\n  return_or_enter: Enter\n  grave_accent_and_tilde: Backtick\n  japanese_eisuu: 英数\n  japanese_kana: かな\n\n";
 	const defaults = yaml.parse(defaultsYML);
 	const defaultConfig = loc(io.home, '.config', 'keycomfort', 'config.yml');
 
@@ -14579,10 +14864,18 @@ function requireMain () {
 	}
 
 	function label(key, dict) {
-		if (Array.isArray(key)) return key.map(I => label(I, dict)).join(',');
-		key += '';
+		if (Array.isArray(key)) return key.map(I => label(I.trim(), dict)).join(', ');
+		key = `${key}`.trim();
+		if (key.includes(',')) return label(key.split(','), dict);
+		if (key.includes('+')) return key.split('+').map(I => label(I.trim(), dict)).join(' + ');
 		if (key in dict) return dict[key];
-		return key.split('_').map(I => I.charAt(0).toUpperCase() + I.slice(1)).join(' ');
+		let lr = ''; // left or right
+		let m = key.match(/^(left|right)_([_a-z0-9]+)$/i);
+		if (m) {
+			lr = m[1] == 'left' ? 'L-' : 'R-';
+			key = m[2];
+		}
+		return lr + key.split('_').map(I => I.charAt(0).toUpperCase() + I.slice(1)).join(' ');
 	}
 
 	const app = new Command();
@@ -14727,8 +15020,9 @@ function requireMain () {
 			if (rc.vim && vim) rc = merge(rc, rc.vim);
 
 			// format rule description
-			let desc = rc.desc.replaceAll('<modifier>', label(modifier, labels));
-			for (let i in rc) desc = desc.replaceAll(`[${i}]`, label(rc[i], labels));
+			let desc = rc.desc.replaceAll(/(?:<modifier>|\[([_0-9a-z]+)\])/gi, (_, m1) => {
+				return label(m1 ? rc[m1] : modifier, labels);
+			});
 
 			let rule = rules[i];
 			let newRule;
