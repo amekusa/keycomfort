@@ -623,6 +623,27 @@ const rules = {
 		})
 	},
 
+	'move mouse by keys'(c, r) {
+		let speed = 1536 * c.speed;
+		r.cond(if_touched(c.fingers, c.area))
+		.remap({
+			from: key(c.up, any),
+			to:   {mouse_key: {y: -speed}}
+		})
+		.remap({
+			from: key(c.right, any),
+			to:   {mouse_key: {x: speed}}
+		})
+		.remap({
+			from: key(c.down, any),
+			to:   {mouse_key: {y: speed}}
+		})
+		.remap({
+			from: key(c.left, any),
+			to:   {mouse_key: {x: -speed}}
+		})
+	},
+
 };
 
 module.exports = rules;

@@ -337,6 +337,17 @@ rules:  # mapping rules
     fingers:    1
     area:       # top/right/bottom/left
 
+  move mouse by keys:
+    desc:       (MultiTouchExtension) Touchpad + { [up] / [right] / [down] / [left] } = Move Mouse Up / Right / Down / Left
+    enable:     1
+    up:         e
+    right:      f
+    down:       d
+    left:       s
+    speed:      1.0
+    fingers:    1
+    area:       # top/right/bottom/left
+
 
 apps:
   others:
