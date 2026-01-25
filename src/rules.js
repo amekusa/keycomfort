@@ -4,6 +4,7 @@ const {
 	set_var,
 	if_var, unless_var,
 	if_lang, unless_lang,
+	if_touched, unless_touched,
 } = require('karabinerge');
 
 const modding = if_var('keycomfort_layer', 1);
@@ -563,6 +564,30 @@ const rules = {
 			from:        key('right_shift', any),
 			to:          key(c.to),
 			to_if_alone: key(c.alone)
+		})
+	},
+
+	'l-click'(c, r) {
+		r.cond(if_touched(1))
+		.remap({
+			from: key(c.from, any),
+			to:   {pointing_button: c.to}
+		})
+	},
+
+	'r-click'(c, r) {
+		r.cond(if_touched(1))
+		.remap({
+			from: key(c.from, any),
+			to:   {pointing_button: c.to}
+		})
+	},
+
+	'm-click'(c, r) {
+		r.cond(if_touched(1))
+		.remap({
+			from: key(c.from, any),
+			to:   {pointing_button: c.to}
 		})
 	},
 

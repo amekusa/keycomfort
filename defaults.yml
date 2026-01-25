@@ -283,6 +283,24 @@ rules:  # mapping rules
     to:         right_shift
     alone:      right_shift
 
+  l-click:
+    desc:       (MultiTouchExtension) Touchpad + [from] = [to]
+    enable:     1
+    from:       j
+    to:         button1
+
+  r-click:
+    desc:       (MultiTouchExtension) Touchpad + [from] = [to]
+    enable:     1
+    from:       l
+    to:         button2
+
+  m-click:
+    desc:       (MultiTouchExtension) Touchpad + [from] = [to]
+    enable:     1
+    from:       k
+    to:         button3
+
 
 apps:
   others:
@@ -333,6 +351,9 @@ key_labels:  # display names for key codes
   spacebar: Space
   return_or_enter: Enter
   grave_accent_and_tilde: Backtick
+  button1: Left Click
+  button2: Right Click
+  button3: Middle Click
   japanese_eisuu: 英数
   japanese_kana: かな
 
