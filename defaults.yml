@@ -321,6 +321,22 @@ rules:  # mapping rules
     fingers:    1
     area:       # top/right/bottom/left
 
+  wheel left:
+    desc:       (MultiTouchExtension) Touchpad + [key] = Wheel Left
+    enable:     1
+    key:        h
+    speed:      32
+    fingers:    1
+    area:       # top/right/bottom/left
+
+  wheel right:
+    desc:       (MultiTouchExtension) Touchpad + [key] = Wheel Right
+    enable:     1
+    key:        semicolon
+    speed:      -32
+    fingers:    1
+    area:       # top/right/bottom/left
+
 
 apps:
   others:

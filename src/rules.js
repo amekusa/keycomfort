@@ -595,11 +595,7 @@ const rules = {
 		r.cond(if_touched(c.fingers, c.area))
 		.remap({
 			from: key(c.key, any),
-			to:   {
-				mouse_key: {
-					vertical_wheel: c.speed,
-				}
-			}
+			to:   {mouse_key: {vertical_wheel: c.speed}}
 		})
 	},
 
@@ -607,11 +603,23 @@ const rules = {
 		r.cond(if_touched(c.fingers, c.area))
 		.remap({
 			from: key(c.key, any),
-			to:   {
-				mouse_key: {
-					vertical_wheel: c.speed,
-				}
-			}
+			to:   {mouse_key: {vertical_wheel: c.speed}}
+		})
+	},
+
+	'wheel left'(c, r) {
+		r.cond(if_touched(c.fingers, c.area))
+		.remap({
+			from: key(c.key, any),
+			to:   {mouse_key: {horizontal_wheel: c.speed}}
+		})
+	},
+
+	'wheel right'(c, r) {
+		r.cond(if_touched(c.fingers, c.area))
+		.remap({
+			from: key(c.key, any),
+			to:   {mouse_key: {horizontal_wheel: c.speed}}
 		})
 	},
 
