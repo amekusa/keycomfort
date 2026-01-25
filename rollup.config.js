@@ -20,7 +20,7 @@ module.exports = {
 	input: 'src/main.js',
 	output: {
 		name: 'keycomfort',
-		file: 'dist/bundle.js',
+		file: 'dist/keycomfort.js',
 		format: 'cjs',
 		indent: !prod,
 		sourcemap: !prod,
