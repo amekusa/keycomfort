@@ -591,6 +591,30 @@ const rules = {
 		})
 	},
 
+	'wheel up'(c, r) {
+		r.cond(if_touched(1))
+		.remap({
+			from: key(c.key, any),
+			to:   {
+				mouse_key: {
+					vertical_wheel: c.speed,
+				}
+			}
+		})
+	},
+
+	'wheel down'(c, r) {
+		r.cond(if_touched(1))
+		.remap({
+			from: key(c.key, any),
+			to:   {
+				mouse_key: {
+					vertical_wheel: c.speed,
+				}
+			}
+		})
+	},
+
 };
 
 module.exports = rules;

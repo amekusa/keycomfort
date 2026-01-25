@@ -298,8 +298,20 @@ rules:  # mapping rules
   m-click:
     desc:       (MultiTouchExtension) Touchpad + [from] = [to]
     enable:     1
-    from:       k
+    from:       comma
     to:         button3
+
+  wheel up:
+    desc:       (MultiTouchExtension) Touchpad + [key] = Wheel Up
+    enable:     1
+    key:        i
+    speed:      -32
+
+  wheel down:
+    desc:       (MultiTouchExtension) Touchpad + [key] = Wheel Down
+    enable:     1
+    key:        k
+    speed:      32
 
 
 apps:
