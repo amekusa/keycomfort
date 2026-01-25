@@ -288,12 +288,16 @@ rules:  # mapping rules
     enable:     1
     from:       j
     to:         button1
+    fingers:    1
+    area:       # top/right/bottom/left
 
   r-click:
     desc:       (MultiTouchExtension) Touchpad + [from] = [to]
     enable:     1
     from:       l
     to:         button2
+    fingers:    1
+    area:       # top/right/bottom/left
 
   m-click:
     desc:       (MultiTouchExtension) Touchpad + [from] = [to]
@@ -306,12 +310,16 @@ rules:  # mapping rules
     enable:     1
     key:        i
     speed:      -32
+    fingers:    1
+    area:       # top/right/bottom/left
 
   wheel down:
     desc:       (MultiTouchExtension) Touchpad + [key] = Wheel Down
     enable:     1
     key:        k
     speed:      32
+    fingers:    1
+    area:       # top/right/bottom/left
 
 
 apps:

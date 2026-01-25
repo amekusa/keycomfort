@@ -568,7 +568,7 @@ const rules = {
 	},
 
 	'l-click'(c, r) {
-		r.cond(if_touched(1))
+		r.cond(if_touched(c.fingers, c.area))
 		.remap({
 			from: key(c.from, any),
 			to:   {pointing_button: c.to}
@@ -576,7 +576,7 @@ const rules = {
 	},
 
 	'r-click'(c, r) {
-		r.cond(if_touched(1))
+		r.cond(if_touched(c.fingers, c.area))
 		.remap({
 			from: key(c.from, any),
 			to:   {pointing_button: c.to}
@@ -584,7 +584,7 @@ const rules = {
 	},
 
 	'm-click'(c, r) {
-		r.cond(if_touched(1))
+		r.cond(if_touched(c.fingers, c.area))
 		.remap({
 			from: key(c.from, any),
 			to:   {pointing_button: c.to}
@@ -592,7 +592,7 @@ const rules = {
 	},
 
 	'wheel up'(c, r) {
-		r.cond(if_touched(1))
+		r.cond(if_touched(c.fingers, c.area))
 		.remap({
 			from: key(c.key, any),
 			to:   {
@@ -604,7 +604,7 @@ const rules = {
 	},
 
 	'wheel down'(c, r) {
-		r.cond(if_touched(1))
+		r.cond(if_touched(c.fingers, c.area))
 		.remap({
 			from: key(c.key, any),
 			to:   {
