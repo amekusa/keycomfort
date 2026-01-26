@@ -110,7 +110,7 @@ const rules = {
 	},
 
 	'line start/end': {
-		app: {
+		apps: {
 			terminal(c, r) {
 				r.cond(modding)
 				.remap({
