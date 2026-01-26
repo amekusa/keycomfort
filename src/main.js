@@ -226,55 +226,66 @@ function generate(target, opts = {}) {
 		if (userConfig) config = merge(config, userConfig);
 	}
 	let modifier = config.rules.modifier.key;
-	let apps = config.apps;
-	let labels = config.key_labels;
-	let vim = config.vim_like;
+	let apps     = config.apps;
+	let labels   = config.key_labels;
+	let vim      = config.vim_like;
 
-	// run rules
 	let ruleSet = new RuleSet('KeyComfort');
-	for (let i in rules) {
 
+	function addRule(rule, rc, desc = undefined) {
+		// overwrite conf with vim-like mappings
+		if (vim && rc.vim) rc = merge(rc, rc.vim);
+
+		// format rule description
+		if (!desc) {
+			desc = rc.desc.replaceAll(/(?:<modifier>|\[([_0-9a-z]+)\])/gi, (_, m1) => {
+				return label(m1 ? rc[m1] : modifier, labels);
+			});
+		}
+
+		// apply rule
+		if (typeof rule == 'function') {
+			rule(rc, ruleSet.add(desc));
+			return;
+		}
+
+		// apply branching rules
+		if (rule.rules) {
+			for (let k in rule.rules) {
+				addRule(rule.rules[k], rc, `${desc} :: ${k}`); // RECURSION
+			}
+		}
+
+		// apply app-specific rules
+		if (rule.apps) {
+			let newRule;
+			let enabled = []; // enabled apps
+			for (let app in rule.apps) {
+				if (app == 'others') continue;
+				if (!apps[app]) continue; // uknown app
+				if (!apps[app].enable) continue; // globally disabled
+				if (!rc.apps[app]) continue; // disabled for this rule
+				if (isEmpty(apps[app].id)) continue; // no app-id
+				enabled = enabled.concat(apps[app].id);
+				newRule = ruleSet.add(desc + ` (${app})`);
+				newRule.cond(if_app(...apps[app].id));
+				rule.apps[app](rc, newRule);
+			}
+			if (apps.others.enable && rc.apps.others) {
+				newRule = ruleSet.add(desc);
+				if (enabled.length) newRule.cond(unless_app(...enabled));
+				rule.apps.others(rc, newRule);
+			}
+		}
+	}
+
+	for (let i in rules) {
 		// rule config
 		let rc = config.rules[i];
 		if (!rc) continue;
 		if (!rc.enable) continue; // rule disabled
 
-		// overwrite conf with vim-like mappings
-		if (rc.vim && vim) rc = merge(rc, rc.vim);
-
-		// format rule description
-		let desc = rc.desc.replaceAll(/(?:<modifier>|\[([_0-9a-z]+)\])/gi, (_, m1) => {
-			return label(m1 ? rc[m1] : modifier, labels);
-		});
-
-		let rule = rules[i];
-		let newRule;
-
-		// non app-specific rule
-		if (typeof rule == 'function') {
-			newRule = ruleSet.add(desc);
-			rule(rc, newRule);
-			continue;
-		}
-
-		// app-specific rule
-		let enabled = []; // enabled apps
-		for (let app in rule) {
-			if (app == 'others') continue;
-			if (!apps[app]) continue; // invalid app
-			if (!apps[app].enable) continue; // globally disabled
-			if (!rc.apps[app]) continue; // disabled for this rule
-			if (isEmpty(apps[app].id)) continue; // no app-id
-			enabled = enabled.concat(apps[app].id);
-			newRule = ruleSet.add(desc + ` (${app})`);
-			newRule.cond(if_app(...apps[app].id));
-			rule[app](rc, newRule);
-		}
-		if (apps.others.enable && rc.apps.others) {
-			newRule = ruleSet.add(desc);
-			if (enabled.length) newRule.cond(unless_app(...enabled));
-			rule.others(rc, newRule);
-		}
+		addRule(rules[i], rc);
 	}
 
 	let data = ruleSet.toJSON();

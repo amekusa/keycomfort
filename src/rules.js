@@ -83,64 +83,68 @@ const rules = {
 	},
 
 	'prev/next word': {
-		sonicpi(c, r) {
-			r.cond(modding)
-			.remap({
-				from: key(c.prev),
-				to:   key('b', 'command')
-			})
-			.remap({
-				from: key(c.next),
-				to:   key('f', 'command')
-			})
+		apps: {
+			sonicpi(c, r) {
+				r.cond(modding)
+				.remap({
+					from: key(c.prev),
+					to:   key('b', 'command')
+				})
+				.remap({
+					from: key(c.next),
+					to:   key('f', 'command')
+				})
+			},
+			others(c, r) {
+				r.cond(modding)
+				.remap({
+					from: key(c.prev),
+					to:   key('left_arrow', 'option')
+				})
+				.remap({
+					from: key(c.next),
+					to:   key('right_arrow', 'option')
+				})
+			},
 		},
-		others(c, r) {
-			r.cond(modding)
-			.remap({
-				from: key(c.prev),
-				to:   key('left_arrow', 'option')
-			})
-			.remap({
-				from: key(c.next),
-				to:   key('right_arrow', 'option')
-			})
-		}
 	},
 
 	'line start/end': {
-		terminal(c, r) {
-			r.cond(modding)
-			.remap({
-				from: key(c.start),
-				to:   key('home')
-			})
-			.remap({
-				from: key(c.end),
-				to:   key('end')
-			})
+		app: {
+			terminal(c, r) {
+				r.cond(modding)
+				.remap({
+					from: key(c.start),
+					to:   key('home')
+				})
+				.remap({
+					from: key(c.end),
+					to:   key('end')
+				})
+			},
+			sonicpi(c, r) {
+				r.cond(modding)
+				.remap({
+					from: key(c.start),
+					to:   key('a', 'control')
+				})
+				.remap({
+					from: key(c.end),
+					to:   key('e', 'control')
+				})
+			},
+			others(c, r) {
+				r.cond(modding)
+				.remap({
+					from: key(c.start),
+					to:   key('left_arrow', 'command')
+				})
+				.remap({
+					from: key(c.end),
+					to:   key('right_arrow', 'command')
+				})
+			},
 		},
-		sonicpi(c, r) {
-			r.cond(modding)
-			.remap({
-				from: key(c.start),
-				to:   key('a', 'control')
-			})
-			.remap({
-				from: key(c.end),
-				to:   key('e', 'control')
-			})
-		},
-		others(c, r) {
-			r.cond(modding)
-			.remap({
-				from: key(c.start),
-				to:   key('left_arrow', 'command')
-			})
-			.remap({
-				from: key(c.end),
-				to:   key('right_arrow', 'command')
-			})
-		}
 	},
 
 	'select'(c, r) {
@@ -216,133 +220,141 @@ const rules = {
 	},
 
 	'delete line': {
-		atom(c, r) {
-			r.cond(modding)
-			.remap({
-				from: key(c.key),
-				to:   key('k', ['control', 'shift'])
-			})
-		},
-		vscode(c, r) {
-			r.cond(modding)
-			.remap({
-				from: key(c.key),
-				to:   key('k', ['command', 'shift'])
-			})
-		},
-		eclipse(c, r) {
-			r.cond(modding)
-			.remap({
-				from: key(c.key),
-				to:   key('d', 'command')
-			})
+		apps: {
+			atom(c, r) {
+				r.cond(modding)
+				.remap({
+					from: key(c.key),
+					to:   key('k', ['control', 'shift'])
+				})
+			},
+			vscode(c, r) {
+				r.cond(modding)
+				.remap({
+					from: key(c.key),
+					to:   key('k', ['command', 'shift'])
+				})
+			},
+			eclipse(c, r) {
+				r.cond(modding)
+				.remap({
+					from: key(c.key),
+					to:   key('d', 'command')
+				})
+			},
 		},
 	},
 
 	'insert line': {
-		atom(c, r) {
-			r.cond(modding)
-			.remap({
-				from: key(c.key),
-				to:   key('return_or_enter', 'command')
-			})
-		},
-		vscode(c, r) {
-			r.cond(modding)
-			.remap({
-				from: key(c.key),
-				to:   key('return_or_enter', 'command')
-			})
-		},
-		eclipse(c, r) {
-			r.cond(modding)
-			.remap({
-				from: key(c.key),
-				to:   key('return_or_enter', 'shift')
-			})
+		apps: {
+			atom(c, r) {
+				r.cond(modding)
+				.remap({
+					from: key(c.key),
+					to:   key('return_or_enter', 'command')
+				})
+			},
+			vscode(c, r) {
+				r.cond(modding)
+				.remap({
+					from: key(c.key),
+					to:   key('return_or_enter', 'command')
+				})
+			},
+			eclipse(c, r) {
+				r.cond(modding)
+				.remap({
+					from: key(c.key),
+					to:   key('return_or_enter', 'shift')
+				})
+			},
 		},
 	},
 
 	'move line': {
-		atom(c, r) {
-			r.cond(modding)
-			.remap({
-				from: key(c.up),
-				to:   key('up_arrow', ['command', 'control'])
-			})
-			.remap({
-				from: key(c.down),
-				to:   key('down_arrow', ['command', 'control'])
-			})
-		},
-		vscode(c, r) {
-			r.cond(modding)
-			.remap({
-				from: key(c.up),
-				to:   key('up_arrow', 'option')
-			})
-			.remap({
-				from: key(c.down),
-				to:   key('down_arrow', 'option')
-			})
-		},
-		eclipse(c, r) {
-			r.cond(modding)
-			.remap({
-				from: key(c.up),
-				to:   key('up_arrow', 'option')
-			})
-			.remap({
-				from: key(c.down),
-				to:   key('down_arrow', 'option')
-			})
-		},
-		sonicpi(c, r) {
-			r.cond(modding)
-			.remap({
-				from: key(c.up),
-				to:   key('p', ['command', 'control'])
-			})
-			.remap({
-				from: key(c.down),
-				to:   key('n', ['command', 'control'])
-			})
+		apps: {
+			atom(c, r) {
+				r.cond(modding)
+				.remap({
+					from: key(c.up),
+					to:   key('up_arrow', ['command', 'control'])
+				})
+				.remap({
+					from: key(c.down),
+					to:   key('down_arrow', ['command', 'control'])
+				})
+			},
+			vscode(c, r) {
+				r.cond(modding)
+				.remap({
+					from: key(c.up),
+					to:   key('up_arrow', 'option')
+				})
+				.remap({
+					from: key(c.down),
+					to:   key('down_arrow', 'option')
+				})
+			},
+			eclipse(c, r) {
+				r.cond(modding)
+				.remap({
+					from: key(c.up),
+					to:   key('up_arrow', 'option')
+				})
+				.remap({
+					from: key(c.down),
+					to:   key('down_arrow', 'option')
+				})
+			},
+			sonicpi(c, r) {
+				r.cond(modding)
+				.remap({
+					from: key(c.up),
+					to:   key('p', ['command', 'control'])
+				})
+				.remap({
+					from: key(c.down),
+					to:   key('n', ['command', 'control'])
+				})
+			},
 		},
 	},
 
 	'left/right tab': {
-		vscode(c, r) {
-			r.cond(modding)
-			.remap({
-				from: key(c.left),
-				to:   key('left_arrow', ['command', 'option'])
-			})
-			.remap({
-				from: key(c.right),
-				to:   key('right_arrow', ['command', 'option'])
-			})
-		},
-		eclipse(c, r) {
-			r.cond(modding)
-			.remap({
-				from: key(c.left),
-				to:   key('page_up', 'control')
-			})
-			.remap({
-				from: key(c.right),
-				to:   key('page_down', 'control')
-			})
-		},
-		others(c, r) {
-			r.cond(modding)
-			.remap({
-				from: key(c.left),
-				to:   key('tab', ['control', 'shift'])
-			})
-			.remap({
-				from: key(c.right),
-				to:   key('tab', 'control')
-			})
+		apps: {
+			vscode(c, r) {
+				r.cond(modding)
+				.remap({
+					from: key(c.left),
+					to:   key('left_arrow', ['command', 'option'])
+				})
+				.remap({
+					from: key(c.right),
+					to:   key('right_arrow', ['command', 'option'])
+				})
+			},
+			eclipse(c, r) {
+				r.cond(modding)
+				.remap({
+					from: key(c.left),
+					to:   key('page_up', 'control')
+				})
+				.remap({
+					from: key(c.right),
+					to:   key('page_down', 'control')
+				})
+			},
+			others(c, r) {
+				r.cond(modding)
+				.remap({
+					from: key(c.left),
+					to:   key('tab', ['control', 'shift'])
+				})
+				.remap({
+					from: key(c.right),
+					to:   key('tab', 'control')
+				})
+			},
 		},
 	},
 
