@@ -10,7 +10,7 @@ const {Command, Argument} = require('commander');
 const yaml = require('yaml');
 const {io, merge, isEmpty} = require('@amekusa/util.js');
 const {
-	RuleSet, Config,
+	Rule, RuleSet, Config,
 	if_app, unless_app,
 } = require('karabinerge');
 
@@ -245,7 +245,10 @@ function generate(target, opts = {}) {
 
 		// apply rule
 		if (typeof rule == 'function') {
-			rule(rc, ruleSet.add(desc));
+			let newRule = new Rule(desc);
+			if (rule(rc, newRule) !== false) {
+				ruleSet.add(newRule);
+			}
 			return;
 		}
 
@@ -260,14 +263,18 @@ function generate(target, opts = {}) {
 				if (!rc.apps[app]) continue; // disabled for this rule
 				if (isEmpty(apps[app].id)) continue; // no app-id
 				enabled = enabled.concat(apps[app].id);
-				newRule = ruleSet.add(desc + ` (${app})`);
+				newRule = new Rule(desc + ` (${app})`);
 				newRule.cond(if_app(...apps[app].id));
-				rule.apps[app](rc, newRule);
+				if (rule.apps[app](rc, newRule) !== false) {
+					ruleSet.add(newRule);
+				}
 			}
 			if (apps.others.enable && rc.apps.others) {
-				newRule = ruleSet.add(desc);
+				newRule = new Rule(desc);
 				if (enabled.length) newRule.cond(unless_app(...enabled));
-				rule.apps.others(rc, newRule);
+				if (rule.apps.others(rc, newRule) !== false) {
+					ruleSet.add(newRule);
+				}
 			}
 			delete rule.apps;
 		}
