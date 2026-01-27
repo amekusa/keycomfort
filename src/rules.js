@@ -599,6 +599,19 @@ const rules = {
 		},
 	},
 
+	'mouse speed up/down': {
+		'on'(c, r) {
+			if (c.touchpad) r.cond(if_touched(0));
+			r.cond(if_var(mouse_mode, 1));
+			mouse_speed(c, r);
+		},
+		'while touching touchpad'(c, r) {
+			if (!c.touchpad) return false;
+			r.cond(if_touched(1));
+			mouse_speed(c, r);
+		},
+	},
+
 	'mouse move': {
 		'on'(c, r) {
 			if (c.touchpad) r.cond(if_touched(0));
@@ -653,6 +666,17 @@ const rules = {
 
 };
 
+function mouse_speed(c, r) {
+	r.remap({
+		from: key(c.up, any),
+		to:   {mouse_key: {speed_multiplier: c.up_to}}
+	})
+	.remap({
+		from: key(c.down, any),
+		to:   {mouse_key: {speed_multiplier: c.down_to}}
+	});
+}
+
 function mouse_move(c, r) {
 	let speed = Math.round(1536 * c.speed);
 	r.remap({
@@ -671,6 +695,12 @@ function mouse_move(c, r) {
 		from: key(c.left, any),
 		to:   {mouse_key: {x: -speed}}
 	});
+	// if (c.speed2_key) {
+	// 	r.remap({
+	// 		from: key(c.speed2_key, any),
+	// 		to:   {mouse_key: {speed_multiplier: c.speed2}}
+	// 	});
+	// }
 }
 
 function mouse_buttons(c, r) {
