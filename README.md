@@ -1,6 +1,10 @@
 # KEYCOMFORT
 Comfortable keyboard remaps for Karabiner.
 
+> [!WARNING]  
+> Keycomfort is still in **beta**.
+> There will be a lot of breaking changes until `v1.*`.
+
 ## Installation
 Keycomfort is a command line application.
 Install it via NPM with `-g` option.
