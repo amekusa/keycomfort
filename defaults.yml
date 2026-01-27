@@ -283,60 +283,71 @@ rules:  # mapping rules
     to:         right_shift
     alone:      right_shift
 
-  l-click:
-    desc:       (MultiTouchExtension) Touchpad + [from] = [to]
+  mouse mode:
+    desc:       <modifier> + { [on] / [off] } = Mouse Mode On / Off
     enable:     1
-    from:       j
-    to:         button1
-    fingers:    1
-    area:       # top/right/bottom/left
+    on:         9
+    off:        0
 
-  r-click:
-    desc:       (MultiTouchExtension) Touchpad + [from] = [to]
-    enable:     1
-    from:       l
-    to:         button2
-    fingers:    1
-    area:       # top/right/bottom/left
-
-  m-click:
-    desc:       (MultiTouchExtension) Touchpad + [from] = [to]
-    enable:     1
-    from:       comma
-    to:         button3
-    fingers:    1
-    area:       # top/right/bottom/left
-
-  wheel up/down:
-    desc:       (MultiTouchExtension) Touchpad + { [up] / [down] } = Wheel Up / Down
-    enable:     1
-    up:         i
-    down:       k
-    speed:      1.0
-    reverse:    0
-    fingers:    1
-    area:       # top/right/bottom/left
-
-  wheel left/right:
-    desc:       (MultiTouchExtension) Touchpad + { [left] / [right] } = Wheel Left / Right
-    enable:     1
-    left:       h
-    right:      semicolon
-    speed:      1.0
-    reverse:    0
-    fingers:    1
-    area:       # top/right/bottom/left
-
-  move mouse by keys:
-    desc:       (MultiTouchExtension) Touchpad + { [up] / [right] / [down] / [left] } = Move Mouse Up / Right / Down / Left
+  mouse move:
+    desc:       (Mouse Mode) [up] / [right] / [down] / [left] = Move Mouse Up / Right / Down / Left
     enable:     1
     up:         e
     right:      f
     down:       d
     left:       s
     speed:      1.0
-    fingers:    1
-    area:       # top/right/bottom/left
+
+  mouse buttons:
+    desc:       (Mouse Mode) [left] / [middle] / [right] = Mouse Buttons Left / Middle / Right
+    enable:     1
+    left:       j
+    middle:     m
+    right:      l
+
+  mouse wheel up/down:
+    desc:       (Mouse Mode) [up] / [down] = Mouse Wheel Up / Down
+    enable:     1
+    up:         i
+    down:       k
+    speed:      1.0
+
+  mouse wheel left/right:
+    desc:       (Mouse Mode) [left] / [right] = Mouse Wheel Left / Right
+    enable:     1
+    left:       h
+    right:      semicolon
+    speed:      1.0
+
+  touch to mouse move:
+    desc:       Touchpad + { [up] / [right] / [down] / [left] } = Move Mouse Up / Right / Down / Left
+    enable:     1
+    up:         e
+    right:      f
+    down:       d
+    left:       s
+    speed:      1.0
+
+  touch to mouse buttons:
+    desc:       Touchpad + { [left] / [middle] / [right] } = Mouse Buttons Left / Middle / Right
+    enable:     1
+    left:       j
+    middle:     m
+    right:      l
+
+  touch to mouse wheel up/down:
+    desc:       Touchpad + { [up] / [down] } = Mouse Wheel Up / Down
+    enable:     1
+    up:         i
+    down:       k
+    speed:      1.0
+
+  touch to mouse wheel left/right:
+    desc:       Touchpad + { [left] / [right] } = Mouse Wheel Left / Right
+    enable:     1
+    left:       h
+    right:      semicolon
+    speed:      1.0
 
 
 apps:

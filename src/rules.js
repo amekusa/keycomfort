@@ -8,6 +8,7 @@ const {
 } = require('karabinerge');
 
 const modding = if_var('keycomfort_layer', 1);
+const mouse_mode = 'keycomfort_mode_mouse';
 const any = {optional: 'any'};
 const rules = {
 
@@ -579,80 +580,131 @@ const rules = {
 		})
 	},
 
-	'l-click'(c, r) {
-		r.cond(if_touched(c.fingers, c.area))
-		.remap({
-			from: key(c.from, any),
-			to:   {pointing_button: c.to}
-		})
+	'mouse mode': {
+		'on'(c, r) {
+			r.cond(modding)
+			.cond(if_var(mouse_mode, 0))
+			.remap({
+				from: key(c.on),
+				to:   set_var(mouse_mode, 1)
+			})
+		},
+		'off'(c, r) {
+			r.cond(modding)
+			.cond(if_var(mouse_mode, 1))
+			.remap({
+				from: key(c.off),
+				to:   set_var(mouse_mode, 0)
+			})
+		},
 	},
 
-	'r-click'(c, r) {
-		r.cond(if_touched(c.fingers, c.area))
-		.remap({
-			from: key(c.from, any),
-			to:   {pointing_button: c.to}
-		})
+	'mouse move'(c, r) {
+		r.cond(if_var(mouse_mode, 1))
+		.cond(if_touched(0));
+		mouse_move(c, r);
 	},
 
-	'm-click'(c, r) {
-		r.cond(if_touched(c.fingers, c.area))
-		.remap({
-			from: key(c.from, any),
-			to:   {pointing_button: c.to}
-		})
+	'mouse buttons'(c, r) {
+		r.cond(if_var(mouse_mode, 1))
+		.cond(if_touched(0));
+		mouse_buttons(c, r);
 	},
 
-	'wheel up/down'(c, r) {
-		let speed = Math.round(32 * c.speed);
-		let flip = c.reverse ? -1 : 1;
-		r.cond(if_touched(c.fingers, c.area))
-		.remap({
-			from: key(c.up, any),
-			to:   {mouse_key: {vertical_wheel: -speed * flip}}
-		})
-		.remap({
-			from: key(c.down, any),
-			to:   {mouse_key: {vertical_wheel: speed * flip}}
-		})
+	'mouse wheel up/down'(c, r) {
+		r.cond(if_var(mouse_mode, 1))
+		.cond(if_touched(0));
+		mouse_wheel_v(c, r);
 	},
 
-	'wheel left/right'(c, r) {
-		let speed = Math.round(32 * c.speed);
-		let flip = c.reverse ? -1 : 1;
-		r.cond(if_touched(c.fingers, c.area))
-		.remap({
-			from: key(c.left, any),
-			to:   {mouse_key: {horizontal_wheel: speed * flip}}
-		})
-		.remap({
-			from: key(c.right, any),
-			to:   {mouse_key: {horizontal_wheel: -speed * flip}}
-		})
+	'mouse wheel left/right'(c, r) {
+		r.cond(if_var(mouse_mode, 1))
+		.cond(if_touched(0));
+		mouse_wheel_h(c, r);
 	},
 
-	'move mouse by keys'(c, r) {
-		let speed = Math.round(1536 * c.speed);
-		r.cond(if_touched(c.fingers, c.area))
-		.remap({
-			from: key(c.up, any),
-			to:   {mouse_key: {y: -speed}}
-		})
-		.remap({
-			from: key(c.right, any),
-			to:   {mouse_key: {x: speed}}
-		})
-		.remap({
-			from: key(c.down, any),
-			to:   {mouse_key: {y: speed}}
-		})
-		.remap({
-			from: key(c.left, any),
-			to:   {mouse_key: {x: -speed}}
-		})
+	'touch to mouse move'(c, r) {
+		r.cond(if_touched(1))
+		mouse_move(c, r);
+	},
+
+	'touch to mouse buttons'(c, r) {
+		r.cond(if_touched(1))
+		mouse_buttons(c, r);
+	},
+
+	'touch to mouse wheel up/down'(c, r) {
+		r.cond(if_touched(1))
+		mouse_wheel_v(c, r);
+	},
+
+	'touch to mouse wheel left/right'(c, r) {
+		r.cond(if_touched(1))
+		mouse_wheel_h(c, r);
 	},
 
 };
+
+function mouse_move(c, r) {
+	let speed = Math.round(1536 * c.speed);
+	r.remap({
+		from: key(c.up, any),
+		to:   {mouse_key: {y: -speed}}
+	})
+	.remap({
+		from: key(c.right, any),
+		to:   {mouse_key: {x: speed}}
+	})
+	.remap({
+		from: key(c.down, any),
+		to:   {mouse_key: {y: speed}}
+	})
+	.remap({
+		from: key(c.left, any),
+		to:   {mouse_key: {x: -speed}}
+	});
+}
+
+function mouse_buttons(c, r) {
+	r.remap({
+		from: key(c.left, any),
+		to:   {pointing_button: 'button1'}
+	})
+	.remap({
+		from: key(c.right, any),
+		to:   {pointing_button: 'button2'}
+	})
+	r.remap({
+		from: key(c.middle, any),
+		to:   {pointing_button: 'button3'}
+	});
+}
+
+function mouse_wheel_v(c, r) {
+	let speed = Math.round(32 * c.speed);
+	let flip = c.reverse ? -1 : 1;
+	r.remap({
+		from: key(c.up, any),
+		to:   {mouse_key: {vertical_wheel: -speed * flip}}
+	})
+	.remap({
+		from: key(c.down, any),
+		to:   {mouse_key: {vertical_wheel: speed * flip}}
+	});
+}
+
+function mouse_wheel_h(c, r) {
+	let speed = Math.round(32 * c.speed);
+	let flip = c.reverse ? -1 : 1;
+	r.remap({
+		from: key(c.left, any),
+		to:   {mouse_key: {horizontal_wheel: speed * flip}}
+	})
+	.remap({
+		from: key(c.right, any),
+		to:   {mouse_key: {horizontal_wheel: -speed * flip}}
+	});
+}
 
 module.exports = rules;
 

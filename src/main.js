@@ -249,13 +249,6 @@ function generate(target, opts = {}) {
 			return;
 		}
 
-		// apply branching rules
-		if (rule.rules) {
-			for (let k in rule.rules) {
-				addRule(rule.rules[k], rc, `${desc} :: ${k}`); // RECURSION
-			}
-		}
-
 		// apply app-specific rules
 		if (rule.apps) {
 			let newRule;
@@ -276,6 +269,12 @@ function generate(target, opts = {}) {
 				if (enabled.length) newRule.cond(unless_app(...enabled));
 				rule.apps.others(rc, newRule);
 			}
+			delete rule.apps;
+		}
+
+		// apply branching rules
+		for (let k in rule) {
+			addRule(rule[k], rc, `${desc} :: ${k}`); // RECURSION
 		}
 	}
 
