@@ -290,7 +290,7 @@ rules:  # mapping rules
     off:        0
 
   mouse speed up/down:
-    desc:       (Mouse Mode) [up] / [down] = Mouse Speed Up / Down
+    desc:       (Mouse) [up] / [down] = Mouse Speed Up / Down
     enable:     1
     touchpad:   1
     up:         z
@@ -299,7 +299,7 @@ rules:  # mapping rules
     down_to:    .5
 
   mouse move:
-    desc:       (Mouse Mode) [up] / [right] / [down] / [left] = Move Mouse Up / Right / Down / Left
+    desc:       (Mouse) [up] / [right] / [down] / [left] = Move Mouse Up / Right / Down / Left
     enable:     1
     touchpad:   1
     up:         e
@@ -309,7 +309,7 @@ rules:  # mapping rules
     speed:      1.0
 
   mouse buttons:
-    desc:       (Mouse Mode) [left] / [middle] / [right] = Mouse Buttons Left / Middle / Right
+    desc:       (Mouse) [left] / [middle] / [right] = Mouse Buttons Left / Middle / Right
     enable:     1
     touchpad:   1
     left:       j
@@ -317,7 +317,7 @@ rules:  # mapping rules
     right:      l
 
   mouse wheel up/down:
-    desc:       (Mouse Mode) [up] / [down] = Mouse Wheel Up / Down
+    desc:       (Mouse) [up] / [down] = Mouse Wheel Up / Down
     enable:     1
     touchpad:   1
     up:         i
@@ -325,7 +325,7 @@ rules:  # mapping rules
     speed:      1.0
 
   mouse wheel left/right:
-    desc:       (Mouse Mode) [left] / [right] = Mouse Wheel Left / Right
+    desc:       (Mouse) [left] / [right] = Mouse Wheel Left / Right
     enable:     1
     touchpad:   1
     left:       h

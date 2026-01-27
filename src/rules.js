@@ -600,12 +600,12 @@ const rules = {
 	},
 
 	'mouse speed up/down': {
-		'on'(c, r) {
+		'mouse mode: on'(c, r) {
 			if (c.touchpad) r.cond(if_touched(0));
 			r.cond(if_var(mouse_mode, 1));
 			mouse_speed(c, r);
 		},
-		'while touching touchpad'(c, r) {
+		'thumb on touchpad'(c, r) {
 			if (!c.touchpad) return false;
 			r.cond(if_touched(1));
 			mouse_speed(c, r);
@@ -613,12 +613,12 @@ const rules = {
 	},
 
 	'mouse move': {
-		'on'(c, r) {
+		'mouse mode: on'(c, r) {
 			if (c.touchpad) r.cond(if_touched(0));
 			r.cond(if_var(mouse_mode, 1));
 			mouse_move(c, r);
 		},
-		'while touching touchpad'(c, r) {
+		'thumb on touchpad'(c, r) {
 			if (!c.touchpad) return false;
 			r.cond(if_touched(1));
 			mouse_move(c, r);
@@ -626,12 +626,12 @@ const rules = {
 	},
 
 	'mouse buttons': {
-		'on'(c, r) {
+		'mouse mode: on'(c, r) {
 			if (c.touchpad) r.cond(if_touched(0));
 			r.cond(if_var(mouse_mode, 1));
 			mouse_buttons(c, r);
 		},
-		'while touching touchpad'(c, r) {
+		'thumb on touchpad'(c, r) {
 			if (!c.touchpad) return false;
 			r.cond(if_touched(1));
 			mouse_buttons(c, r);
@@ -639,12 +639,12 @@ const rules = {
 	},
 
 	'mouse wheel up/down': {
-		'on'(c, r) {
+		'mouse mode: on'(c, r) {
 			if (c.touchpad) r.cond(if_touched(0));
 			r.cond(if_var(mouse_mode, 1));
 			mouse_wheel_v(c, r);
 		},
-		'while touching touchpad'(c, r) {
+		'thumb on touchpad'(c, r) {
 			if (!c.touchpad) return false;
 			r.cond(if_touched(1));
 			mouse_wheel_v(c, r);
@@ -652,12 +652,12 @@ const rules = {
 	},
 
 	'mouse wheel left/right': {
-		'on'(c, r) {
+		'mouse mode: on'(c, r) {
 			if (c.touchpad) r.cond(if_touched(0));
 			r.cond(if_var(mouse_mode, 1));
 			mouse_wheel_h(c, r);
 		},
-		'while touching touchpad'(c, r) {
+		'thumb on touchpad'(c, r) {
 			if (!c.touchpad) return false;
 			r.cond(if_touched(1));
 			mouse_wheel_h(c, r);
