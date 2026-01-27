@@ -695,12 +695,6 @@ function mouse_move(c, r) {
 		from: key(c.left, any),
 		to:   {mouse_key: {x: -speed}}
 	});
-	// if (c.speed2_key) {
-	// 	r.remap({
-	// 		from: key(c.speed2_key, any),
-	// 		to:   {mouse_key: {speed_multiplier: c.speed2}}
-	// 	});
-	// }
 }
 
 function mouse_buttons(c, r) {
