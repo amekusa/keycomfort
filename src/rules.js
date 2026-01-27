@@ -599,48 +599,56 @@ const rules = {
 		},
 	},
 
-	'mouse move'(c, r) {
-		r.cond(if_var(mouse_mode, 1))
-		.cond(if_touched(0));
-		mouse_move(c, r);
+	'mouse move': {
+		'on'(c, r) {
+			if (c.touchpad) r.cond(if_touched(0));
+			r.cond(if_var(mouse_mode, 1));
+			mouse_move(c, r);
+		},
+		'while touching touchpad'(c, r) {
+			if (!c.touchpad) return false;
+			r.cond(if_touched(1));
+			mouse_move(c, r);
+		},
 	},
 
-	'mouse buttons'(c, r) {
-		r.cond(if_var(mouse_mode, 1))
-		.cond(if_touched(0));
-		mouse_buttons(c, r);
+	'mouse buttons': {
+		'on'(c, r) {
+			if (c.touchpad) r.cond(if_touched(0));
+			r.cond(if_var(mouse_mode, 1));
+			mouse_buttons(c, r);
+		},
+		'while touching touchpad'(c, r) {
+			if (!c.touchpad) return false;
+			r.cond(if_touched(1));
+			mouse_buttons(c, r);
+		},
 	},
 
-	'mouse wheel up/down'(c, r) {
-		r.cond(if_var(mouse_mode, 1))
-		.cond(if_touched(0));
-		mouse_wheel_v(c, r);
+	'mouse wheel up/down': {
+		'on'(c, r) {
+			if (c.touchpad) r.cond(if_touched(0));
+			r.cond(if_var(mouse_mode, 1));
+			mouse_wheel_v(c, r);
+		},
+		'while touching touchpad'(c, r) {
+			if (!c.touchpad) return false;
+			r.cond(if_touched(1));
+			mouse_wheel_v(c, r);
+		},
 	},
 
-	'mouse wheel left/right'(c, r) {
-		r.cond(if_var(mouse_mode, 1))
-		.cond(if_touched(0));
-		mouse_wheel_h(c, r);
-	},
-
-	'touch to mouse move'(c, r) {
-		r.cond(if_touched(1))
-		mouse_move(c, r);
-	},
-
-	'touch to mouse buttons'(c, r) {
-		r.cond(if_touched(1))
-		mouse_buttons(c, r);
-	},
-
-	'touch to mouse wheel up/down'(c, r) {
-		r.cond(if_touched(1))
-		mouse_wheel_v(c, r);
-	},
-
-	'touch to mouse wheel left/right'(c, r) {
-		r.cond(if_touched(1))
-		mouse_wheel_h(c, r);
+	'mouse wheel left/right': {
+		'on'(c, r) {
+			if (c.touchpad) r.cond(if_touched(0));
+			r.cond(if_var(mouse_mode, 1));
+			mouse_wheel_h(c, r);
+		},
+		'while touching touchpad'(c, r) {
+			if (!c.touchpad) return false;
+			r.cond(if_touched(1));
+			mouse_wheel_h(c, r);
+		},
 	},
 
 };

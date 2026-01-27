@@ -281,7 +281,7 @@ function generate(target, opts = {}) {
 
 		// apply branching rules
 		for (let k in rule) {
-			addRule(rule[k], rc, `${desc} :: ${k}`); // RECURSION
+			addRule(rule[k], rc, `${desc} (${k})`); // RECURSION
 		}
 	}
 

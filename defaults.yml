@@ -297,6 +297,7 @@ rules:  # mapping rules
     down:       d
     left:       s
     speed:      1.0
+    touchpad:   1
 
   mouse buttons:
     desc:       (Mouse Mode) [left] / [middle] / [right] = Mouse Buttons Left / Middle / Right
@@ -304,6 +305,7 @@ rules:  # mapping rules
     left:       j
     middle:     m
     right:      l
+    touchpad:   1
 
   mouse wheel up/down:
     desc:       (Mouse Mode) [up] / [down] = Mouse Wheel Up / Down
@@ -311,6 +313,7 @@ rules:  # mapping rules
     up:         i
     down:       k
     speed:      1.0
+    touchpad:   1
 
   mouse wheel left/right:
     desc:       (Mouse Mode) [left] / [right] = Mouse Wheel Left / Right
@@ -318,36 +321,7 @@ rules:  # mapping rules
     left:       h
     right:      semicolon
     speed:      1.0
-
-  touch to mouse move:
-    desc:       Touchpad + { [up] / [right] / [down] / [left] } = Move Mouse Up / Right / Down / Left
-    enable:     1
-    up:         e
-    right:      f
-    down:       d
-    left:       s
-    speed:      1.0
-
-  touch to mouse buttons:
-    desc:       Touchpad + { [left] / [middle] / [right] } = Mouse Buttons Left / Middle / Right
-    enable:     1
-    left:       j
-    middle:     m
-    right:      l
-
-  touch to mouse wheel up/down:
-    desc:       Touchpad + { [up] / [down] } = Mouse Wheel Up / Down
-    enable:     1
-    up:         i
-    down:       k
-    speed:      1.0
-
-  touch to mouse wheel left/right:
-    desc:       Touchpad + { [left] / [right] } = Mouse Wheel Left / Right
-    enable:     1
-    left:       h
-    right:      semicolon
-    speed:      1.0
+    touchpad:   1
 
 
 apps:
