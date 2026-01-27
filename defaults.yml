@@ -301,7 +301,7 @@ rules:  # mapping rules
   mouse move:
     desc:       (Mouse) [up] / [right] / [down] / [left] = Move Mouse Up / Right / Down / Left
     enable:     1
-    touchpad:   1
+    touchpad:   0
     up:         e
     right:      f
     down:       d
