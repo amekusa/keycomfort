@@ -313,7 +313,7 @@ rules:  # mapping rules
     enable:     1
     touchpad:   1
     left:       j
-    middle:     m
+    middle:     h
     right:      l
 
   mouse wheel up/down:
@@ -328,8 +328,8 @@ rules:  # mapping rules
     desc:       (Mouse) [left] / [right] = Mouse Wheel Left / Right
     enable:     1
     touchpad:   1
-    left:       h
-    right:      semicolon
+    left:       u
+    right:      o
     speed:      1.0
 
 
