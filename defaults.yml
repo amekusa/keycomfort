@@ -337,11 +337,6 @@ apps:
   others:
     enable: 1
 
-  login:
-    enable: 1
-    id:
-    - com.apple.loginwindow
-
   terminal:
     enable: 1
     id:
