@@ -8,7 +8,7 @@ const readline = require('node:readline');
 
 const {Command, Argument} = require('commander');
 const yaml = require('yaml');
-const {io, merge, isEmpty} = require('@amekusa/util.js');
+const {io, clone, merge, isEmpty} = require('@amekusa/util.js');
 const {
 	Rule, RuleSet, Config,
 	if_app, unless_app,
@@ -232,9 +232,21 @@ function generate(target, opts = {}) {
 
 	let ruleSet = new RuleSet('KeyComfort');
 
-	function addRule(rule, rc, desc = undefined) {
-		// overwrite conf with vim-like mappings
-		if (vim && rc.vim) rc = merge(rc, rc.vim);
+	/**
+	 * @param {function|object} rule - Rule definition
+	 * @param {object} rc - Rule config
+	 * @param {string} [desc] - Rule description
+	 * @param {function} [fn] - Rule modifier
+	 * @return {mixed} Forwards the return value of `rule` if it's a function
+	 */
+	function addRule(rule, rc, desc = undefined, fn = undefined) {
+		rc = clone(rc);
+
+		// override config with vim-like mappings
+		if (rc.vim && vim) {
+			rc = merge(rc, rc.vim);
+			delete rc.vim;
+		}
 
 		// format rule description
 		if (!desc) {
@@ -243,55 +255,57 @@ function generate(target, opts = {}) {
 			});
 		}
 
-		// apply rule
-		if (typeof rule == 'function') {
-			let newRule = new Rule(desc);
-			if (rule(rc, newRule) !== false) {
-				ruleSet.add(newRule);
+		// override config with app-specific mappings
+		if (rc.apps) {
+			let enabled = []; // enabled apps
+			for (let k in rc.apps) {
+				if (k == 'others') continue;
+				let app = apps[k];
+				if (!app || !app.enable || isEmpty(app.id)) continue;
+				let v = rc.apps[k];
+				if (!v) continue;
+				let _rc = clone(rc); delete _rc.apps;
+				let ret = addRule(rule, merge(_rc, v), `${desc} (${k})`, newRule => {
+					return newRule.cond(if_app(...app.id))
+				}); // #RECURSE
+				if (ret !== false) {
+					enabled = enabled.concat(app.id);
+				}
+			}
+			if (apps.others.enable && rc.apps.others) {
+				let _rc = clone(rc); delete _rc.apps;
+				addRule(rule, merge(_rc, rc.apps.others), `${desc} (others)`, enabled.length ? (newRule => {
+					return newRule.cond(unless_app(...enabled));
+				}) : undefined); // #RECURSE
 			}
 			return;
 		}
 
-		// apply app-specific rules
-		if (rule.apps) {
-			let newRule;
-			let enabled = []; // enabled apps
-			for (let app in rule.apps) {
-				if (app == 'others') continue;
-				if (!apps[app]) continue; // uknown app
-				if (!apps[app].enable) continue; // globally disabled
-				if (!rc.apps[app]) continue; // disabled for this rule
-				if (isEmpty(apps[app].id)) continue; // no app-id
-				enabled = enabled.concat(apps[app].id);
-				newRule = new Rule(desc + ` (${app})`);
-				newRule.cond(if_app(...apps[app].id));
-				if (rule.apps[app](rc, newRule) !== false) {
-					ruleSet.add(newRule);
-				}
+		switch (typeof rule) {
+		case 'function': // apply rule
+			let newRule = new Rule(desc);
+			if (fn) newRule = fn(newRule);
+			let ret = rule(rc, newRule);
+			if (ret !== false) {
+				ruleSet.add(newRule);
 			}
-			if (apps.others.enable && rc.apps.others) {
-				newRule = new Rule(desc);
-				if (enabled.length) newRule.cond(unless_app(...enabled));
-				if (rule.apps.others(rc, newRule) !== false) {
-					ruleSet.add(newRule);
-				}
-			}
-			delete rule.apps;
-		}
+			return ret;
 
-		// apply branching rules
-		for (let k in rule) {
-			addRule(rule[k], rc, `${desc} (${k})`); // RECURSION
+		case 'object': // branching rules
+			for (let k in rule) {
+				addRule(rule[k], rc, `${desc} (${k})`, fn); // #RECURSE
+			}
+			return;
+
+		default:
+			throw new Error(`invalid rule definition`, {cause: rule});
 		}
 	}
 
+	// add rules
 	for (let i in rules) {
-		// rule config
-		let rc = config.rules[i];
-		if (!rc) continue;
-		if (!rc.enable) continue; // rule disabled
-
-		addRule(rules[i], rc);
+		let rc = config.rules[i]; // rule config
+		if (rc && rc.enable) addRule(rules[i], rc);
 	}
 
 	let data = ruleSet.toJSON();
