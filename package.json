@@ -34,12 +34,12 @@
   "author": "Satoshi Soma (https://amekusa.com)",
   "license": "MIT",
   "devDependencies": {
-    "@amekusa/util.js": "^2.2.0",
+    "@amekusa/util.js": "^2.3.0",
     "@rollup/plugin-commonjs": "^29.0.0",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@rollup/plugin-replace": "^6.0.3",
-    "commander": "^14.0.2",
+    "commander": "^14.0.3",
     "karabinerge": "^2.2.1",
     "yaml": "^2.8.2"
   }
