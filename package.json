@@ -9,12 +9,12 @@
     "keycomfort": "dist/keycomfort.js"
   },
   "scripts": {
-    "dev": "rollup -c --watch",
-    "test": "echo noop",
     "version": "npm --no-git-tag-version version",
+    "test": "echo noop",
+    "dev": "rollup -c --watch",
     "build": "rollup -c && chmod u+x ./dist/keycomfort.js",
     "clean": "rm -rf ./dist",
-    "dist": "npm run clean; NODE_ENV=production npm run build && npm run test"
+    "dist": "npm run clean; NODE_ENV=production npm run build && npm run test && ./dist/keycomfort.js gen --no-config --no-save --no-apply -p > ./dist/keycomfort.json"
   },
   "repository": {
     "type": "git",
