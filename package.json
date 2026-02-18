@@ -14,7 +14,11 @@
     "dev": "rollup -c --watch",
     "build": "rollup -c && chmod u+x ./dist/keycomfort.js",
     "clean": "rm -rf ./dist",
-    "dist": "npm run clean; NODE_ENV=production npm run build && npm run test && ./dist/keycomfort.js gen --no-config --no-save --no-apply -p > ./dist/keycomfort.json"
+    "dist": "npm run dist_main && npm run dist_json",
+    "dist_main": "npm run clean; NODE_ENV=production npm run build && npm run test",
+    "dist_json": "npm run dist_json_1; npm run dist_json_2",
+    "dist_json_1": "./dist/keycomfort.js gen --no-save --no-apply -p -d > ./dist/keycomfort.json",
+    "dist_json_2": "./dist/keycomfort.js gen --no-save --no-apply -p -c ./presets/vim.yml > ./dist/keycomfort-vim.json"
   },
   "repository": {
     "type": "git",
