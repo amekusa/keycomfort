@@ -228,7 +228,7 @@ function generate(target, opts = {}) {
 	let labels   = config.key_labels;
 	let vim      = config.vim_like;
 
-	let ruleSet = new RuleSet('KeyComfort');
+	let ruleSet = new RuleSet('Keycomfort (npmjs.com/package/keycomfort)');
 
 	/**
 	 * @param {function|object} rule - Rule definition
