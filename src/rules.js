@@ -510,8 +510,8 @@ const rules = {
 
 function remap(from, to, c, r) {
 	r.remap({
-		from: c[from],
-		to:   c[to]
+		from: key(c[from]),
+		to:   key(c[to])
 	});
 }
 
