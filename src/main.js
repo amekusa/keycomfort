@@ -112,16 +112,14 @@ app.name(pkg.name)
 		debug(`command options:`, cmd.opts());
 	});
 
-app.command('configure')
-	.alias('config')
+app.command('config')
 	.description(`create/edit/reset/delete config`)
 	.argument('[file]', `config file`, defaultConfig)
 	.option('-r, --reset', `reset config with defaults`)
 	.option('-D, --delete', `delete config`)
 	.action(configure);
 
-app.command('generate')
-	.alias('gen')
+app.command('gen')
 	.description(`generate keymaps`)
 	.addArgument(new Argument('[target]', `target application`).choices(['karabiner', 'ahk']).default('karabiner'))
 	.option('-c, --config <path>', `config file`, defaultConfig)
