@@ -8,13 +8,13 @@ Very opinionated, but also easy to customize with a YAML file.
 - macOS
 - [Karabiner Elements](https://karabiner-elements.pqrs.org/)
 
-## Installation 
+## Installation (JSON)
 1. Download the JSON file from [dist](https://github.com/amekusa/keycomfort/tree/master/dist).
 Pick either [keycomfort.json](https://github.com/amekusa/keycomfort/blob/master/dist/keycomfort.json) or [keycomfort-vim.json](https://github.com/amekusa/keycomfort/blob/master/dist/keycomfort-vim.json).
-[keycomfort-vim.json](https://github.com/amekusa/keycomfort/blob/master/dist/keycomfort-vim.json) is for those who prefer Vim-like mappings.
+The latter is for those who prefer Vim-like mappings.
 2. Put the JSON file into `📁 ~/.config/karabiner/assets/complex_modifications`.
 3. Open Karabiner's preferences.
-4. "Complex modifications" ➔ "Add rule" ➔ "Keycomfort" ➔ "Enable All".
+4. `Complex modifications` ➔ `Add rule` ➔ `Keycomfort` ➔ `Enable All`.
 
 ## Installation (CLI)
 If you want to customize the mappings, we recommend installing the commandline utility.
@@ -39,7 +39,7 @@ keycomfort config
 keycomfort gen
 ```
 
-See [configuration examples](https://github.com/amekusa/keycomfort/tree/master/presets).
+See also: [configuration examples](https://github.com/amekusa/keycomfort/tree/master/presets).
 
 ## License
 MIT © 2025 [Satoshi Soma](https://github.com/amekusa)
