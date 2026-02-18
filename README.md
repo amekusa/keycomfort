@@ -1,36 +1,45 @@
 # KEYCOMFORT
-Comfortable keyboard remaps for Karabiner.
+![NPM Version](https://img.shields.io/npm/v/keycomfort?color=blue)
 
-> [!WARNING]  
-> Keycomfort is still in **beta**.
-> There will be a lot of breaking changes until `v1.*`.
+Comfortable keyboard remaps for those who **NEVER** want to move their hands away from the home row position.
+Very opinionated, but also easy to customize with a YAML file.
 
-## Installation
-Keycomfort is a command line application.
-Install it via NPM with `-g` option.
+## Requirements
+- macOS
+- [Karabiner Elements](https://karabiner-elements.pqrs.org/)
+
+## Installation 
+1. Download the JSON file from [dist](https://github.com/amekusa/keycomfort/tree/master/dist).
+Pick either [keycomfort.json](https://github.com/amekusa/keycomfort/blob/master/dist/keycomfort.json) or [keycomfort-vim.json](https://github.com/amekusa/keycomfort/blob/master/dist/keycomfort-vim.json).
+[keycomfort-vim.json](https://github.com/amekusa/keycomfort/blob/master/dist/keycomfort-vim.json) is for those who prefer Vim-like mappings.
+2. Put the JSON file into `📁 ~/.config/karabiner/assets/complex_modifications`.
+3. Open Karabiner's preferences.
+4. "Complex modifications" ➔ "Add rule" ➔ "Keycomfort" ➔ "Enable All".
+
+## Installation (CLI)
+If you want to customize the mappings, we recommend installing the commandline utility.
+You can install it via NPM:
 
 ```sh
 npm i -g keycomfort
 ```
 
-## Usage
-
+## CLI Usage
 ```sh
-Usage: keycomfort [options] [command]
+# Show help
+keycomfort help
 
-Comfortable keyboard remaps for Karabiner/AutoHotKey
+# Show help for command
+keycomfort help [command]
 
-Options:
-  -V, --version                      output the version number
-  -v, --verbose                      output detailed messages for debug
-  -h, --help                         display help for command
+# Create/Edit the config file (~/.config/keycomfort/config.yml)
+keycomfort config
 
-Commands:
-  configure|config [options] [file]  create/edit/reset/delete config
-  generate|gen [options] [target]    generate keymaps
-  help [command]                     display help for command
-
+# Generate/Apply the keymaps (keycomfort.json)
+keycomfort gen
 ```
+
+See [configuration examples](https://github.com/amekusa/keycomfort/tree/master/presets).
 
 ## License
 MIT © 2025 [Satoshi Soma](https://github.com/amekusa)
