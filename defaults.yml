@@ -323,15 +323,15 @@ rules:  # mapping rules
     desc:       (Mouse) [up] / [down] = Mouse Speed Up / Down
     enable:     1
     touchpad:   1
-    up:         z
-    up_to:      2.0
-    down:       a
+    up:         quote
+    up_to:      1.5
+    down:       semicolon
     down_to:    .5
 
   mouse move:
     desc:       (Mouse) [up] / [right] / [down] / [left] = Move Mouse Up / Right / Down / Left
     enable:     1
-    touchpad:   0
+    touchpad:   1
     up:         e
     right:      f
     down:       d
