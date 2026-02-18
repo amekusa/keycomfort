@@ -265,18 +265,20 @@ function generate(target, opts = {}) {
 				let v = rc.apps[k];
 				if (!v) continue;
 				let _rc = clone(rc); delete _rc.apps;
-				let ret = addRule(rule, merge(_rc, v), `${desc} (${k})`, newRule => {
-					return newRule.cond(if_app(...app.id))
-				}); // #RECURSE
+				let fn = newRule => newRule.cond(if_app(...app.id));
+				let ret = addRule(rule, merge(_rc, v), `${desc} (app: ${k})`, fn); // #RECURSE
 				if (ret !== false) {
 					enabled = enabled.concat(app.id);
 				}
 			}
 			if (apps.others.enable && rc.apps.others) {
 				let _rc = clone(rc); delete _rc.apps;
-				addRule(rule, merge(_rc, rc.apps.others), `${desc} (others)`, enabled.length ? (newRule => {
-					return newRule.cond(unless_app(...enabled));
-				}) : undefined); // #RECURSE
+				let fn;
+				if (enabled.length) {
+					fn = newRule => newRule.cond(unless_app(...enabled));
+					desc = `${desc} (app: others)`;
+				}
+				addRule(rule, merge(_rc, rc.apps.others), desc, fn); // #RECURSE
 			}
 			return;
 		}
