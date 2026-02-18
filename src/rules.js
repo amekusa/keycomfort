@@ -208,7 +208,9 @@ const rules = {
 	},
 
 	'left/right tab'(c, r) {
-		remap_left_right(c, r.cond(modding));
+		r.cond(modding);
+		remap('left',  'left_to',  c, r);
+		remap('right', 'right_to', c, r);
 	},
 
 	'close/open tab'(c, r) {
@@ -490,12 +492,14 @@ const rules = {
 		'mouse mode: on'(c, r) {
 			if (c.touchpad) r.cond(if_touched(0));
 			r.cond(if_var(mouse_mode, 1));
-			remap_left_right(c, r);
+			remap('left',  'left_to',  c, r);
+			remap('right', 'right_to', c, r);
 		},
 		'thumb on touchpad'(c, r) {
 			if (!c.touchpad) return false;
 			r.cond(if_touched(1));
-			remap_left_right(c, r);
+			remap('left',  'left_to',  c, r);
+			remap('right', 'right_to', c, r);
 		},
 	},
 
@@ -533,17 +537,6 @@ function remap(from, to, c, r) {
 	r.remap({
 		from: key(c[from]),
 		to:   key(c[to])
-	});
-}
-
-function remap_left_right(c, r) {
-	r.remap({
-		from: key(c.left),
-		to:   key(c.left_to)
-	})
-	.remap({
-		from: key(c.right),
-		to:   key(c.right_to)
 	});
 }
 
