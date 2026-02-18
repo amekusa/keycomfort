@@ -299,11 +299,11 @@ const rules = {
 		r.cond(modding)
 		.remap({
 			from: key(c.plus),
-			to:   key(c.to.plus)
+			to:   key('equal_sign', 'shift')
 		})
 		.remap({
 			from: key(c.minus),
-			to:   key(c.to.minus)
+			to:   key('hyphen')
 		})
 	},
 

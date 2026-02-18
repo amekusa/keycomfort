@@ -233,9 +233,6 @@ rules:  # mapping rules
     enable:     1
     plus:       p
     minus:      shift + p
-    to:
-      plus:     shift + equal_sign
-      minus:    hyphen
 
   backslash:
     desc:       <modifier> + [from] = Backslash
