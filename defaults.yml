@@ -198,8 +198,8 @@ rules:  # mapping rules
         back_to:    command + open_bracket
         forward_to: command + close_bracket
       browser:
-        back_to:    command + left_arrow
-        forward_to: command + right_arrow
+        back_to:    command + open_bracket
+        forward_to: command + close_bracket
 
   numpad:
     desc:       <modifier> + [trigger] = Numpad Mode ([num1]=1, [num5]=5, [num9]=9)
@@ -413,8 +413,8 @@ rules:  # mapping rules
         back_to:    command + open_bracket
         forward_to: command + close_bracket
       browser:
-        back_to:    command + left_arrow
-        forward_to: command + right_arrow
+        back_to:    command + open_bracket
+        forward_to: command + close_bracket
 
 
 apps:
@@ -452,8 +452,8 @@ apps:
   vscode:
     enable: 0
     id:
-    - com.microsoft.VSCode
     - com.vscodium
+    - com.microsoft.VSCode
     exe:
     - Code.exe
 
