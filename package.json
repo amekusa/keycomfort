@@ -1,7 +1,7 @@
 {
   "name": "keycomfort",
-  "version": "0.9.0",
-  "description": "Comfortable keyboard remaps for Karabiner/AutoHotKey",
+  "version": "0.10.0",
+  "description": "Comfortable keyboard remaps for Karabiner",
   "files": [
     "dist"
   ],
@@ -23,6 +23,7 @@
   "keywords": [
     "keyboard",
     "remap",
+    "vim",
     "accessibility",
     "a11y",
     "karabiner",
