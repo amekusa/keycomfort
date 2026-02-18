@@ -308,59 +308,31 @@ const rules = {
 	},
 
 	'backslash'(c, r) {
-		r.cond(modding)
-		.remap({
-			from: key(c.from),
-			to:   key(c.to)
-		})
+		remap_from_to(c, r.cond(modding));
 	},
 
 	'backtick'(c, r) {
-		r.cond(modding)
-		.remap({
-			from: key(c.from),
-			to:   key(c.to)
-		})
+		remap_from_to(c, r.cond(modding));
 	},
 
 	'tilde'(c, r) {
-		r.cond(modding)
-		.remap({
-			from: key(c.from),
-			to:   key(c.to)
-		})
+		remap_from_to(c, r.cond(modding));
 	},
 
 	'pipe'(c, r) {
-		r.cond(modding)
-		.remap({
-			from: key(c.from),
-			to:   key(c.to)
-		})
+		remap_from_to(c, r.cond(modding));
 	},
 
 	'equal'(c, r) {
-		r.cond(modding)
-		.remap({
-			from: key(c.from),
-			to:   key(c.to)
-		})
+		remap_from_to(c, r.cond(modding));
 	},
 
 	'enter'(c, r) {
-		r.cond(modding)
-		.remap({
-			from: key(c.from),
-			to:   key(c.to)
-		})
+		remap_from_to(c, r.cond(modding));
 	},
 
 	'underscore'(c, r) {
-		r.cond(modding)
-		.remap({
-			from: key(c.from),
-			to:   key(c.to)
-		})
+		remap_from_to(c, r.cond(modding));
 	},
 
 	'custom'(c, r) {
@@ -519,15 +491,24 @@ const rules = {
 	'mouse left/right tab': {
 		'mouse mode: on'(c, r) {
 			if (c.touchpad) r.cond(if_touched(0));
-			remap_left_right(c, r.cond(if_var(mouse_mode, 1)));
+			r.cond(if_var(mouse_mode, 1));
+			remap_left_right(c, r);
 		},
 		'thumb on touchpad'(c, r) {
 			if (!c.touchpad) return false;
-			remap_left_right(c, r.cond(if_touched(1)));
+			r.cond(if_touched(1));
+			remap_left_right(c, r);
 		},
 	},
 
 };
+
+function remap_from_to(c, r) {
+	r.remap({
+		from: key(c.from),
+		to:   key(c.to)
+	});
+}
 
 function remap_left_right(c, r) {
 	r.remap({
