@@ -212,15 +212,7 @@ const rules = {
 	},
 
 	'close/open tab'(c, r) {
-		r.cond(modding)
-		.remap({
-			from: key(c.close),
-			to:   key('w', 'command')
-		})
-		.remap({
-			from: key(c.open),
-			to:   key('t', 'command')
-		})
+		close_open_tab(c, r.cond(modding));
 	},
 
 	'numpad'(c, r) {
@@ -501,6 +493,19 @@ const rules = {
 		},
 	},
 
+	'mouse close/open tab': {
+		'mouse mode: on'(c, r) {
+			if (c.touchpad) r.cond(if_touched(0));
+			r.cond(if_var(mouse_mode, 1));
+			close_open_tab(c, r);
+		},
+		'thumb on touchpad'(c, r) {
+			if (!c.touchpad) return false;
+			r.cond(if_touched(1));
+			close_open_tab(c, r);
+		},
+	},
+
 };
 
 function remap(from, to, c, r) {
@@ -518,6 +523,17 @@ function remap_left_right(c, r) {
 	.remap({
 		from: key(c.right),
 		to:   key(c.right_to)
+	});
+}
+
+function close_open_tab(c, r) {
+	r.remap({
+		from: key(c.close),
+		to:   key('w', 'command')
+	})
+	.remap({
+		from: key(c.open),
+		to:   key('t', 'command')
 	});
 }
 

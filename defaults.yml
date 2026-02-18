@@ -366,8 +366,8 @@ rules:  # mapping rules
     desc:       (Mouse) [left] / [right] = Left/Right Tab
     enable:     1
     touchpad:   1
-    left:       y
-    right:      p
+    left:       n
+    right:      m
     apps:
       vscode:
         left_to:  command + option + left_arrow
@@ -378,6 +378,13 @@ rules:  # mapping rules
       others:
         left_to:  control + shift + tab
         right_to: control + tab
+
+  mouse close/open tab:
+    desc:       (Mouse) [close] / [open] = Close / Open Tab
+    enable:     1
+    touchpad:   1
+    close:      b
+    open:       comma
 
 
 apps:
