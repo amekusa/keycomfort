@@ -308,31 +308,31 @@ const rules = {
 	},
 
 	'backslash'(c, r) {
-		remap_from_to(c, r.cond(modding));
+		remap('from', 'to', c, r.cond(modding));
 	},
 
 	'backtick'(c, r) {
-		remap_from_to(c, r.cond(modding));
+		remap('from', 'to', c, r.cond(modding));
 	},
 
 	'tilde'(c, r) {
-		remap_from_to(c, r.cond(modding));
+		remap('from', 'to', c, r.cond(modding));
 	},
 
 	'pipe'(c, r) {
-		remap_from_to(c, r.cond(modding));
+		remap('from', 'to', c, r.cond(modding));
 	},
 
 	'equal'(c, r) {
-		remap_from_to(c, r.cond(modding));
+		remap('from', 'to', c, r.cond(modding));
 	},
 
 	'enter'(c, r) {
-		remap_from_to(c, r.cond(modding));
+		remap('from', 'to', c, r.cond(modding));
 	},
 
 	'underscore'(c, r) {
-		remap_from_to(c, r.cond(modding));
+		remap('from', 'to', c, r.cond(modding));
 	},
 
 	'custom'(c, r) {
@@ -503,10 +503,10 @@ const rules = {
 
 };
 
-function remap_from_to(c, r) {
+function remap(from, to, c, r) {
 	r.remap({
-		from: key(c.from),
-		to:   key(c.to)
+		from: c[from],
+		to:   c[to]
 	});
 }
 
