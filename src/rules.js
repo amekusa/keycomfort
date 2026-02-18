@@ -336,7 +336,7 @@ const rules = {
 	},
 
 	'custom'(c, r) {
-		if (!c.rules.length) return;
+		if (!c.rules || !c.rules.length) return;
 		r.cond(modding);
 		for (let {from, to, alone} of c.rules) {
 			let map = {
