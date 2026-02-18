@@ -188,6 +188,19 @@ rules:  # mapping rules
     close:      1
     open:       4
 
+  go back/forward:
+    desc:       <modifier> + { [back] / [forward] } = Go Back / Forward
+    enable:     1
+    back:       control + q
+    forward:    control + w
+    apps:
+      filemanager:
+        back_to:    command + open_bracket
+        forward_to: command + close_bracket
+      browser:
+        back_to:    command + left_arrow
+        forward_to: command + right_arrow
+
   numpad:
     desc:       <modifier> + [trigger] = Numpad Mode ([num1]=1, [num5]=5, [num9]=9)
     enable:     1
@@ -389,10 +402,43 @@ rules:  # mapping rules
     close:      b
     open:       comma
 
+  mouse go back/forward:
+    desc:       (Mouse) [back] / [forward] = Go Back / Forward
+    enable:     1
+    touchpad:   1
+    back:       y
+    forward:    p
+    apps:
+      filemanager:
+        back_to:    command + open_bracket
+        forward_to: command + close_bracket
+      browser:
+        back_to:    command + left_arrow
+        forward_to: command + right_arrow
+
 
 apps:
   others:
     enable: 1
+
+  filemanager:
+    enable: 1
+    id:
+    - com.apple.finder
+    exe:
+    - explorer.exe
+
+  browser:
+    enable: 1
+    id:
+    - org.mozilla.firefox
+    - com.apple.Safari
+    - org.chromium.Chromium
+    - com.google.Chrome
+    exe:
+    - firefox.exe
+    - msedge.exe
+    - chromium.exe
 
   terminal:
     enable: 1

@@ -215,6 +215,12 @@ const rules = {
 		close_open_tab(c, r.cond(modding));
 	},
 
+	'go back/forward'(c, r) {
+		r.cond(modding)
+		remap('back',    'back_to',    c, r);
+		remap('forward', 'forward_to', c, r);
+	},
+
 	'numpad'(c, r) {
 		r.cond(modding)
 		.remap({
@@ -503,6 +509,21 @@ const rules = {
 			if (!c.touchpad) return false;
 			r.cond(if_touched(1));
 			close_open_tab(c, r);
+		},
+	},
+
+	'mouse go back/forward': {
+		'mouse mode: on'(c, r) {
+			if (c.touchpad) r.cond(if_touched(0));
+			r.cond(if_var(mouse_mode, 1));
+			remap('back',    'back_to',    c, r);
+			remap('forward', 'forward_to', c, r);
+		},
+		'thumb on touchpad'(c, r) {
+			if (!c.touchpad) return false;
+			r.cond(if_touched(1));
+			remap('back',    'back_to',    c, r);
+			remap('forward', 'forward_to', c, r);
 		},
 	},
 
