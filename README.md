@@ -1,5 +1,5 @@
 # KEYCOMFORT
-![NPM Version](https://img.shields.io/npm/v/keycomfort?color=blue)
+[![NPM Version](https://img.shields.io/npm/v/keycomfort?color=blue)](https://www.npmjs.com/package/keycomfort)
 
 Comfortable keyboard remaps for those who **NEVER** want to move their hands away from the home row position.
 Very opinionated, but also easy to customize with a YAML file.
