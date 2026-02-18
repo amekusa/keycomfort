@@ -362,6 +362,23 @@ rules:  # mapping rules
     right:      o
     speed:      1.0
 
+  mouse left/right tab:
+    desc:       (Mouse) [left] / [right] = Left/Right Tab
+    enable:     1
+    touchpad:   1
+    left:       y
+    right:      p
+    apps:
+      vscode:
+        left_to:  command + option + left_arrow
+        right_to: command + option + right_arrow
+      eclipse:
+        left_to:  control + page_up
+        right_to: control + page_down
+      others:
+        left_to:  control + shift + tab
+        right_to: control + tab
+
 
 apps:
   others:
