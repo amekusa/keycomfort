@@ -391,6 +391,9 @@ rules:  # mapping rules
       eclipse:
         left_to:  control + page_up
         right_to: control + page_down
+      sonicpi:
+        left_to:  command + shift + open_bracket
+        right_to: command + shift + close_bracket
       others:
         left_to:  control + shift + tab
         right_to: control + tab
