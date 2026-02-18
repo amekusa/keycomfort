@@ -6,7 +6,7 @@
     "dist/keycomfort.js"
   ],
   "bin": {
-    "keycomfort": "./dist/keycomfort.js"
+    "keycomfort": "dist/keycomfort.js"
   },
   "scripts": {
     "dev": "rollup -c --watch",
