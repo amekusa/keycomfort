@@ -1,6 +1,6 @@
 {
   "name": "keycomfort",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "Comfortable keyboard remaps for Karabiner/AutoHotKey",
   "files": [
     "dist/keycomfort.js"

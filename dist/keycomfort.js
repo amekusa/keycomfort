@@ -11640,6 +11640,20 @@ var os=require$$0$2,fs=require$$3,fsp=require$$2,path=require$$3$1,node_stream=r
 	const isEmptyOrFalsey = isEmptyOrFalsy;
 
 	/**
+	 * @class TypedArray
+	 */
+	const TypedArray = Object.getPrototypeOf(Int8Array);
+
+	/**
+	 * Checks if the given value is an {@link TypedArray}.
+	 * @param {any} x
+	 * @return {boolean}
+	 */
+	function isTypedArray(x) {
+		return x instanceof TypedArray;
+	}
+
+	/**
 	 * Removes "empty" values from the given object or array.
 	 * @param {object|any[]} x
 	 * @param {number} recurse - Recursion limit
@@ -11662,6 +11676,37 @@ var os=require$$0$2,fs=require$$3,fsp=require$$2,path=require$$3$1,node_stream=r
 					if (!isEmpty(v)) r[k] = v;
 				}
 				return r;
+			}
+		}
+		return x;
+	}
+
+	/**
+	 * Recursively clones the given value (deep clone). 
+	 * The given value won't be modified.
+	 * @param {any} x - Value to clone
+	 * @param {number} [recurse=8] - Recursion limit. Negative number means unlimited
+	 * @param {function} [fn] - Function to process each value. If nothing (or undefined) was returned by it, the value is handled normally
+	 * @return {any} Cloned value
+	 */
+	function clone(x, recurse = 8, fn = undefined) {
+		if (fn) {
+			let r = fn(x);
+			if (r !== undefined) return r;
+		}
+		if (x) {
+			if (x instanceof TypedArray) {
+				return x.subarray();
+			}
+			if (recurse) {
+				if (Array.isArray(x)) {
+					return x.map(it => clone(it, recurse - 1, fn));
+				}
+				if (typeof x == 'object') {
+					let r = {};
+					for (let k in x) r[k] = clone(x[k], recurse - 1, fn);
+					return r;
+				}
 			}
 		}
 		return x;
@@ -11743,7 +11788,7 @@ var os=require$$0$2,fs=require$$3,fsp=require$$2,path=require$$3$1,node_stream=r
 			? (_, m1) => (modifier(dig(data, m1), m1, data) || '')
 			: (_, m1) => (dig(data, m1) || '')
 		);
-	}var gen=/*#__PURE__*/Object.freeze({__proto__:null,arr:arr,clean:clean$1,dig:dig,is:is,isEmpty:isEmpty,isEmptyOrFalsey:isEmptyOrFalsey,isEmptyOrFalsy:isEmptyOrFalsy,merge:merge$1,subst:subst});/*!
+	}var gen=/*#__PURE__*/Object.freeze({__proto__:null,TypedArray:TypedArray,arr:arr,clean:clean$1,clone:clone,dig:dig,is:is,isEmpty:isEmpty,isEmptyOrFalsey:isEmptyOrFalsey,isEmptyOrFalsy:isEmptyOrFalsy,isTypedArray:isTypedArray,merge:merge$1,subst:subst});/*!
 	 * === @amekusa/util.js/web === *
 	 * MIT License
 	 *
@@ -12190,14 +12235,7 @@ var os=require$$0$2,fs=require$$3,fsp=require$$2,path=require$$3$1,node_stream=r
 				let {type, src} = item;
 				let url;
 
-				if (!item.resolve) { // no resolution
-					url = src;
-					if (!type) type = typeMap[ext(src)] || 'asset';
-					console.log('---- File Link ----');
-					console.log(' type:', type);
-					console.log('  src:', src);
-
-				} else { // needs resolution
+				if (item.resolve) { // needs resolution
 					let {dst:dstDir, as:dstFile} = item;
 					let create = item.resolve == 'create'; // needs creation?
 					if (create) {
@@ -12228,6 +12266,13 @@ var os=require$$0$2,fs=require$$3,fsp=require$$2,path=require$$3$1,node_stream=r
 						console.log('  dst:', dst);
 						tasks.push(fsp.copyFile(src, dst));
 					}
+
+				} else { // no resolution
+					url = src;
+					if (!type) type = typeMap[ext(src)] || 'asset';
+					console.log('---- File Link ----');
+					console.log(' type:', type);
+					console.log('  src:', src);
 				}
 
 				if (!item.private) {
@@ -12702,7 +12747,7 @@ var os=require$$0$2,fs=require$$3,fsp=require$$2,path=require$$3$1,node_stream=r
 				}
 			}
 		});
-	}var test=/*#__PURE__*/Object.freeze({__proto__:null,InvalidTest:InvalidTest,assertEqual:assertEqual,assertProps:assertProps,assertType:assertType,testFn:testFn,testInstance:testInstance,testMethod:testMethod});amekusa_util.arr=arr;amekusa_util.clean=clean$1;amekusa_util.dig=dig;amekusa_util.gen=gen;amekusa_util.io=io;amekusa_util.is=is;amekusa_util.isEmpty=isEmpty;amekusa_util.isEmptyOrFalsey=isEmptyOrFalsey;amekusa_util.isEmptyOrFalsy=isEmptyOrFalsy;amekusa_util.merge=merge$1;amekusa_util.sh=sh;amekusa_util.subst=subst;amekusa_util.test=test;amekusa_util.time=time;amekusa_util.web=web;
+	}var test=/*#__PURE__*/Object.freeze({__proto__:null,InvalidTest:InvalidTest,assertEqual:assertEqual,assertProps:assertProps,assertType:assertType,testFn:testFn,testInstance:testInstance,testMethod:testMethod});amekusa_util.TypedArray=TypedArray;amekusa_util.arr=arr;amekusa_util.clean=clean$1;amekusa_util.clone=clone;amekusa_util.dig=dig;amekusa_util.gen=gen;amekusa_util.io=io;amekusa_util.is=is;amekusa_util.isEmpty=isEmpty;amekusa_util.isEmptyOrFalsey=isEmptyOrFalsey;amekusa_util.isEmptyOrFalsy=isEmptyOrFalsy;amekusa_util.isTypedArray=isTypedArray;amekusa_util.merge=merge$1;amekusa_util.sh=sh;amekusa_util.subst=subst;amekusa_util.test=test;amekusa_util.time=time;amekusa_util.web=web;
 	return amekusa_util;
 }var karabinerge = {};var hasRequiredKarabinerge;
 
@@ -14337,7 +14382,7 @@ function requireKarabinerge () {
 	karabinerge.unless_var = unless_var;
 	return karabinerge;
 }var name = "keycomfort";
-var version = "0.8.0";
+var version = "0.9.0";
 var description = "Comfortable keyboard remaps for Karabiner/AutoHotKey";
 var require$$9 = {
 	name: name,
@@ -14433,69 +14478,28 @@ function requireRules () {
 			});
 		},
 
-		'prev/next word': {
-			apps: {
-				sonicpi(c, r) {
-					r.cond(modding)
-					.remap({
-						from: key(c.prev),
-						to:   key('b', 'command')
-					})
-					.remap({
-						from: key(c.next),
-						to:   key('f', 'command')
-					});
-				},
-				others(c, r) {
-					r.cond(modding)
-					.remap({
-						from: key(c.prev),
-						to:   key('left_arrow', 'option')
-					})
-					.remap({
-						from: key(c.next),
-						to:   key('right_arrow', 'option')
-					});
-				},
-			},
+		'prev/next word'(c, r) {
+			r.cond(modding)
+			.remap({
+				from: key(c.prev),
+				to:   key(c.prev_to)
+			})
+			.remap({
+				from: key(c.next),
+				to:   key(c.next_to)
+			});
 		},
 
-		'line start/end': {
-			apps: {
-				terminal(c, r) {
-					r.cond(modding)
-					.remap({
-						from: key(c.start),
-						to:   key('home')
-					})
-					.remap({
-						from: key(c.end),
-						to:   key('end')
-					});
-				},
-				sonicpi(c, r) {
-					r.cond(modding)
-					.remap({
-						from: key(c.start),
-						to:   key('a', 'control')
-					})
-					.remap({
-						from: key(c.end),
-						to:   key('e', 'control')
-					});
-				},
-				others(c, r) {
-					r.cond(modding)
-					.remap({
-						from: key(c.start),
-						to:   key('left_arrow', 'command')
-					})
-					.remap({
-						from: key(c.end),
-						to:   key('right_arrow', 'command')
-					});
-				},
-			},
+		'line start/end'(c, r) {
+			r.cond(modding)
+			.remap({
+				from: key(c.start),
+				to:   key(c.start_to)
+			})
+			.remap({
+				from: key(c.end),
+				to:   key(c.end_to)
+			});
 		},
 
 		'select'(c, r) {
@@ -14570,155 +14574,48 @@ function requireRules () {
 			});
 		},
 
-		'delete line': {
-			apps: {
-				atom(c, r) {
-					r.cond(modding)
-					.remap({
-						from: key(c.key),
-						to:   key('k', ['control', 'shift'])
-					});
-				},
-				vscode(c, r) {
-					r.cond(modding)
-					.remap({
-						from: key(c.key),
-						to:   key('k', ['command', 'shift'])
-					});
-				},
-				eclipse(c, r) {
-					r.cond(modding)
-					.remap({
-						from: key(c.key),
-						to:   key('d', 'command')
-					});
-				},
-			},
+		'delete line'(c, r) {
+			r.cond(modding)
+			.remap({
+				from: key(c.key),
+				to:   key(c.key_to)
+			});
 		},
 
-		'insert line': {
-			apps: {
-				atom(c, r) {
-					r.cond(modding)
-					.remap({
-						from: key(c.key),
-						to:   key('return_or_enter', 'command')
-					});
-				},
-				vscode(c, r) {
-					r.cond(modding)
-					.remap({
-						from: key(c.key),
-						to:   key('return_or_enter', 'command')
-					});
-				},
-				eclipse(c, r) {
-					r.cond(modding)
-					.remap({
-						from: key(c.key),
-						to:   key('return_or_enter', 'shift')
-					});
-				},
-			},
+		'insert line'(c, r) {
+			r.cond(modding)
+			.remap({
+				from: key(c.key),
+				to:   key(c.key_to)
+			});
 		},
 
-		'move line': {
-			apps: {
-				atom(c, r) {
-					r.cond(modding)
-					.remap({
-						from: key(c.up),
-						to:   key('up_arrow', ['command', 'control'])
-					})
-					.remap({
-						from: key(c.down),
-						to:   key('down_arrow', ['command', 'control'])
-					});
-				},
-				vscode(c, r) {
-					r.cond(modding)
-					.remap({
-						from: key(c.up),
-						to:   key('up_arrow', 'option')
-					})
-					.remap({
-						from: key(c.down),
-						to:   key('down_arrow', 'option')
-					});
-				},
-				eclipse(c, r) {
-					r.cond(modding)
-					.remap({
-						from: key(c.up),
-						to:   key('up_arrow', 'option')
-					})
-					.remap({
-						from: key(c.down),
-						to:   key('down_arrow', 'option')
-					});
-				},
-				sonicpi(c, r) {
-					r.cond(modding)
-					.remap({
-						from: key(c.up),
-						to:   key('p', ['command', 'control'])
-					})
-					.remap({
-						from: key(c.down),
-						to:   key('n', ['command', 'control'])
-					});
-				},
-			},
+		'move line'(c, r) {
+			r.cond(modding)
+			.remap({
+				from: key(c.up),
+				to:   key(c.up_to)
+			})
+			.remap({
+				from: key(c.down),
+				to:   key(c.down_to)
+			});
 		},
 
-		'left/right tab': {
-			apps: {
-				vscode(c, r) {
-					r.cond(modding)
-					.remap({
-						from: key(c.left),
-						to:   key('left_arrow', ['command', 'option'])
-					})
-					.remap({
-						from: key(c.right),
-						to:   key('right_arrow', ['command', 'option'])
-					});
-				},
-				eclipse(c, r) {
-					r.cond(modding)
-					.remap({
-						from: key(c.left),
-						to:   key('page_up', 'control')
-					})
-					.remap({
-						from: key(c.right),
-						to:   key('page_down', 'control')
-					});
-				},
-				others(c, r) {
-					r.cond(modding)
-					.remap({
-						from: key(c.left),
-						to:   key('tab', ['control', 'shift'])
-					})
-					.remap({
-						from: key(c.right),
-						to:   key('tab', 'control')
-					});
-				},
-			},
+		'left/right tab'(c, r) {
+			r.cond(modding);
+			remap('left',  'left_to',  c, r);
+			remap('right', 'right_to', c, r);
 		},
 
 		'close/open tab'(c, r) {
-			r.cond(modding)
-			.remap({
-				from: key(c.close),
-				to:   key('w', 'command')
-			})
-			.remap({
-				from: key(c.open),
-				to:   key('t', 'command')
-			});
+			close_open_tab(c, r.cond(modding));
+		},
+
+		'go back/forward'(c, r) {
+			r.cond(modding);
+			remap('back',    'back_to',    c, r);
+			remap('forward', 'forward_to', c, r);
 		},
 
 		'numpad'(c, r) {
@@ -14806,59 +14703,31 @@ function requireRules () {
 		},
 
 		'backslash'(c, r) {
-			r.cond(modding)
-			.remap({
-				from: key(c.from),
-				to:   key(c.to)
-			});
+			remap('from', 'to', c, r.cond(modding));
 		},
 
 		'backtick'(c, r) {
-			r.cond(modding)
-			.remap({
-				from: key(c.from),
-				to:   key(c.to)
-			});
+			remap('from', 'to', c, r.cond(modding));
 		},
 
 		'tilde'(c, r) {
-			r.cond(modding)
-			.remap({
-				from: key(c.from),
-				to:   key(c.to)
-			});
+			remap('from', 'to', c, r.cond(modding));
 		},
 
 		'pipe'(c, r) {
-			r.cond(modding)
-			.remap({
-				from: key(c.from),
-				to:   key(c.to)
-			});
+			remap('from', 'to', c, r.cond(modding));
 		},
 
 		'equal'(c, r) {
-			r.cond(modding)
-			.remap({
-				from: key(c.from),
-				to:   key(c.to)
-			});
+			remap('from', 'to', c, r.cond(modding));
 		},
 
 		'enter'(c, r) {
-			r.cond(modding)
-			.remap({
-				from: key(c.from),
-				to:   key(c.to)
-			});
+			remap('from', 'to', c, r.cond(modding));
 		},
 
 		'underscore'(c, r) {
-			r.cond(modding)
-			.remap({
-				from: key(c.from),
-				to:   key(c.to)
-			});
+			remap('from', 'to', c, r.cond(modding));
 		},
 
 		'custom'(c, r) {
@@ -15014,7 +14883,68 @@ function requireRules () {
 			},
 		},
 
+		'mouse left/right tab': {
+			'mouse mode: on'(c, r) {
+				if (c.touchpad) r.cond(if_touched(0));
+				r.cond(if_var(mouse_mode, 1));
+				remap('left',  'left_to',  c, r);
+				remap('right', 'right_to', c, r);
+			},
+			'thumb on touchpad'(c, r) {
+				if (!c.touchpad) return false;
+				r.cond(if_touched(1));
+				remap('left',  'left_to',  c, r);
+				remap('right', 'right_to', c, r);
+			},
+		},
+
+		'mouse close/open tab': {
+			'mouse mode: on'(c, r) {
+				if (c.touchpad) r.cond(if_touched(0));
+				r.cond(if_var(mouse_mode, 1));
+				close_open_tab(c, r);
+			},
+			'thumb on touchpad'(c, r) {
+				if (!c.touchpad) return false;
+				r.cond(if_touched(1));
+				close_open_tab(c, r);
+			},
+		},
+
+		'mouse go back/forward': {
+			'mouse mode: on'(c, r) {
+				if (c.touchpad) r.cond(if_touched(0));
+				r.cond(if_var(mouse_mode, 1));
+				remap('back',    'back_to',    c, r);
+				remap('forward', 'forward_to', c, r);
+			},
+			'thumb on touchpad'(c, r) {
+				if (!c.touchpad) return false;
+				r.cond(if_touched(1));
+				remap('back',    'back_to',    c, r);
+				remap('forward', 'forward_to', c, r);
+			},
+		},
+
 	};
+
+	function remap(from, to, c, r) {
+		r.remap({
+			from: key(c[from]),
+			to:   key(c[to])
+		});
+	}
+
+	function close_open_tab(c, r) {
+		r.remap({
+			from: key(c.close),
+			to:   key('w', 'command')
+		})
+		.remap({
+			from: key(c.open),
+			to:   key('t', 'command')
+		});
+	}
 
 	function mouse_speed(c, r) {
 		r.remap({
@@ -15045,12 +14975,6 @@ function requireRules () {
 			from: key(c.left, any),
 			to:   {mouse_key: {x: -speed}}
 		});
-		// if (c.speed2_key) {
-		// 	r.remap({
-		// 		from: key(c.speed2_key, any),
-		// 		to:   {mouse_key: {speed_multiplier: c.speed2}}
-		// 	});
-		// }
 	}
 
 	function mouse_buttons(c, r) {
@@ -15109,7 +15033,7 @@ function requireMain () {
 
 	const {Command, Argument} = requireCommander();
 	const yaml = require$$6;
-	const {io, merge, isEmpty} = requireAmekusa_util();
+	const {io, clone, merge, isEmpty} = requireAmekusa_util();
 	const {
 		Rule, RuleSet, Config,
 		if_app, unless_app,
@@ -15146,7 +15070,7 @@ function requireMain () {
 
 	const pkg = require$$9;
 	const rules = requireRules();
-	const defaultsYML = "# === KEYCOMFORT CONFIG ===\n# NOTE:\n#   0 means \"No\"\n#   1 means \"Yes\"\n\npaths:\n  karabiner:\n    save_as:    ~/.config/karabiner/assets/complex_modifications/keycomfort.json\n    apply_to:   ~/.config/karabiner/karabiner.json\n  ahk:\n    save_as:    ~/Desktop/keycomfort.ahk\n    apply_to:\n\nvim_like: 0  # prefer vim-like mappings?\n\nrules:  # mapping rules\n\n  modifier:\n    desc:       Use [key] as a special modifier key (Required)\n    enable:     1\n    key:        spacebar\n    alone:      spacebar\n\n  cancel modifier:\n    desc:       Cancel modifier (<modifier>) with [key]\n    enable:     1\n    key:        left_shift\n\n  disable modifier:\n    desc:       Disable modifier (<modifier>) with <modifier> + [key]\n    enable:     1\n    key:        right_shift + escape\n\n  enable modifier:\n    desc:       Enable modifier (<modifier>) with [key]\n    enable:     1\n    key:        right_shift + escape\n\n  arrows:\n    desc:       <modifier> + { [up] / [right] / [down] / [left] } = Up / Right / Down / Left\n    enable:     1\n    up:         e\n    right:      f\n    down:       d\n    left:       s\n\n  page up/down:\n    desc:       <modifier> + { [up] / [down] } = Page Up / Down\n    enable:     1\n    up:         w\n    down:       r\n\n  prev/next word:\n    desc:       <modifier> + { [prev] / [next] } = Prev / Next Word\n    enable:     1\n    prev:       a\n    next:       g\n    apps:\n      sonicpi:  1\n      others:   1\n\n  line start/end:\n    desc:       <modifier> + { [start] / [end] } = Line Start / End\n    enable:     1\n    start:      q\n    end:        t\n    apps:\n      terminal: 1\n      sonicpi:  1\n      others:   1\n\n  select:\n    desc:       <modifier> + { [up] / [right] / [down] / [left] } = Select Up / Right / Down / Left\n    enable:     1\n    up:         i\n    right:      l\n    down:       k\n    left:       j\n    vim:\n      left:     h\n      down:     j\n      up:       k\n      right:    l\n\n  indent/outdent:\n    desc:       <modifier> + { [indent] / [outdent] } = Indent / Outdent\n    enable:     1\n    indent:     o\n    outdent:    u\n\n  backspace/delete:\n    desc:       <modifier> + { [backspace] / [delete] } = Backspace / Delete\n    enable:     1\n    backspace:  n\n    delete:     m\n\n  delete word:\n    desc:       <modifier> + [key] = Delete Word\n    enable:     1\n    key:        b\n\n  edit:\n    desc:       <modifier> + { [undo] / [cut] / [copy] / [paste] } = Undo / Cut / Copy / Paste\n    enable:     1\n    undo:       z\n    cut:        x\n    copy:       c\n    paste:      v\n\n  delete line:\n    desc:       <modifier> + [key] = Delete Line\n    enable:     1\n    key:        shift + m\n    apps:\n      atom:     1\n      vscode:   1\n      eclipse:  1\n\n  insert line:\n    desc:       <modifier> + [key] = New Line Below\n    enable:     1\n    key:        return_or_enter\n    apps:\n      atom:     1\n      vscode:   1\n      eclipse:  1\n\n  move line:\n    desc:       <modifier> + { [up] / [down] } = Move Line Up / Down\n    enable:     1\n    up:         shift + i\n    down:       shift + k\n    vim:\n      up:       shift + k\n      down:     shift + j\n    apps:\n      atom:     1\n      vscode:   1\n      eclipse:  1\n      sonicpi:  1\n\n  left/right tab:\n    desc:       <modifier> + { [left] / [right] } = Left / Right Tab\n    enable:     1\n    left:       2\n    right:      3\n    apps:\n      vscode:   1\n      eclipse:  1\n      others:   1\n\n  close/open tab:\n    desc:       <modifier> + { [close] / [open] } = Close / Open Tab\n    enable:     1\n    close:      1\n    open:       4\n\n  numpad:\n    desc:       <modifier> + [trigger] = Numpad Mode ([num1]=1, [num5]=5, [num9]=9)\n    enable:     1\n    trigger:    left_control\n\n    num0:       b\n    num1:       n\n    num2:       m\n    num3:       comma\n\n    num4:       j\n    num5:       k\n    num6:       l\n\n    num7:       u\n    num8:       i\n    num9:       o\n\n    slash:      8\n    asterisk:   9\n    hyphen:     0\n    plus:       p\n\n    enter:      slash\n    delete:     semicolon\n    backspace:  h\n\n  plus/minus:\n    desc:       <modifier> + { [plus] / [minus] } = Plus / Minus\n    enable:     1\n    plus:       p\n    minus:      shift + p\n    to:\n      plus:     shift + equal_sign\n      minus:    hyphen\n\n  backslash:\n    desc:       <modifier> + [from] = Backslash\n    enable:     1\n    from:       slash\n    to:         backslash\n\n  backtick:\n    desc:       <modifier> + [from] = Backtick\n    enable:     1\n    from:       quote\n    to:         grave_accent_and_tilde\n\n  tilde:\n    desc:       <modifier> + [from] = Tilde\n    enable:     1\n    from:       hyphen\n    to:         shift + grave_accent_and_tilde\n\n  pipe:\n    desc:       <modifier> + [from] = Pipe\n    enable:     1\n    from:       7\n    to:         shift + backslash\n\n  equal:\n    desc:       <modifier> + [from] = Equal Sign\n    enable:     1\n    from:       semicolon\n    to:         equal_sign\n\n  enter:\n    desc:       <modifier> + [from] = Enter\n    enable:     1\n    from:       tab\n    to:         return_or_enter\n\n  underscore:\n    desc:       <modifier> + [from] = Underscore\n    enable:     1\n    from:       period\n    to:         shift + hyphen\n\n  custom:\n    desc:       <modifier> + Custom Keys\n    enable:     1\n    rules:\n      # Examples\n      # - from: p\n      #   to:   shift + equal_sign\n\n  remap capslock:\n    desc:       Caps Lock = [to] / [alone]\n    enable:     1\n    to:         left_control\n    alone:      escape\n\n  remap l-control:\n    desc:       Left Control = [to] / [alone]\n    enable:     1\n    to:         left_control\n    alone:      escape\n\n  remap r-control:\n    desc:       Right Control = [to] / [alone]\n    enable:     0\n    to:         right_control\n    alone:      escape\n\n  remap l-command:\n    desc:       Left Command = [to] / [alone]\n    enable:     0\n    to:         left_command\n    alone:      left_command\n\n  remap r-command:\n    desc:       Right Command = [to] / [alone]\n    enable:     0\n    to:         right_command\n    alone:      right_command\n\n  remap l-shift:\n    desc:       Left Shift = [to] / [alone]\n    enable:     0\n    to:         left_shift\n    alone:      left_shift\n\n  remap r-shift:\n    desc:       Right Shift = [to] / [alone]\n    enable:     0\n    to:         right_shift\n    alone:      right_shift\n\n  mouse mode:\n    desc:       <modifier> + { [on] / [off] } = Mouse Mode On / Off\n    enable:     1\n    on:         9\n    off:        0\n\n  mouse speed up/down:\n    desc:       (Mouse) [up] / [down] = Mouse Speed Up / Down\n    enable:     1\n    touchpad:   1\n    up:         z\n    up_to:      2.0\n    down:       a\n    down_to:    .5\n\n  mouse move:\n    desc:       (Mouse) [up] / [right] / [down] / [left] = Move Mouse Up / Right / Down / Left\n    enable:     1\n    touchpad:   1\n    up:         e\n    right:      f\n    down:       d\n    left:       s\n    speed:      1.0\n\n  mouse buttons:\n    desc:       (Mouse) [left] / [middle] / [right] = Mouse Buttons Left / Middle / Right\n    enable:     1\n    touchpad:   1\n    left:       j\n    middle:     m\n    right:      l\n\n  mouse wheel up/down:\n    desc:       (Mouse) [up] / [down] = Mouse Wheel Up / Down\n    enable:     1\n    touchpad:   1\n    up:         i\n    down:       k\n    speed:      1.0\n\n  mouse wheel left/right:\n    desc:       (Mouse) [left] / [right] = Mouse Wheel Left / Right\n    enable:     1\n    touchpad:   1\n    left:       h\n    right:      semicolon\n    speed:      1.0\n\n\napps:\n  others:\n    enable: 1\n\n  login:\n    enable: 1\n    id:\n    - com.apple.loginwindow\n\n  terminal:\n    enable: 1\n    id:\n    - com.apple.Terminal\n    - com.googlecode.iterm2\n    - org.alacritty\n    exe:\n    - cmd.exe\n\n  vscode:\n    enable: 0\n    id:\n    - com.microsoft.VSCode\n    - com.vscodium\n    exe:\n    - Code.exe\n\n  atom:\n    enable: 0\n    id:\n    - com.github.atom\n    - dev.pulsar-edit.pulsar\n\n  eclipse:\n    enable: 0\n    id:\n    - org.eclipse.platform.ide\n    exe:\n    - eclipse.exe\n\n  sonicpi:\n    enable: 0\n    id:\n    - net.sonic-pi.app\n\n\nkey_labels:  # display names for key codes\n  spacebar: Space\n  return_or_enter: Enter\n  grave_accent_and_tilde: Backtick\n  button1: Left Click\n  button2: Right Click\n  button3: Middle Click\n  japanese_eisuu: 英数\n  japanese_kana: かな\n\n";
+	const defaultsYML = "# === KEYCOMFORT CONFIG ===\n# NOTE:\n#   0 means \"No\"\n#   1 means \"Yes\"\n\npaths:\n  karabiner:\n    save_as:    ~/.config/karabiner/assets/complex_modifications/keycomfort.json\n    apply_to:   ~/.config/karabiner/karabiner.json\n  ahk:\n    save_as:    ~/Desktop/keycomfort.ahk\n    apply_to:\n\nvim_like: 0  # prefer vim-like mappings?\n\nrules:  # mapping rules\n\n  modifier:\n    desc:       Use [key] as a special modifier key (Required)\n    enable:     1\n    key:        spacebar\n    alone:      spacebar\n\n  cancel modifier:\n    desc:       Cancel modifier (<modifier>) with [key]\n    enable:     1\n    key:        left_shift\n\n  disable modifier:\n    desc:       Disable modifier (<modifier>) with <modifier> + [key]\n    enable:     1\n    key:        right_shift + escape\n\n  enable modifier:\n    desc:       Enable modifier (<modifier>) with [key]\n    enable:     1\n    key:        right_shift + escape\n\n  arrows:\n    desc:       <modifier> + { [up] / [right] / [down] / [left] } = Up / Right / Down / Left\n    enable:     1\n    up:         e\n    right:      f\n    down:       d\n    left:       s\n\n  page up/down:\n    desc:       <modifier> + { [up] / [down] } = Page Up / Down\n    enable:     1\n    up:         w\n    down:       r\n\n  prev/next word:\n    desc:       <modifier> + { [prev] / [next] } = Prev / Next Word\n    enable:     1\n    prev:       a\n    next:       g\n    apps:\n      sonicpi:\n        prev_to: command + b\n        next_to: command + f\n      others:\n        prev_to: option + left_arrow\n        next_to: option + right_arrow\n\n  line start/end:\n    desc:       <modifier> + { [start] / [end] } = Line Start / End\n    enable:     1\n    start:      q\n    end:        t\n    apps:\n      terminal:\n        start_to: home\n        end_to:   end\n      sonicpi:\n        start_to: control + a\n        end_to:   control + e\n      others:\n        start_to: command + left_arrow\n        end_to:   command + right_arrow\n\n  select:\n    desc:       <modifier> + { [up] / [right] / [down] / [left] } = Select Up / Right / Down / Left\n    enable:     1\n    up:         i\n    right:      l\n    down:       k\n    left:       j\n    vim:\n      left:     h\n      down:     j\n      up:       k\n      right:    l\n\n  indent/outdent:\n    desc:       <modifier> + { [indent] / [outdent] } = Indent / Outdent\n    enable:     1\n    indent:     o\n    outdent:    u\n\n  backspace/delete:\n    desc:       <modifier> + { [backspace] / [delete] } = Backspace / Delete\n    enable:     1\n    backspace:  n\n    delete:     m\n\n  delete word:\n    desc:       <modifier> + [key] = Delete Word\n    enable:     1\n    key:        b\n\n  edit:\n    desc:       <modifier> + { [undo] / [cut] / [copy] / [paste] } = Undo / Cut / Copy / Paste\n    enable:     1\n    undo:       z\n    cut:        x\n    copy:       c\n    paste:      v\n\n  delete line:\n    desc:       <modifier> + [key] = Delete Line\n    enable:     1\n    key:        shift + m\n    apps:\n      atom:\n        key_to: control + shift + k\n      vscode:\n        key_to: command + shift + k\n      eclipse:\n        key_to: command + d\n\n  insert line:\n    desc:       <modifier> + [key] = New Line Below\n    enable:     1\n    key:        return_or_enter\n    apps:\n      atom:\n        key_to: command + return_or_enter\n      vscode:\n        key_to: command + return_or_enter\n      eclipse:\n        key_to: shift + return_or_enter\n\n  move line:\n    desc:       <modifier> + { [up] / [down] } = Move Line Up / Down\n    enable:     1\n    up:         shift + i\n    down:       shift + k\n    vim:\n      up:       shift + k\n      down:     shift + j\n    apps:\n      atom:\n        up_to:   command + control + up_arrow\n        down_to: command + control + down_arrow\n      vscode:\n        up_to:   option + up_arrow\n        down_to: option + down_arrow\n      eclipse:\n        up_to:   option + up_arrow\n        down_to: option + down_arrow\n      sonicpi:\n        up_to:   command + control + p\n        down_to: command + control + n\n\n  left/right tab:\n    desc:       <modifier> + { [left] / [right] } = Left / Right Tab\n    enable:     1\n    left:       2\n    right:      3\n    apps:\n      vscode:\n        left_to:  command + option + left_arrow\n        right_to: command + option + right_arrow\n      eclipse:\n        left_to:  control + page_up\n        right_to: control + page_down\n      sonicpi:\n        left_to:  command + shift + open_bracket\n        right_to: command + shift + close_bracket\n      others:\n        left_to:  control + shift + tab\n        right_to: control + tab\n\n  close/open tab:\n    desc:       <modifier> + { [close] / [open] } = Close / Open Tab\n    enable:     1\n    close:      1\n    open:       4\n\n  go back/forward:\n    desc:       <modifier> + { [back] / [forward] } = Go Back / Forward\n    enable:     1\n    back:       control + q\n    forward:    control + w\n    apps:\n      filemanager:\n        back_to:    command + open_bracket\n        forward_to: command + close_bracket\n      browser:\n        back_to:    command + left_arrow\n        forward_to: command + right_arrow\n\n  numpad:\n    desc:       <modifier> + [trigger] = Numpad Mode ([num1]=1, [num5]=5, [num9]=9)\n    enable:     1\n    trigger:    left_control\n\n    num0:       b\n    num1:       n\n    num2:       m\n    num3:       comma\n\n    num4:       j\n    num5:       k\n    num6:       l\n\n    num7:       u\n    num8:       i\n    num9:       o\n\n    slash:      8\n    asterisk:   9\n    hyphen:     0\n    plus:       p\n\n    enter:      slash\n    delete:     semicolon\n    backspace:  h\n\n  plus/minus:\n    desc:       <modifier> + { [plus] / [minus] } = Plus / Minus\n    enable:     1\n    plus:       p\n    minus:      shift + p\n    to:\n      plus:     shift + equal_sign\n      minus:    hyphen\n\n  backslash:\n    desc:       <modifier> + [from] = Backslash\n    enable:     1\n    from:       slash\n    to:         backslash\n\n  backtick:\n    desc:       <modifier> + [from] = Backtick\n    enable:     1\n    from:       quote\n    to:         grave_accent_and_tilde\n\n  tilde:\n    desc:       <modifier> + [from] = Tilde\n    enable:     1\n    from:       hyphen\n    to:         shift + grave_accent_and_tilde\n\n  pipe:\n    desc:       <modifier> + [from] = Pipe\n    enable:     1\n    from:       7\n    to:         shift + backslash\n\n  equal:\n    desc:       <modifier> + [from] = Equal Sign\n    enable:     1\n    from:       semicolon\n    to:         equal_sign\n\n  enter:\n    desc:       <modifier> + [from] = Enter\n    enable:     1\n    from:       tab\n    to:         return_or_enter\n\n  underscore:\n    desc:       <modifier> + [from] = Underscore\n    enable:     1\n    from:       period\n    to:         shift + hyphen\n\n  custom:\n    desc:       <modifier> + Custom Keys\n    enable:     1\n    rules:\n      # Examples\n      # - from: p\n      #   to:   shift + equal_sign\n\n  remap capslock:\n    desc:       Caps Lock = [to] / [alone]\n    enable:     1\n    to:         left_control\n    alone:      escape\n\n  remap l-control:\n    desc:       Left Control = [to] / [alone]\n    enable:     1\n    to:         left_control\n    alone:      escape\n\n  remap r-control:\n    desc:       Right Control = [to] / [alone]\n    enable:     0\n    to:         right_control\n    alone:      escape\n\n  remap l-command:\n    desc:       Left Command = [to] / [alone]\n    enable:     0\n    to:         left_command\n    alone:      left_command\n\n  remap r-command:\n    desc:       Right Command = [to] / [alone]\n    enable:     0\n    to:         right_command\n    alone:      right_command\n\n  remap l-shift:\n    desc:       Left Shift = [to] / [alone]\n    enable:     0\n    to:         left_shift\n    alone:      left_shift\n\n  remap r-shift:\n    desc:       Right Shift = [to] / [alone]\n    enable:     0\n    to:         right_shift\n    alone:      right_shift\n\n  mouse mode:\n    desc:       <modifier> + { [on] / [off] } = Mouse Mode On / Off\n    enable:     1\n    on:         9\n    off:        0\n\n  mouse speed up/down:\n    desc:       (Mouse) [up] / [down] = Mouse Speed Up / Down\n    enable:     1\n    touchpad:   1\n    up:         quote\n    up_to:      1.5\n    down:       semicolon\n    down_to:    .5\n\n  mouse move:\n    desc:       (Mouse) [up] / [right] / [down] / [left] = Move Mouse Up / Right / Down / Left\n    enable:     1\n    touchpad:   1\n    up:         e\n    right:      f\n    down:       d\n    left:       s\n    speed:      1.0\n\n  mouse buttons:\n    desc:       (Mouse) [left] / [middle] / [right] = Mouse Buttons Left / Middle / Right\n    enable:     1\n    touchpad:   1\n    left:       j\n    middle:     h\n    right:      l\n\n  mouse wheel up/down:\n    desc:       (Mouse) [up] / [down] = Mouse Wheel Up / Down\n    enable:     1\n    touchpad:   1\n    up:         i\n    down:       k\n    speed:      1.0\n\n  mouse wheel left/right:\n    desc:       (Mouse) [left] / [right] = Mouse Wheel Left / Right\n    enable:     1\n    touchpad:   1\n    left:       u\n    right:      o\n    speed:      1.0\n\n  mouse left/right tab:\n    desc:       (Mouse) [left] / [right] = Left/Right Tab\n    enable:     1\n    touchpad:   1\n    left:       n\n    right:      m\n    apps:\n      vscode:\n        left_to:  command + option + left_arrow\n        right_to: command + option + right_arrow\n      eclipse:\n        left_to:  control + page_up\n        right_to: control + page_down\n      others:\n        left_to:  control + shift + tab\n        right_to: control + tab\n\n  mouse close/open tab:\n    desc:       (Mouse) [close] / [open] = Close / Open Tab\n    enable:     1\n    touchpad:   1\n    close:      b\n    open:       comma\n\n  mouse go back/forward:\n    desc:       (Mouse) [back] / [forward] = Go Back / Forward\n    enable:     1\n    touchpad:   1\n    back:       y\n    forward:    p\n    apps:\n      filemanager:\n        back_to:    command + open_bracket\n        forward_to: command + close_bracket\n      browser:\n        back_to:    command + left_arrow\n        forward_to: command + right_arrow\n\n\napps:\n  others:\n    enable: 1\n\n  filemanager:\n    enable: 1\n    id:\n    - com.apple.finder\n    exe:\n    - explorer.exe\n\n  browser:\n    enable: 1\n    id:\n    - org.mozilla.firefox\n    - com.apple.Safari\n    - org.chromium.Chromium\n    - com.google.Chrome\n    exe:\n    - firefox.exe\n    - msedge.exe\n    - chromium.exe\n\n  terminal:\n    enable: 1\n    id:\n    - com.apple.Terminal\n    - com.googlecode.iterm2\n    - org.alacritty\n    exe:\n    - cmd.exe\n\n  vscode:\n    enable: 0\n    id:\n    - com.microsoft.VSCode\n    - com.vscodium\n    exe:\n    - Code.exe\n\n  atom:\n    enable: 0\n    id:\n    - com.github.atom\n    - dev.pulsar-edit.pulsar\n\n  eclipse:\n    enable: 0\n    id:\n    - org.eclipse.platform.ide\n    exe:\n    - eclipse.exe\n\n  sonicpi:\n    enable: 0\n    id:\n    - net.sonic-pi.app\n\n\nkey_labels:  # display names for key codes\n  spacebar: Space\n  return_or_enter: Enter\n  grave_accent_and_tilde: Backtick\n  button1: Left Click\n  button2: Right Click\n  button3: Middle Click\n  japanese_eisuu: 英数\n  japanese_kana: かな\n\n";
 	const defaults = yaml.parse(defaultsYML);
 	const defaultConfig = loc(io.home, '.config', 'keycomfort', 'config.yml');
 
@@ -15333,9 +15257,21 @@ function requireMain () {
 
 		let ruleSet = new RuleSet('KeyComfort');
 
-		function addRule(rule, rc, desc = undefined) {
-			// overwrite conf with vim-like mappings
-			if (vim && rc.vim) rc = merge(rc, rc.vim);
+		/**
+		 * @param {function|object} rule - Rule definition
+		 * @param {object} rc - Rule config
+		 * @param {string} [desc] - Rule description
+		 * @param {function} [fn] - Rule modifier
+		 * @return {mixed} Forwards the return value of `rule` if it's a function
+		 */
+		function addRule(rule, rc, desc = undefined, fn = undefined) {
+			rc = clone(rc);
+
+			// override config with vim-like mappings
+			if (rc.vim && vim) {
+				rc = merge(rc, rc.vim);
+				delete rc.vim;
+			}
 
 			// format rule description
 			if (!desc) {
@@ -15344,55 +15280,59 @@ function requireMain () {
 				});
 			}
 
-			// apply rule
-			if (typeof rule == 'function') {
-				let newRule = new Rule(desc);
-				if (rule(rc, newRule) !== false) {
-					ruleSet.add(newRule);
+			// override config with app-specific mappings
+			if (rc.apps) {
+				let enabled = []; // enabled apps
+				for (let k in rc.apps) {
+					if (k == 'others') continue;
+					let app = apps[k];
+					if (!app || !app.enable || isEmpty(app.id)) continue;
+					let v = rc.apps[k];
+					if (!v) continue;
+					let _rc = clone(rc); delete _rc.apps;
+					let fn = newRule => newRule.cond(if_app(...app.id));
+					let ret = addRule(rule, merge(_rc, v), `${desc} (app: ${k})`, fn); // #RECURSE
+					if (ret !== false) {
+						enabled = enabled.concat(app.id);
+					}
+				}
+				if (apps.others.enable && rc.apps.others) {
+					let _rc = clone(rc); delete _rc.apps;
+					let fn;
+					if (enabled.length) {
+						fn = newRule => newRule.cond(unless_app(...enabled));
+						desc = `${desc} (app: others)`;
+					}
+					addRule(rule, merge(_rc, rc.apps.others), desc, fn); // #RECURSE
 				}
 				return;
 			}
 
-			// apply app-specific rules
-			if (rule.apps) {
-				let newRule;
-				let enabled = []; // enabled apps
-				for (let app in rule.apps) {
-					if (app == 'others') continue;
-					if (!apps[app]) continue; // uknown app
-					if (!apps[app].enable) continue; // globally disabled
-					if (!rc.apps[app]) continue; // disabled for this rule
-					if (isEmpty(apps[app].id)) continue; // no app-id
-					enabled = enabled.concat(apps[app].id);
-					newRule = new Rule(desc + ` (${app})`);
-					newRule.cond(if_app(...apps[app].id));
-					if (rule.apps[app](rc, newRule) !== false) {
-						ruleSet.add(newRule);
-					}
+			switch (typeof rule) {
+			case 'function': // apply rule
+				let newRule = new Rule(desc);
+				if (fn) newRule = fn(newRule);
+				let ret = rule(rc, newRule);
+				if (ret !== false) {
+					ruleSet.add(newRule);
 				}
-				if (apps.others.enable && rc.apps.others) {
-					newRule = new Rule(desc);
-					if (enabled.length) newRule.cond(unless_app(...enabled));
-					if (rule.apps.others(rc, newRule) !== false) {
-						ruleSet.add(newRule);
-					}
-				}
-				delete rule.apps;
-			}
+				return ret;
 
-			// apply branching rules
-			for (let k in rule) {
-				addRule(rule[k], rc, `${desc} (${k})`); // RECURSION
+			case 'object': // branching rules
+				for (let k in rule) {
+					addRule(rule[k], rc, `${desc} (${k})`, fn); // #RECURSE
+				}
+				return;
+
+			default:
+				throw new Error(`invalid rule definition`, {cause: rule});
 			}
 		}
 
+		// add rules
 		for (let i in rules) {
-			// rule config
-			let rc = config.rules[i];
-			if (!rc) continue;
-			if (!rc.enable) continue; // rule disabled
-
-			addRule(rules[i], rc);
+			let rc = config.rules[i]; // rule config
+			if (rc && rc.enable) addRule(rules[i], rc);
 		}
 
 		let data = ruleSet.toJSON();
