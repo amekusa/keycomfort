@@ -3,7 +3,7 @@
   "version": "0.10.0",
   "description": "Comfortable keyboard remaps for Karabiner",
   "files": [
-    "dist"
+    "dist/keycomfort.js"
   ],
   "bin": {
     "keycomfort": "dist/keycomfort.js"
