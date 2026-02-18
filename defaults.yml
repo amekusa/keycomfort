@@ -56,8 +56,12 @@ rules:  # mapping rules
     prev:       a
     next:       g
     apps:
-      sonicpi:  1
-      others:   1
+      sonicpi:
+        prev_to: command + b
+        next_to: command + f
+      others:
+        prev_to: option + left_arrow
+        next_to: option + right_arrow
 
   line start/end:
     desc:       <modifier> + { [start] / [end] } = Line Start / End
@@ -65,9 +69,15 @@ rules:  # mapping rules
     start:      q
     end:        t
     apps:
-      terminal: 1
-      sonicpi:  1
-      others:   1
+      terminal:
+        start_to: home
+        end_to:   end
+      sonicpi:
+        start_to: control + a
+        end_to:   control + e
+      others:
+        start_to: command + left_arrow
+        end_to:   command + right_arrow
 
   select:
     desc:       <modifier> + { [up] / [right] / [down] / [left] } = Select Up / Right / Down / Left
@@ -112,18 +122,24 @@ rules:  # mapping rules
     enable:     1
     key:        shift + m
     apps:
-      atom:     1
-      vscode:   1
-      eclipse:  1
+      atom:
+        key_to: control + shift + k
+      vscode:
+        key_to: command + shift + k
+      eclipse:
+        key_to: command + d
 
   insert line:
     desc:       <modifier> + [key] = New Line Below
     enable:     1
     key:        return_or_enter
     apps:
-      atom:     1
-      vscode:   1
-      eclipse:  1
+      atom:
+        key_to: command + return_or_enter
+      vscode:
+        key_to: command + return_or_enter
+      eclipse:
+        key_to: shift + return_or_enter
 
   move line:
     desc:       <modifier> + { [up] / [down] } = Move Line Up / Down
@@ -134,10 +150,18 @@ rules:  # mapping rules
       up:       shift + k
       down:     shift + j
     apps:
-      atom:     1
-      vscode:   1
-      eclipse:  1
-      sonicpi:  1
+      atom:
+        up_to:   command + control + up_arrow
+        down_to: command + control + down_arrow
+      vscode:
+        up_to:   option + up_arrow
+        down_to: option + down_arrow
+      eclipse:
+        up_to:   option + up_arrow
+        down_to: option + down_arrow
+      sonicpi:
+        up_to:   command + control + p
+        down_to: command + control + n
 
   left/right tab:
     desc:       <modifier> + { [left] / [right] } = Left / Right Tab
@@ -145,9 +169,15 @@ rules:  # mapping rules
     left:       2
     right:      3
     apps:
-      vscode:   1
-      eclipse:  1
-      others:   1
+      vscode:
+        left_to:  command + option + left_arrow
+        right_to: command + option + right_arrow
+      eclipse:
+        left_to:  control + page_up
+        right_to: control + page_down
+      others:
+        left_to:  control + shift + tab
+        right_to: control + tab
 
   close/open tab:
     desc:       <modifier> + { [close] / [open] } = Close / Open Tab
