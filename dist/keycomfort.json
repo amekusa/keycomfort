@@ -1,0 +1,2962 @@
+{
+  "title": "KeyComfort",
+  "rules": [
+    {
+      "description": "Use Space as a special modifier key (Required)",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "spacebar",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "set_variable": {
+                "name": "keycomfort_layer",
+                "value": 1
+              },
+              "lazy": true
+            }
+          ],
+          "to_after_key_up": [
+            {
+              "set_variable": {
+                "name": "keycomfort_layer",
+                "value": 0
+              }
+            }
+          ],
+          "to_if_alone": [
+            {
+              "key_code": "spacebar"
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_unless",
+              "name": "keycomfort_layer_disable",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Cancel modifier (Space) with L-Shift",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "left_shift",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "set_variable": {
+                "name": "keycomfort_layer_disable",
+                "value": 1
+              }
+            },
+            {
+              "key_code": "left_shift"
+            }
+          ],
+          "to_after_key_up": [
+            {
+              "set_variable": {
+                "name": "keycomfort_layer_disable",
+                "value": 0
+              }
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer_disable",
+              "value": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Disable modifier (Space) with Space + R-Shift + Escape",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "escape",
+            "modifiers": {
+              "mandatory": [
+                "right_shift"
+              ]
+            }
+          },
+          "to": [
+            {
+              "set_variable": {
+                "name": "keycomfort_layer_disable",
+                "value": 1
+              }
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            },
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer_disable",
+              "value": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Enable modifier (Space) with R-Shift + Escape",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "escape",
+            "modifiers": {
+              "mandatory": [
+                "right_shift"
+              ]
+            }
+          },
+          "to": [
+            {
+              "set_variable": {
+                "name": "keycomfort_layer_disable",
+                "value": 0
+              }
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer_disable",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Space + { E / F / D / S } = Up / Right / Down / Left",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "e",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "up_arrow"
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "f",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "right_arrow"
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "d",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "down_arrow"
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "s",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "left_arrow"
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Space + { W / R } = Page Up / Down",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "w"
+          },
+          "to": [
+            {
+              "key_code": "page_up"
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "r"
+          },
+          "to": [
+            {
+              "key_code": "page_down"
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Space + { A / G } = Prev / Next Word",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "a"
+          },
+          "to": [
+            {
+              "key_code": "left_arrow",
+              "modifiers": [
+                "option"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "g"
+          },
+          "to": [
+            {
+              "key_code": "right_arrow",
+              "modifiers": [
+                "option"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Space + { Q / T } = Line Start / End (app: terminal)",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "q"
+          },
+          "to": [
+            {
+              "key_code": "home"
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "com.apple.Terminal",
+                "com.googlecode.iterm2",
+                "org.alacritty"
+              ]
+            },
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "t"
+          },
+          "to": [
+            {
+              "key_code": "end"
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "com.apple.Terminal",
+                "com.googlecode.iterm2",
+                "org.alacritty"
+              ]
+            },
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Space + { Q / T } = Line Start / End (app: others)",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "q"
+          },
+          "to": [
+            {
+              "key_code": "left_arrow",
+              "modifiers": [
+                "command"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "frontmost_application_unless",
+              "bundle_identifiers": [
+                "com.apple.Terminal",
+                "com.googlecode.iterm2",
+                "org.alacritty"
+              ]
+            },
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "t"
+          },
+          "to": [
+            {
+              "key_code": "right_arrow",
+              "modifiers": [
+                "command"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "frontmost_application_unless",
+              "bundle_identifiers": [
+                "com.apple.Terminal",
+                "com.googlecode.iterm2",
+                "org.alacritty"
+              ]
+            },
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Space + { I / L / K / J } = Select Up / Right / Down / Left",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "i"
+          },
+          "to": [
+            {
+              "key_code": "up_arrow",
+              "modifiers": [
+                "shift"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "k"
+          },
+          "to": [
+            {
+              "key_code": "down_arrow",
+              "modifiers": [
+                "shift"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "j"
+          },
+          "to": [
+            {
+              "key_code": "left_arrow",
+              "modifiers": [
+                "shift"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "l"
+          },
+          "to": [
+            {
+              "key_code": "right_arrow",
+              "modifiers": [
+                "shift"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Space + { O / U } = Indent / Outdent",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "o"
+          },
+          "to": [
+            {
+              "key_code": "tab"
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "u"
+          },
+          "to": [
+            {
+              "key_code": "tab",
+              "modifiers": [
+                "shift"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Space + { N / M } = Backspace / Delete",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "n"
+          },
+          "to": [
+            {
+              "key_code": "delete_or_backspace"
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "m"
+          },
+          "to": [
+            {
+              "key_code": "delete_or_backspace",
+              "modifiers": [
+                "fn"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Space + B = Delete Word",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "b"
+          },
+          "to": [
+            {
+              "key_code": "delete_or_backspace",
+              "modifiers": [
+                "option"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Space + { Z / X / C / V } = Undo / Cut / Copy / Paste",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "z"
+          },
+          "to": [
+            {
+              "key_code": "z",
+              "modifiers": [
+                "command"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "x"
+          },
+          "to": [
+            {
+              "key_code": "x",
+              "modifiers": [
+                "command"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "c"
+          },
+          "to": [
+            {
+              "key_code": "c",
+              "modifiers": [
+                "command"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "v"
+          },
+          "to": [
+            {
+              "key_code": "v",
+              "modifiers": [
+                "command"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Space + { 2 / 3 } = Left / Right Tab",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "2"
+          },
+          "to": [
+            {
+              "key_code": "tab",
+              "modifiers": [
+                "control",
+                "shift"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "3"
+          },
+          "to": [
+            {
+              "key_code": "tab",
+              "modifiers": [
+                "control"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Space + { 1 / 4 } = Close / Open Tab",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "1"
+          },
+          "to": [
+            {
+              "key_code": "w",
+              "modifiers": [
+                "command"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "4"
+          },
+          "to": [
+            {
+              "key_code": "t",
+              "modifiers": [
+                "command"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Space + { Control + Q / Control + W } = Go Back / Forward (app: filemanager)",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "q",
+            "modifiers": {
+              "mandatory": [
+                "control"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "open_bracket",
+              "modifiers": [
+                "command"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "com.apple.finder"
+              ]
+            },
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "w",
+            "modifiers": {
+              "mandatory": [
+                "control"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "close_bracket",
+              "modifiers": [
+                "command"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "com.apple.finder"
+              ]
+            },
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Space + { Control + Q / Control + W } = Go Back / Forward (app: browser)",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "q",
+            "modifiers": {
+              "mandatory": [
+                "control"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "left_arrow",
+              "modifiers": [
+                "command"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "org.mozilla.firefox",
+                "com.apple.Safari",
+                "org.chromium.Chromium",
+                "com.google.Chrome"
+              ]
+            },
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "w",
+            "modifiers": {
+              "mandatory": [
+                "control"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "right_arrow",
+              "modifiers": [
+                "command"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "org.mozilla.firefox",
+                "com.apple.Safari",
+                "org.chromium.Chromium",
+                "com.google.Chrome"
+              ]
+            },
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Space + L-Control = Numpad Mode (N=1, K=5, O=9)",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "b",
+            "modifiers": {
+              "mandatory": [
+                "left_control"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "keypad_0"
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "n",
+            "modifiers": {
+              "mandatory": [
+                "left_control"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "keypad_1"
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "m",
+            "modifiers": {
+              "mandatory": [
+                "left_control"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "keypad_2"
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "comma",
+            "modifiers": {
+              "mandatory": [
+                "left_control"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "keypad_3"
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "j",
+            "modifiers": {
+              "mandatory": [
+                "left_control"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "keypad_4"
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "k",
+            "modifiers": {
+              "mandatory": [
+                "left_control"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "keypad_5"
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "l",
+            "modifiers": {
+              "mandatory": [
+                "left_control"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "keypad_6"
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "u",
+            "modifiers": {
+              "mandatory": [
+                "left_control"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "keypad_7"
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "i",
+            "modifiers": {
+              "mandatory": [
+                "left_control"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "keypad_8"
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "o",
+            "modifiers": {
+              "mandatory": [
+                "left_control"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "keypad_9"
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "8",
+            "modifiers": {
+              "mandatory": [
+                "left_control"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "keypad_slash"
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "9",
+            "modifiers": {
+              "mandatory": [
+                "left_control"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "keypad_asterisk"
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "0",
+            "modifiers": {
+              "mandatory": [
+                "left_control"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "keypad_hyphen"
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "p",
+            "modifiers": {
+              "mandatory": [
+                "left_control"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "keypad_plus"
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "slash",
+            "modifiers": {
+              "mandatory": [
+                "left_control"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "keypad_enter"
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "semicolon",
+            "modifiers": {
+              "mandatory": [
+                "left_control"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "delete_or_backspace",
+              "modifiers": [
+                "fn"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "h",
+            "modifiers": {
+              "mandatory": [
+                "left_control"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "delete_or_backspace"
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Space + { P / Shift + P } = Plus / Minus",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "p"
+          },
+          "to": [
+            {
+              "key_code": "equal_sign",
+              "modifiers": [
+                "shift"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "p",
+            "modifiers": {
+              "mandatory": [
+                "shift"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "hyphen"
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Space + Slash = Backslash",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "slash"
+          },
+          "to": [
+            {
+              "key_code": "backslash"
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Space + Quote = Backtick",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "quote"
+          },
+          "to": [
+            {
+              "key_code": "grave_accent_and_tilde"
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Space + Hyphen = Tilde",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "hyphen"
+          },
+          "to": [
+            {
+              "key_code": "grave_accent_and_tilde",
+              "modifiers": [
+                "shift"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Space + 7 = Pipe",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "7"
+          },
+          "to": [
+            {
+              "key_code": "backslash",
+              "modifiers": [
+                "shift"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Space + Semicolon = Equal Sign",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "semicolon"
+          },
+          "to": [
+            {
+              "key_code": "equal_sign"
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Space + Tab = Enter",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "tab"
+          },
+          "to": [
+            {
+              "key_code": "return_or_enter"
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Space + Period = Underscore",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "period"
+          },
+          "to": [
+            {
+              "key_code": "hyphen",
+              "modifiers": [
+                "shift"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Space + Custom Keys",
+      "manipulators": []
+    },
+    {
+      "description": "Caps Lock = L-Control / Escape",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "caps_lock",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "left_control"
+            }
+          ],
+          "to_if_alone": [
+            {
+              "key_code": "escape"
+            }
+          ],
+          "type": "basic"
+        }
+      ]
+    },
+    {
+      "description": "Left Control = L-Control / Escape",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "left_control",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "left_control"
+            }
+          ],
+          "to_if_alone": [
+            {
+              "key_code": "escape"
+            }
+          ],
+          "type": "basic"
+        }
+      ]
+    },
+    {
+      "description": "Space + { 9 / 0 } = Mouse Mode On / Off (on)",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "9"
+          },
+          "to": [
+            {
+              "set_variable": {
+                "name": "keycomfort_mode_mouse",
+                "value": 1
+              }
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            },
+            {
+              "type": "variable_if",
+              "name": "keycomfort_mode_mouse",
+              "value": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Space + { 9 / 0 } = Mouse Mode On / Off (off)",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "0"
+          },
+          "to": [
+            {
+              "set_variable": {
+                "name": "keycomfort_mode_mouse",
+                "value": 0
+              }
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "keycomfort_layer",
+              "value": 1
+            },
+            {
+              "type": "variable_if",
+              "name": "keycomfort_mode_mouse",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "(Mouse) Quote / Semicolon = Mouse Speed Up / Down (mouse mode: on)",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "quote",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "mouse_key": {
+                "speed_multiplier": 1.5
+              }
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 0
+            },
+            {
+              "type": "variable_if",
+              "name": "keycomfort_mode_mouse",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "semicolon",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "mouse_key": {
+                "speed_multiplier": 0.5
+              }
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 0
+            },
+            {
+              "type": "variable_if",
+              "name": "keycomfort_mode_mouse",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "(Mouse) Quote / Semicolon = Mouse Speed Up / Down (thumb on touchpad)",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "quote",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "mouse_key": {
+                "speed_multiplier": 1.5
+              }
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "semicolon",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "mouse_key": {
+                "speed_multiplier": 0.5
+              }
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "(Mouse) E / F / D / S = Move Mouse Up / Right / Down / Left (mouse mode: on)",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "e",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "mouse_key": {
+                "y": -1536
+              }
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 0
+            },
+            {
+              "type": "variable_if",
+              "name": "keycomfort_mode_mouse",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "f",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "mouse_key": {
+                "x": 1536
+              }
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 0
+            },
+            {
+              "type": "variable_if",
+              "name": "keycomfort_mode_mouse",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "d",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "mouse_key": {
+                "y": 1536
+              }
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 0
+            },
+            {
+              "type": "variable_if",
+              "name": "keycomfort_mode_mouse",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "s",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "mouse_key": {
+                "x": -1536
+              }
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 0
+            },
+            {
+              "type": "variable_if",
+              "name": "keycomfort_mode_mouse",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "(Mouse) E / F / D / S = Move Mouse Up / Right / Down / Left (thumb on touchpad)",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "e",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "mouse_key": {
+                "y": -1536
+              }
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "f",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "mouse_key": {
+                "x": 1536
+              }
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "d",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "mouse_key": {
+                "y": 1536
+              }
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "s",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "mouse_key": {
+                "x": -1536
+              }
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "(Mouse) J / H / L = Mouse Buttons Left / Middle / Right (mouse mode: on)",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "j",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "pointing_button": "button1"
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 0
+            },
+            {
+              "type": "variable_if",
+              "name": "keycomfort_mode_mouse",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "l",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "pointing_button": "button2"
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 0
+            },
+            {
+              "type": "variable_if",
+              "name": "keycomfort_mode_mouse",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "h",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "pointing_button": "button3"
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 0
+            },
+            {
+              "type": "variable_if",
+              "name": "keycomfort_mode_mouse",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "(Mouse) J / H / L = Mouse Buttons Left / Middle / Right (thumb on touchpad)",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "j",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "pointing_button": "button1"
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "l",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "pointing_button": "button2"
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "h",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "pointing_button": "button3"
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "(Mouse) I / K = Mouse Wheel Up / Down (mouse mode: on)",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "i",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "mouse_key": {
+                "vertical_wheel": -32
+              }
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 0
+            },
+            {
+              "type": "variable_if",
+              "name": "keycomfort_mode_mouse",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "k",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "mouse_key": {
+                "vertical_wheel": 32
+              }
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 0
+            },
+            {
+              "type": "variable_if",
+              "name": "keycomfort_mode_mouse",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "(Mouse) I / K = Mouse Wheel Up / Down (thumb on touchpad)",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "i",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "mouse_key": {
+                "vertical_wheel": -32
+              }
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "k",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "mouse_key": {
+                "vertical_wheel": 32
+              }
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "(Mouse) U / O = Mouse Wheel Left / Right (mouse mode: on)",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "u",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "mouse_key": {
+                "horizontal_wheel": 32
+              }
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 0
+            },
+            {
+              "type": "variable_if",
+              "name": "keycomfort_mode_mouse",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "o",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "mouse_key": {
+                "horizontal_wheel": -32
+              }
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 0
+            },
+            {
+              "type": "variable_if",
+              "name": "keycomfort_mode_mouse",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "(Mouse) U / O = Mouse Wheel Left / Right (thumb on touchpad)",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "u",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "mouse_key": {
+                "horizontal_wheel": 32
+              }
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "o",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "mouse_key": {
+                "horizontal_wheel": -32
+              }
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "(Mouse) N / M = Left/Right Tab (mouse mode: on)",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "n"
+          },
+          "to": [
+            {
+              "key_code": "tab",
+              "modifiers": [
+                "control",
+                "shift"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 0
+            },
+            {
+              "type": "variable_if",
+              "name": "keycomfort_mode_mouse",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "m"
+          },
+          "to": [
+            {
+              "key_code": "tab",
+              "modifiers": [
+                "control"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 0
+            },
+            {
+              "type": "variable_if",
+              "name": "keycomfort_mode_mouse",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "(Mouse) N / M = Left/Right Tab (thumb on touchpad)",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "n"
+          },
+          "to": [
+            {
+              "key_code": "tab",
+              "modifiers": [
+                "control",
+                "shift"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "m"
+          },
+          "to": [
+            {
+              "key_code": "tab",
+              "modifiers": [
+                "control"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "(Mouse) B / Comma = Close / Open Tab (mouse mode: on)",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "b"
+          },
+          "to": [
+            {
+              "key_code": "w",
+              "modifiers": [
+                "command"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 0
+            },
+            {
+              "type": "variable_if",
+              "name": "keycomfort_mode_mouse",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "comma"
+          },
+          "to": [
+            {
+              "key_code": "t",
+              "modifiers": [
+                "command"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 0
+            },
+            {
+              "type": "variable_if",
+              "name": "keycomfort_mode_mouse",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "(Mouse) B / Comma = Close / Open Tab (thumb on touchpad)",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "b"
+          },
+          "to": [
+            {
+              "key_code": "w",
+              "modifiers": [
+                "command"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "comma"
+          },
+          "to": [
+            {
+              "key_code": "t",
+              "modifiers": [
+                "command"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "(Mouse) Y / P = Go Back / Forward (app: filemanager) (mouse mode: on)",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "y"
+          },
+          "to": [
+            {
+              "key_code": "open_bracket",
+              "modifiers": [
+                "command"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "com.apple.finder"
+              ]
+            },
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 0
+            },
+            {
+              "type": "variable_if",
+              "name": "keycomfort_mode_mouse",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "p"
+          },
+          "to": [
+            {
+              "key_code": "close_bracket",
+              "modifiers": [
+                "command"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "com.apple.finder"
+              ]
+            },
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 0
+            },
+            {
+              "type": "variable_if",
+              "name": "keycomfort_mode_mouse",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "(Mouse) Y / P = Go Back / Forward (app: filemanager) (thumb on touchpad)",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "y"
+          },
+          "to": [
+            {
+              "key_code": "open_bracket",
+              "modifiers": [
+                "command"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "com.apple.finder"
+              ]
+            },
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "p"
+          },
+          "to": [
+            {
+              "key_code": "close_bracket",
+              "modifiers": [
+                "command"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "com.apple.finder"
+              ]
+            },
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "(Mouse) Y / P = Go Back / Forward (app: browser) (mouse mode: on)",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "y"
+          },
+          "to": [
+            {
+              "key_code": "left_arrow",
+              "modifiers": [
+                "command"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "org.mozilla.firefox",
+                "com.apple.Safari",
+                "org.chromium.Chromium",
+                "com.google.Chrome"
+              ]
+            },
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 0
+            },
+            {
+              "type": "variable_if",
+              "name": "keycomfort_mode_mouse",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "p"
+          },
+          "to": [
+            {
+              "key_code": "right_arrow",
+              "modifiers": [
+                "command"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "org.mozilla.firefox",
+                "com.apple.Safari",
+                "org.chromium.Chromium",
+                "com.google.Chrome"
+              ]
+            },
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 0
+            },
+            {
+              "type": "variable_if",
+              "name": "keycomfort_mode_mouse",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "(Mouse) Y / P = Go Back / Forward (app: browser) (thumb on touchpad)",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "y"
+          },
+          "to": [
+            {
+              "key_code": "left_arrow",
+              "modifiers": [
+                "command"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "org.mozilla.firefox",
+                "com.apple.Safari",
+                "org.chromium.Chromium",
+                "com.google.Chrome"
+              ]
+            },
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "p"
+          },
+          "to": [
+            {
+              "key_code": "right_arrow",
+              "modifiers": [
+                "command"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "org.mozilla.firefox",
+                "com.apple.Safari",
+                "org.chromium.Chromium",
+                "com.google.Chrome"
+              ]
+            },
+            {
+              "type": "variable_if",
+              "name": "multitouch_extension_finger_count_total",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
