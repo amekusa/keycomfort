@@ -1,8 +1,27 @@
 # KEYCOMFORT
 [![NPM Version](https://img.shields.io/npm/v/keycomfort?label=npm%20package&color=blue)](https://www.npmjs.com/package/keycomfort)
 
-Comfortable keyboard remaps for those who **NEVER** want to move their hands away from the home row position.
+Comfortable keyboard remappings + configuration utility for those who **NEVER** want to move their hands away from the home row position.
 Very opinionated, but also easy to customize with a YAML file.
+
+## Features
+- Uses <kbd>SPACE</kbd> as a special modifier key, which is *extremely* powerful.
+  - You can also change it to any other key (e.g. <kbd>英数</kbd> ).
+- Aims:
+  - to maximize the capability of your keyboard.
+  - to ergonomically reduce strain on your wrists as much as possible.
+  - memorable and intuitive key placements with very gentle learning curve.
+- Application-specific mappings
+  - Editors (VSCode, VSCodium, Atom, Eclipse, Sonic-Pi, etc.)
+  - Terminals (Terminal, iTerm, Alacritty, etc.)
+  - Browsers (Firefox, Safari, Chromium, Chrome, etc.)
+- Mouse keys (Mouse emulation)
+  - Cursor movement with togglable speed
+  - Buttons (Left/Middle/Right)
+  - Wheel (Vertical/Horizontal)
+  - MultitouchExtension is also supported.
+- Numpad emulation
+- Can output mapping tables as HTML and plain text for your reference.
 
 ## Requirements
 - macOS
