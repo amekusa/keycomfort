@@ -8,7 +8,10 @@ Very opinionated, but also easy to customize with a YAML file.
 - macOS
 - [Karabiner Elements](https://karabiner-elements.pqrs.org/)
 
-## Installation (JSON)
+## Installation
+There are 2 ways to install Keycomfort: JSON or CLI.
+
+## JSON installation
 1. Download the JSON file from [dist](https://github.com/amekusa/keycomfort/tree/master/dist).
 Pick either [keycomfort.json](https://github.com/amekusa/keycomfort/blob/master/dist/keycomfort.json) or [keycomfort-vim.json](https://github.com/amekusa/keycomfort/blob/master/dist/keycomfort-vim.json).
 The latter is for those who prefer Vim-like mappings.
@@ -16,9 +19,9 @@ The latter is for those who prefer Vim-like mappings.
 3. Open Karabiner's preferences.
 4. `Complex modifications` ➔ `Add rule` ➔ `Keycomfort` ➔ `Enable All`.
 
-## Installation (CLI)
-If you want to customize the mappings, we recommend installing the commandline utility.
-You can install it via NPM:
+## CLI installation
+If you want to customize the mappings, we recommend using the commandline utility, instead of manually installing JSON.
+You can install `keycomfort` CLI via NPM:
 
 ```sh
 npm i -g keycomfort
