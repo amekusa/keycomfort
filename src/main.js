@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 
+const os = require('node:os');
 const {env, cwd, stdin, stdout} = require('node:process');
 const {spawnSync: spawn} = require('node:child_process');
 const fs = require('node:fs');
-const path = require('node:path');
+const {join, dirname} = require('node:path');
 const readline = require('node:readline');
 
 const {Command, Argument} = require('commander');
@@ -60,7 +61,7 @@ function debug(...args) {
 }
 
 function loc(...args) {
-	return io.untilde(path.join(...args));
+	return io.untilde(join(...args));
 }
 
 function yes(answer) {
@@ -128,6 +129,8 @@ app.command('gen')
 	.option('--no-save', `do not save generated keymaps`)
 	.option('-a, --apply', `apply generated keymaps (only for karabiner)`, true)
 	.option('--no-apply', `do not apply generated keymaps`)
+	.option('-t, --table', `generate a table of keymaps`, true)
+	.option('--no-table', `do not generate a table of keymaps`)
 	.option('-p, --print', `print results`)
 	.action(generate);
 
@@ -141,7 +144,7 @@ function configure(file, opts = {}) {
 		return app.error(`--reset and --delete options are mutually exclusive`);
 	}
 	// check if directory exists
-	let dir = path.dirname(file);
+	let dir = dirname(file);
 	if (!fs.existsSync(dir)) {
 		if (opts.reset || opts.delete) {
 			return app.error(`File not found: ${file}`);
@@ -207,10 +210,12 @@ function generate(target, opts = {}) {
 	if (target == 'ahk') {
 		return app.error(`sorry, ahk is not supported yet.`)
 	}
-	// parse config
+	// configuration
 	let config = defaults;
+	let configPath = defaultConfig;
 	if (opts.config) {
-		if (!fs.existsSync(opts.config)) {
+		configPath = loc(opts.config);
+		if (!fs.existsSync(configPath)) {
 			log(`Config not found:`, opts.config);
 			return prompt(`Use default config? [Yes/Cancel] `, answer => {
 				if (yes(answer)) {
@@ -220,13 +225,17 @@ function generate(target, opts = {}) {
 				log(`Canceled.`);
 			});
 		}
-		let userConfig = yaml.parse(fs.readFileSync(opts.config, {encoding: 'utf8'}));
+		let userConfig = yaml.parse(fs.readFileSync(configPath, {encoding: 'utf8'}));
 		if (userConfig) config = merge(config, userConfig);
 	}
-	let modifier = config.rules.modifier.key;
-	let apps     = config.apps;
-	let labels   = config.key_labels;
-	let vim      = config.vim_like;
+	let configDir = dirname(configPath);
+	let modifier  = config.rules.modifier.key;
+	let apps      = config.apps;
+	let labels    = config.key_labels;
+	let vim       = config.vim_like;
+
+	let tableHTML = [];
+	let tableText = [];
 
 	let ruleSet = new RuleSet('Keycomfort (npmjs.com/package/keycomfort)');
 
@@ -248,9 +257,13 @@ function generate(target, opts = {}) {
 
 		// format rule description
 		if (!desc) {
-			desc = rc.desc.replaceAll(/(?:<modifier>|\[([_0-9a-z]+)\])/gi, (_, m1) => {
-				return label(m1 ? rc[m1] : modifier, labels);
-			});
+			let keys = /(?:<modifier>|\[([_0-9a-z]+)\])/gi;
+			desc = rc.desc.replaceAll(keys, (_, m1) => label(m1 ? rc[m1] : modifier, labels));
+
+			if (desc && opts.table) {
+				tableText.push(desc)
+				tableHTML.push(`<tr><td>${rc.desc.replaceAll(keys, (_, m1) => `<kbd>${label(m1 ? rc[m1] : modifier, labels)}</kbd>`)}</td></tr>`);
+			}
 		}
 
 		// override config with app-specific mappings
@@ -343,6 +356,34 @@ function generate(target, opts = {}) {
 			break;
 		}
 		fs.writeFileSync(saveAs, result, {encoding: 'utf8'});
+	}
+
+	if (opts.table) {
+		let now = (new Date).toUTCString();
+		let saveAs = join(configDir, 'keycomfort');
+		tableText = [
+			`# === Keycomfort Keymaps ===`,
+			`# Generated at: ${now}`,
+			`# Config file:  ${configPath}`,
+			`# HTML version: ${saveAs}.html`,
+			``,
+			...tableText,
+		];
+		tableHTML = [
+			`<!DOCTYPE html>`,
+			`<html>`,
+			`<head>`,
+			`<title>Keycomfort Keymaps</title>`,
+			`</head>`,
+			`<body>`,
+			`<table>`,
+			...tableHTML,
+			`</table>`,
+			`</body>`,
+			`</html>`,
+		];
+		fs.writeFileSync(`${saveAs}.txt`,  tableText.join(os.EOL), {encoding: 'utf8'});
+		fs.writeFileSync(`${saveAs}.html`, tableHTML.join(os.EOL), {encoding: 'utf8'});
 	}
 
 }
