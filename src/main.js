@@ -9,7 +9,7 @@ const readline = require('node:readline');
 
 const {Command, Argument} = require('commander');
 const yaml = require('yaml');
-const {io, clone, merge, isEmpty} = require('@amekusa/util.js');
+const {io, clone, merge, isEmpty, subst} = require('@amekusa/util.js');
 const {
 	Rule, RuleSet, Config,
 	if_app, unless_app,
@@ -46,7 +46,10 @@ const {
 
 const pkg = require('../package.json');
 const rules = require('./rules.js');
+
 const defaultsYML = ROLLUP_REPLACE.defaultsYML;
+const tableHTML = ROLLUP_REPLACE.tableHTML;
+
 const defaults = yaml.parse(defaultsYML);
 const defaultConfig = loc(io.home, '.config', 'keycomfort', 'config.yml')
 
@@ -234,7 +237,7 @@ function generate(target, opts = {}) {
 	let labels    = config.key_labels;
 	let vim       = config.vim_like;
 
-	let tableHTML = [];
+	let tableRows = [];
 	let tableText = [];
 
 	let ruleSet = new RuleSet('Keycomfort (npmjs.com/package/keycomfort)');
@@ -262,7 +265,7 @@ function generate(target, opts = {}) {
 
 			if (desc && opts.table) {
 				tableText.push(desc)
-				tableHTML.push(`<tr><td>${rc.desc.replaceAll(keys, (_, m1) => `<kbd>${label(m1 ? rc[m1] : modifier, labels)}</kbd>`)}</td></tr>`);
+				tableRows.push(`<tr><td>${rc.desc.replaceAll(keys, (_, m1) => `<kbd>${label(m1 ? rc[m1] : modifier, labels)}</kbd>`)}</td></tr>`);
 			}
 		}
 
@@ -361,38 +364,21 @@ function generate(target, opts = {}) {
 	if (opts.table) {
 		let now = (new Date).toUTCString();
 		let saveAs = join(configDir, 'keycomfort');
-		tableText = [
+		tableText.unshift(
 			`# === Keycomfort Keymaps ===`,
 			`# Generated at: ${now}`,
 			`# Config file:  ${configPath}`,
 			`# HTML version: ${saveAs}.html`,
 			``,
-			...tableText,
-		];
-		tableHTML = [
-			`<!DOCTYPE html>`,
-			`<html>`,
-			`<head>`,
-			`<title>Keycomfort Keymaps</title>`,
-			`</head>`,
-			`<body>`,
-			`<h1>Keycomfort Keymaps</h1>`,
-			`<dl>`,
-			`<dt>Generated at:</dt>`,
-			`<dd>${now}</dd>`,
-			`<dt>Config file:</dt>`,
-			`<dd>${configPath}</dd>`,
-			`<dt>Text version:</dt>`,
-			`<dd><a href="file://${saveAs}.txt">${saveAs}.txt</a></dd>`,
-			`</dl>`,
-			`<table>`,
-			...tableHTML,
-			`</table>`,
-			`</body>`,
-			`</html>`,
-		];
-		fs.writeFileSync(`${saveAs}.txt`,  tableText.join(os.EOL), {encoding: 'utf8'});
-		fs.writeFileSync(`${saveAs}.html`, tableHTML.join(os.EOL), {encoding: 'utf8'});
+		);
+		fs.writeFileSync(`${saveAs}.txt`, tableText.join(os.EOL), {encoding: 'utf8'});
+
+		fs.writeFileSync(`${saveAs}.html`, subst(tableHTML, {
+			time: now,
+			config: configPath,
+			table: saveAs,
+			rows: tableRows.join('\n'),
+		}), {encoding: 'utf8'});
 	}
 
 }

@@ -15,6 +15,7 @@ const prod = env.NODE_ENV == 'production';
 
 const fs = require('node:fs');
 const defaultsYML = fs.readFileSync('./defaults.yml', {encoding: 'utf8'});
+const tableHTML = fs.readFileSync('./table.html', {encoding: 'utf8'});
 
 module.exports = {
 	input: 'src/main.js',
@@ -37,6 +38,7 @@ module.exports = {
 			preventAssignment: true,
 			values: {
 				'ROLLUP_REPLACE.defaultsYML': JSON.stringify(defaultsYML),
+				'ROLLUP_REPLACE.tableHTML': JSON.stringify(tableHTML),
 			}
 		})
 	],
